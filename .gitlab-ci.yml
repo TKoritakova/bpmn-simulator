@@ -9,5 +9,4 @@ pages:
     paths:
       - public
   only:
-    - main  # nebo jiná větev, ze které nasazuješ
-    - project-start
+    - main
