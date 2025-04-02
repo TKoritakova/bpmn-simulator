@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import BpmnViewer from 'bpmn-js';
+import { BPMNAssembler } from '../bpmn-parsing/BPMNAssembler';
 
 export function View({ xml }) {
   const containerRef = useRef(null);
@@ -24,6 +25,8 @@ export function View({ xml }) {
         console.log('BPMN DEFINITIONS:', definitions);
 
         window.bpmnDefinitions = definitions;
+        BPMNAssembler.buildFromDefinitions(definitions);
+
       }).catch(err => {
         console.error('Chyba při načítání BPMN XML:', err);
       });

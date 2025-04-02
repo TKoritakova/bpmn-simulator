@@ -1,11 +1,28 @@
 
-import React, { useState } from 'react';
-import { View } from '../bpmn-components/View';
+
+import React, { useEffect, useState } from 'react';
+import { View } from '../components/View';
+import { BPMNAssembler } from '../bpmn-parsing/BPMNAssembler';
 
 
 
 export default function Chapter1() {
     const [bpmnXml, setBpmnXml] = useState(null);
+
+    useEffect(() => {
+        fetch('supermarket.bpmn') 
+          .then(res => res.text())
+          .then(text => {
+            setBpmnXml(text);
+          })
+          .catch(err => {
+            console.error('Chyba při načítání výchozího BPMN souboru:', err);
+          });
+
+          
+      }, []);
+
+  
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];

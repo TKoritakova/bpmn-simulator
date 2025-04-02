@@ -1,7 +1,7 @@
 // src/model/builders/BPMNDiagramBuilder.js
-import { BPMNDiagram } from '../BPMNDiagram';
-import { Activity } from '../Activity';
-import { Gateway } from '../Gateway';
+import { BPMNDiagram } from '../model/BPMNDiagram';
+import { Activity } from '../model/Activity';
+import { Gateway } from '../model/Gateway';
 
 export class BPMNDiagramBuilder {
   constructor() {
