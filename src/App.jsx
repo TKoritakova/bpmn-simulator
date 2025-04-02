@@ -1,18 +1,28 @@
 
 import './App.css'
+import React, { useState } from 'react';
+
+import { Routes, Route } from 'react-router-dom';
+import { Navbar } from './components/NavBar';
+import Home from './routes/Home';
+import Chapter1 from './routes/Chapter1';
+
 
 function App() {
 
-  const act1 = new Activity('Zahájení', 2.0, 1, 100, 100);
-  const act2 = new Activity('Kontrola', 3.0, 2, 300, 100);
 
+  /* PŘIDAT DO ROUTERU - <Route path="*" element={<NotFound />} />*/
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      <ActivityView activity={act1} heat={0.0} />
-      <ActivityView activity={act2} heat={0.6} />
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="bpmn-simulator/" element={<Home />} />
+        <Route path="bpmn-simulator/lesson-1" element={<Chapter1 />} />
+        
+        
+      </Routes>
+    </>
   );
-
 
 }
 
