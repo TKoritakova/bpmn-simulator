@@ -15,8 +15,16 @@
   "dependencies": {
     "bpmn-js": "^18.4.0",
     "bpmn-moddle": "^9.0.1",
+    "chart.js": "^4.4.9",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "fast-xml-parser": "^5.2.1",
+    "fifo": "^2.4.1",
     "gh-pages": "^6.3.0",
+    "js-priority-queue": "^0.1.5",
+    "queue": "^7.0.0",
+    "queue-fifo": "^0.2.6",
     "react": "^19.0.0",
+    "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.4.1"
   },
