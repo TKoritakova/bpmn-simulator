@@ -23,10 +23,13 @@
     "js-priority-queue": "^0.1.5",
     "queue": "^7.0.0",
     "queue-fifo": "^0.2.6",
+    "randgen": "^0.1.0",
+    "random": "^5.4.0",
     "react": "^19.0.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.4.1"
+    "react-router-dom": "^7.4.1",
+    "simple-statistics": "^7.8.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

@@ -1,10 +1,10 @@
 <simulation>
     <scenariospecs>
         <arrivaldistribution>Normal</arrivaldistribution>
-        <arrivalmean>0.2</mean>
+        <arrivalmean>5</mean>
         <arrivalstddeviation>1</stddeviation>
-        <arrivalunit>Hour</unit>
-        <numberofinstances>3</numberofinstances>
+        <arrivalunit>Minute</unit>
+        <numberofinstances>12</numberofinstances>
         <starttime></starttime>
         <currency>CZK</currency>
     </scenariospecs>

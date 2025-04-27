@@ -37,7 +37,7 @@ export function View({ xml }) {
     }
 
     if (xml) {
-      viewerRef.current.importXML(xml).then(() => {
+      viewerRef.current.importXML(xml).then(async () => {
         
         viewerRef.current.get('canvas').zoom('fit-viewport');
 
@@ -47,7 +47,7 @@ export function View({ xml }) {
 
         // Uložení definic a diagramu do stavu
         window.bpmnDefinitions = definitions;
-        const assembledDiagram = BPMNAssembler.buildFromDefinitions(definitions, 'supermarket.xml');
+        const assembledDiagram = await BPMNAssembler.buildFromDefinitions(definitions, 'supermarket.xml');
         setDiagram(assembledDiagram); // Uložení diagramu do stavu
 
         // Inicializace simulátoru
@@ -59,28 +59,11 @@ export function View({ xml }) {
   }, [xml]);
 
   const runSimulation = async () => {
-    const resource = {
-      isAvailable: true,
-      id: 'res1'
-    };
+    
 
-    const resource2 = {
-      isAvailable: true,
-      id: 'res2'
-    };
+    const engine = new SimulationEngine(diagram);
 
-    const engine = new SimulationEngine();
-
-    engine.addResource(resource, 'pokus_id');
-    engine.addResource(resource2, 'pokus_id');
-
-    diagram.getAllObjects().forEach(element => {
-      if (element.constructor.name === "Event" && element.type === "start") {
-        engine.addWorkItemToQueue(element, 'pokus_id', 1);  
-        engine.addWorkItemToQueue(element, 'pokus_id', 2);
-      }
-    });
-
+    
     await engine.run();
     setLogs(engine.log);
 

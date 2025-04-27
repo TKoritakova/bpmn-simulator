@@ -1,15 +1,93 @@
 import PriorityQueue from 'js-priority-queue';
 import { WorkItem } from './WorkItem';
 import { Gateway } from '../model/Gateway';
+import { Participant } from '../model/Participant';
+import { Event } from '../model/Event';
+import random from 'random';
 
 export class SimulationEngine {
-    constructor() {
+    constructor(diagram) {
       this.currentTime = 0;  
       this.resourcePools = {}; 
       this.queueByResourceType = {};  
       this.log = []; 
+
+      this.startEvent;
+
+      this.arrivals = [];
+
+      this.loadEngineDetailsFromDiagram(diagram);
+      
     }
   
+    loadEngineDetailsFromDiagram(diagram) {
+
+      diagram.getAllObjects().forEach(object => {
+        if (object instanceof Participant) {
+          for (let i = 0; i < object.getNumber(); i++) {
+            this.addResource(object,object.getDescription());
+          }
+        } else if (object instanceof Event && object.getType() == "start" ) {
+          this.startEvent = object;
+        }
+
+
+      })
+
+      this.generateArrivalTimes(diagram);
+
+      console.log(this);
+
+ 
+    }
+
+    generateArrivalTimes(diagram) {
+      let currentTime = 0;
+     
+      let generator;
+      if (diagram.getArrivalDistribution() === 'Fixed') {
+        generator = random.uniform(diagram.getArrivalMean(),diagram.getArrivalMean());
+      } else if (diagram.getArrivalDistribution() === 'Normal') {
+        generator = random.normal(diagram.getArrivalMean(), diagram.getArrivalStdDeviation());
+      } else if (diagram.getArrivalDistribution() === 'Exponential') {
+        generator = random.exponential(1/diagram.getArrivalMean());
+      }
+
+      for (let i = 0; i < diagram.getNumberOfInstances(); i++) {
+        let interval;
+    
+        if (generator) {
+          interval = generator();
+          let arrivalInSecs = this.convertToSeconds(diagram.getArrivalUnit(),Math.abs(interval));
+          currentTime += Math.floor(arrivalInSecs);
+          this.arrivals.push({ time: currentTime, instanceId: i });
+        }
+        
+      }
+
+    }
+
+    convertToSeconds(unit, value) {
+      switch (unit.toLowerCase()) {
+        case 'second':
+        case 'seconds':
+          return value;
+        case 'minute':
+        case 'minutes':
+          return value * 60;
+        case 'hour':
+        case 'hours':
+          return value * 3600;
+        case 'day':
+        case 'days':
+          return value * 86400;
+        case 'week':
+        case 'weeks':
+          return value * 604800;
+        default:
+          throw new Error(`Unknown time unit: ${unit}`);
+      }
+    }
 
     addResource(resource, resourceType) {
       if (!this.resourcePools[resourceType]) {
@@ -33,79 +111,52 @@ export class SimulationEngine {
       
    
     async run() {
-      /*while (this.hasTasks()) {
-      
-        for (let resourceType in this.queueByResourceType) {
-          const availableResource = this.getAvailableResource(resourceType);
-          console.log('Dostupný zdroj:', availableResource);
-  
-          if (availableResource) {
-            const task = this.queueByResourceType[resourceType].dequeue(); 
-            await this.executeTask(task.task.getItem(), availableResource, resourceType, task.task.getInstanceID(),task.task.getReadyToBeExecuted());
-          }
+      const runningTasks = new Set();
+
+      while (/*this.hasTasks() || runningTasks.size > 0 || */this.arrivals.length > 0) {
+
+        while (this.arrivals.length > 0 && this.currentTime >= this.arrivals[0].time) {
+          const arrival = this.arrivals.shift(); 
+          this.addWorkItemToQueue(this.startEvent, "Customer" , arrival.instanceId+1); 
+          console.log(`Přidána instance ${arrival.instanceId} v čase ${this.currentTime}`);
         }
-      }*/
 
+        
 
-
-      /*while (this.hasTasks()) {
-        const allTasks = [];
-    
+        // ŘEŠENÍ FRONT
+        /*
         for (let resourceType in this.queueByResourceType) {
           const queue = this.queueByResourceType[resourceType];
           const availableResources = this.resourcePools[resourceType].filter(res => res.isAvailable);
-    
+
           while (availableResources.length > 0 && queue.length > 0) {
-            const resource = availableResources.shift(); 
-            const taskWrapper = queue.dequeue(); 
+            const resource = availableResources.shift();
+            const taskWrapper = queue.dequeue();
             const task = taskWrapper.task.getItem();
             const instanceID = taskWrapper.task.getInstanceID();
             const ready = taskWrapper.task.getReadyToBeExecuted();
+    
+            const taskPromise = this.executeTask(task, resource, resourceType, instanceID,ready);
 
-            allTasks.push(
-              this.executeTask(task, resource, resourceType, instanceID, ready)
-            );
+    
+            runningTasks.add(taskPromise);
+
+        
+            taskPromise.then(() => {
+              runningTasks.delete(taskPromise);
+            });
           }
-        }
-    
+        }*/
 
-        await Promise.all(allTasks);
-      }*/
-
-    const runningTasks = new Set();
-
-    while (this.hasTasks() || runningTasks.size > 0) {
-      for (let resourceType in this.queueByResourceType) {
-        const queue = this.queueByResourceType[resourceType];
-        const availableResources = this.resourcePools[resourceType].filter(res => res.isAvailable);
-
-        while (availableResources.length > 0 && queue.length > 0) {
-          const resource = availableResources.shift();
-          const taskWrapper = queue.dequeue();
-          const task = taskWrapper.task.getItem();
-          const instanceID = taskWrapper.task.getInstanceID();
-          const ready = taskWrapper.task.getReadyToBeExecuted();
-  
-          const taskPromise = this.executeTask(task, resource, resourceType, instanceID,ready);
-
-  
-          runningTasks.add(taskPromise);
-
-       
-          taskPromise.then(() => {
-            runningTasks.delete(taskPromise);
-          });
-        }
+      
+        this.currentTime += 1;
       }
-
     
-      await this.wait(0.1);
-    }
-  
-      console.log("Simulace skončena.");
-      console.log('Log simulace:', this.log);
-  
-    }
+      console.log(this);
+        console.log("Simulace skončena.");
+        console.log('Log simulace:', this.log);
+    
+      }
   
     
     hasTasks() {
