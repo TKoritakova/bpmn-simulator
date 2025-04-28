@@ -293,13 +293,22 @@ export class BPMNAssembler {
     }
     
     static processSimulationDataScenarioSpecs(data, diagram) {     
-        diagram.setArrivalDistribution(data.arrivaldistribution)        
-        diagram.setArrivalMean(data.arrivalmean)         
-        diagram.setArrivalStdDeviation(data.arrivalstddeviation) 
-        diagram.setArrivalUnit(data.arrivalunit)        
-        diagram.setNumberOfInstances(data.numberofinstances)          
-        diagram.setStartTime(data.starttime) 
-        diagram.setCurrency(data.currency)               
+        diagram.setArrivalDistribution(data.arrivaldistribution);        
+        diagram.setArrivalMean(data.arrivalmean);         
+        diagram.setArrivalStdDeviation(data.arrivalstddeviation); 
+        diagram.setArrivalUnit(data.arrivalunit);        
+        diagram.setNumberOfInstances(data.numberofinstances);          
+        diagram.setCurrency(data.currency);  
+        
+        
+        let [datePart, timePart] = data.starttime.split(' ');
+        let [day, month, year] = datePart.split('/').map(Number);
+        let [hours, minutes] = timePart.split(':').map(Number);
+
+        let date = new Date(year, month - 1, day, hours, minutes);
+        
+        diagram.setStartTime(date);
+
     }
 
     static processSimulationDataTimetables(data,diagram) {

@@ -4,7 +4,7 @@ export class Gateway extends FlowObject {
   constructor(description, ID, type, ins, outs) {
     super(description, ID, ins, outs);
     this.type = type;
-    this.probabilities = {};
+    this.probabilities = [];
   }
 
   execute() {
@@ -16,10 +16,12 @@ export class Gateway extends FlowObject {
   }
 
   addProbability(flowID, probability) {
-    this.probabilities[flowID] = probability;
+    this.probabilities.push({id: flowID, probability: probability});
+
   }
 
-  getProbabilityByID(id) {
-    return this.probabilities.hasOwnProperty(id) ? probabilities[id] : null;
+
+  getProbabilities() {
+    return this.probabilities
   }
 }

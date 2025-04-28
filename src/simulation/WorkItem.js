@@ -1,5 +1,5 @@
 import { Activity } from "../model/Activity";
-
+import random from 'random';
 
 export class WorkItem {
   
@@ -9,13 +9,65 @@ export class WorkItem {
     this.readyToBeExecuted = readyToBeExecuted;
     this.startTime = null;
     this.completedTime = null;
+    this.executionTime;
+    this.remainingExecutionTime;
     
     if (item instanceof Activity) {
         this.resourceNeeded = item.getResource();
+        this.generateExectuionTime();
     } else {
         this.resourceNeeded = null;
     }
     
+  }
+
+  generateExectuionTime() {
+    let distribution = this.item.getDistribution();
+    let generator;
+    if (distribution === 'Fixed') {
+        generator = random.uniform(this.item.getMean(),this.item.getMean());
+    } else if (distribution === 'Normal') {
+        generator = random.normal(this.item.getMean(), this.item.getStdDeviation());
+    } else if (distribution === 'Exponential') {
+        generator = random.exponential(1/this.item.getMean());
+    }
+
+    if (generator) {
+
+        this.executionTime = Math.floor(this.convertToSeconds(this.item.getUnit(),Math.abs(generator())));
+        this.remainingExecutionTime = this.executionTime;
+    }
+
+  }
+
+  getRemainingExecutionTime() {
+    return this.remainingExecutionTime;
+  }
+
+  lowerRemainingExecutionTime() {
+    this.remainingExecutionTime -= 1;
+  }
+
+  convertToSeconds(unit, value) {
+    switch (unit.toLowerCase()) {
+      case 'second':
+      case 'seconds':
+        return value;
+      case 'minute':
+      case 'minutes':
+        return value * 60;
+      case 'hour':
+      case 'hours':
+        return value * 3600;
+      case 'day':
+      case 'days':
+        return value * 86400;
+      case 'week':
+      case 'weeks':
+        return value * 604800;
+      default:
+        throw new Error(`Unknown time unit: ${unit}`);
+    }
   }
 
     setStartTime(time) {

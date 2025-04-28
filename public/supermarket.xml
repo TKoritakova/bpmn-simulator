@@ -5,7 +5,7 @@
         <arrivalstddeviation>1</stddeviation>
         <arrivalunit>Minute</unit>
         <numberofinstances>12</numberofinstances>
-        <starttime></starttime>
+        <starttime>12/5/2025 9:00</starttime>
         <currency>CZK</currency>
     </scenariospecs>
 
@@ -39,9 +39,9 @@
         <id>Activity_VyberZbozi</id>
         <resource>Customer</resource>
         <distribution>Normal</distribution>
-        <mean>0.2</mean>
+        <mean>10</mean>
         <stddeviation>3</stddeviation>
-        <unit>Hour</unit>
+        <unit>Minute</unit>
         <fixedcost>0</fixedcost>
     </element>
 
@@ -50,9 +50,9 @@
         <id>Activity_PlatbaSamoobsluha</id>
         <resource>Customer</resource>
         <distribution>Normal</distribution>
-        <mean>0.2</mean>
-        <stddeviation>1</stddeviation>
-        <unit>Hour</unit>
+        <mean>10</mean>
+        <stddeviation>5</stddeviation>
+        <unit>Minute</unit>
         <fixedcost>0</fixedcost>
     </element>
 
@@ -61,9 +61,9 @@
         <id>Activity_PlatbaPokladna</id>
         <resource>Customer</resource>
         <distribution>Exponential</distribution>
-        <mean>0.15</mean>
+        <mean>10</mean>
         <stddeviation></stddeviation>
-        <unit>Hour</unit>
+        <unit>Minute</unit>
         <fixedcost>0</fixedcost>
     </element>
 
@@ -72,9 +72,9 @@
         <id>Activity_KontrolaNakupu</id>
         <resource>Customer</resource>
         <distribution>Normal</distribution>
-        <mean>0.1</mean>
-        <stddeviation>1</stddeviation>
-        <unit>Hour</unit>
+        <mean>8</mean>
+        <stddeviation>2</stddeviation>
+        <unit>Minute</unit>
         <fixedcost>0</fixedcost>
     </element>
 
@@ -83,9 +83,9 @@
         <id>Activity_Reklamace</id>
         <resource>Customer</resource>
         <distribution>Fixed</distribution>
-        <mean>0.4</mean>
+        <mean>18</mean>
         <stddeviation></stddeviation>
-        <unit>Hour</unit>
+        <unit>Minute</unit>
         <fixedcost>0</fixedcost>
     </element>
 

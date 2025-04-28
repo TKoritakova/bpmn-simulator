@@ -25,6 +25,7 @@
     "queue-fifo": "^0.2.6",
     "randgen": "^0.1.0",
     "random": "^5.4.0",
+    "random-weighted-choice": "^0.1.4",
     "react": "^19.0.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.0.0",
