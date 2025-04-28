@@ -1,102 +1,213 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, PureComponent } from 'react';
 import BpmnViewer from 'bpmn-js';
 import { BPMNAssembler } from '../bpmn-parsing/BPMNAssembler';
-import { BPMNSimulator } from '../simulation/BPMNSimulator';
+import { Statistics } from '../simulation/Statistics';
 import { SimulationEngine } from '../simulation/SimulationEngine';
-import { Chart } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  LinearScale,
-  TimeScale,
-  BarElement,
-  Tooltip,
-  Legend,
-  CategoryScale
-} from 'chart.js';
-import 'chartjs-adapter-date-fns';
+import {  BarChart,  Bar,  XAxis,  YAxis,  CartesianGrid,  Tooltip,  Legend,  Rectangle,  ResponsiveContainer,} from 'recharts';
 
-ChartJS.register(LinearScale, TimeScale, CategoryScale, BarElement, Tooltip, Legend);
+
+function colorizeDiagram(viewer, stats, type = 'execution') {
+  let overlays = viewer.get('overlays');
+  let elementRegistry = viewer.get('elementRegistry');
+  
+  let getValue = (info) => {
+    if (type === 'execution') {
+      return info.avgDurationWithoutOfftime;
+    } else if (type === 'waiting') {
+      return info.avgWaitingForExecution;
+    } else {
+      return 0;
+    }
+  };
+
+ 
+
+  for (const [id, info] of Object.entries(stats.activites || {})) {
+
+    let shape = elementRegistry.get(id);
+    if (shape) {
+      const value = getValue(info);
+      const overlayHtml = document.createElement('div');
+
+
+      overlayHtml.className = 'highlight-overlay-green';
+
+      if (value > 3600) {
+        overlayHtml.className = 'highlight-overlay-red';
+      } else if (value > 1800) {
+        overlayHtml.className = 'highlight-overlay-orange';
+      } else if (value > 600) {
+        overlayHtml.className = 'highlight-overlay-yellow';
+      } else {
+        overlayHtml.className = 'highlight-overlay-green';
+      }
+
+      overlayHtml.style.width = shape.width + 'px';
+      overlayHtml.style.height = shape.height + 'px';
+
+      overlays.add(id, {
+        position: {
+          top: 0,
+          left: 0
+        },
+        html: overlayHtml
+      });
+    }
+
+  
+    /*
+  
+    overlays.add('Activity_PlatbaSamoobsluha', {
+      position: {
+        top: 0,
+        left: 0
+      },
+      html: overlayHtml
+    });*/
+
+    /*const element = elementRegistry.get(id);
+    if (element) {
+      const value = getValue(info);
+      const color = getColorForValue(value);
+
+      modeling.setColor(element, {
+        fill: color,
+        stroke: 'black'
+      });
+    }*/
+  }
+}
+
+
 
 export function View({ xml }) {
   const containerRef = useRef(null);
+  const executionContainerRef = useRef(null);    
+  const waitingContainerRef = useRef(null); 
   const viewerRef = useRef(null);
+  const executionViewerRef = useRef(null);
+  const waitingViewerRef = useRef(null);
 
-  const [steps, setSteps] = useState(15);  // Počet kroků pro simulaci
   const [diagram, setDiagram] = useState(null);  // Použití stavu pro diagram
-  const [simulator, setSimulator] = useState(null);
+
     
     const [simulationRunning, setSimulationRunning] = useState(false);
     const [logs, setLogs] = useState([]);
+    const [stats, setStats] = useState({});
 
 
-  useEffect(() => {
-    if (!viewerRef.current) {
-      viewerRef.current = new BpmnViewer({
-        container: containerRef.current,
-      });
-    }
+    useEffect(() => {
+      if (!viewerRef.current) {
+        viewerRef.current = new BpmnViewer({ container: containerRef.current });
+      }
+      if (!executionViewerRef.current) {
+        executionViewerRef.current = new BpmnViewer({ container: executionContainerRef.current });
+      }
+      if (!waitingViewerRef.current) {
+        waitingViewerRef.current = new BpmnViewer({ container: waitingContainerRef.current });
+      }
+    
+      if (xml) {
+        viewerRef.current.importXML(xml).then(async () => {
+          viewerRef.current.get('canvas').zoom('fit-viewport');
+          const definitions = viewerRef.current.getDefinitions();
+          window.bpmnDefinitions = definitions;
+          const assembledDiagram = await BPMNAssembler.buildFromDefinitions(definitions, 'supermarket.xml');
+          setDiagram(assembledDiagram);
+        }).catch(err => {
+          console.error('Chyba při načítání BPMN XML:', err);
+        });
 
-    if (xml) {
-      viewerRef.current.importXML(xml).then(async () => {
-        
-        viewerRef.current.get('canvas').zoom('fit-viewport');
+        executionViewerRef.current.importXML(xml).then(async () => {
+          executionViewerRef.current.get('canvas').zoom('fit-viewport');        
+        }).catch(err => {
+          console.error('Chyba při načítání BPMN XML:', err);
+        });
 
-        const definitions = viewerRef.current.getDefinitions();
-        
-       
+        waitingViewerRef.current.importXML(xml).then(async () => {
+          waitingViewerRef.current.get('canvas').zoom('fit-viewport');        
+        }).catch(err => {
+          console.error('Chyba při načítání BPMN XML:', err);
+        });
+      }
+    }, [xml]);
 
-        // Uložení definic a diagramu do stavu
-        window.bpmnDefinitions = definitions;
-        const assembledDiagram = await BPMNAssembler.buildFromDefinitions(definitions, 'supermarket.xml');
-        setDiagram(assembledDiagram); // Uložení diagramu do stavu
-
-        // Inicializace simulátoru
-        setSimulator(new BPMNSimulator(steps));
-      }).catch(err => {
-        console.error('Chyba při načítání BPMN XML:', err);
-      });
-    }
-  }, [xml]);
+ 
 
   const runSimulation = async () => {
-    
-
+    setSimulationRunning(true); 
+  
     const engine = new SimulationEngine(diagram);
-
-    
+  
     await engine.run();
+    
     setLogs(engine.log);
+  
+    const statistics = Statistics.createStatistics(engine.log, diagram);
+    setStats(statistics);
 
-    /*if (diagram && simulator) {
-      setSimulationRunning(true);
-
-      // Spuštění simulace
-      simulator.startSimulation(diagram, (stepsExecuted) => {
-        console.log(`Aktuální počet kroků: ${stepsExecuted}`);
-      });
-    } else {
-      console.log('Diagram nebo simulátor nejsou připraveny');
-    }*/
+    if (executionContainerRef.current && waitingContainerRef.current) {
+      
+      
+  
+      colorizeDiagram(executionViewerRef.current, statistics, 'execution');
+      colorizeDiagram(waitingViewerRef.current, statistics, 'waiting');
+    }
+  
+    setSimulationRunning(false);
   };
 
-  const getChartData = () => {
 
-      return {
-        datasets: logs.map((log, index) => ({
-          label: `${log.taskId} (Instance ${log.instaceID})`,
-          data: [{
-            x: log.startedAt,
-            x2: log.finishedAt,
-            y: `Instance ${log.instaceID}`,
-            name: log.taskId
-          }],
-          backgroundColor: `hsl(${(log.instaceID * 80 + index * 15) % 360}, 70%, 60%)`,
-          borderColor: 'rgba(0, 0, 0, 0.3)',
-          borderWidth: 1,
-        }))
-      };
-    
-}
+  const DisplayData = Object.entries(stats.activites || {}).map(
+    ([activityID, info], index) => (
+      <tr key={index}>
+        <td>{index + 1}</td>
+        <td>{info.name}</td>
+        <td>{info.count}</td>
+        <td>{info.percInstances.toFixed(2)}</td>
+
+        <td>{Statistics.prepareValueForReading(info.minWholeDuration)}</td>
+        <td>{Statistics.prepareValueForReading(info.maxWholeDuration)}</td>
+        <td>{Statistics.prepareValueForReading(info.avgWholeDuration)}</td>
+
+        <td>{Statistics.prepareValueForReading(info.minDuration)}</td>
+        <td>{Statistics.prepareValueForReading(info.maxDuration)}</td>
+        <td>{Statistics.prepareValueForReading(info.avgDuration)}</td>
+
+        <td>{Statistics.prepareValueForReading(info.minDurationWithoutOfftime)}</td>
+        <td>{Statistics.prepareValueForReading(info.maxDurationWithoutOfftime)}</td>
+        <td>{Statistics.prepareValueForReading(info.avgDurationWithoutOfftime)}</td>
+
+        <td>{Statistics.prepareValueForReading(info.minWaitingForExecution)}</td>
+        <td>{Statistics.prepareValueForReading(info.maxWaitingForExecution)}</td>
+        <td>{Statistics.prepareValueForReading(info.avgWaitingForExecution)}</td>
+
+        <td>{info.minPrice.toFixed(2)}</td>
+        <td>{info.maxPrice.toFixed(2)}</td>
+        <td>{info.avgPrice.toFixed(2)}</td>
+      </tr>
+    )
+  );
+
+  const DisplayGeneralData = Object.entries(stats.general || {}).map(
+    ([key, value], index) => (
+      <tr key={index}>
+        <td>{Statistics.convertGeneralDescriptions(key)}</td>
+        <td>{Statistics.convertGeneralValues(key,value,diagram)}</td>
+      </tr>
+    )
+  );
+
+  
+
+
+
+  let barData;
+  if (stats.instances === undefined) {
+    barData = [];
+  } else {
+    barData = Array.from(stats.instances.instances.values());
+  }
 
 
   return (
@@ -110,72 +221,104 @@ export function View({ xml }) {
         {simulationRunning ? 'Simulace běží...' : 'Simuluj'}
       </button>
 
-      <div>
-        <label htmlFor="steps">Počet kroků:</label>
-        <input
-          id="steps"
-          type="number"
-          value={steps}
-          onChange={(e) => setSteps(parseInt(e.target.value, 10))}
-          min="1"
-        />
+      {stats.instances && Object.keys(stats.instances).length > 0 && (
+        <div style={{ width: '100%', height: '300px', border: '1px solid #ccc' }}>
+    <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          width={500}
+          height={300}
+          data={barData}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="totalWholeDuration" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+          <Bar dataKey="totalDuration" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
+          <Bar dataKey="totalDurationWithoutOfftime" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+          <Bar dataKey="totalWaitingForExecution" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
+        </BarChart>
+      </ResponsiveContainer>
       </div>
 
-      {logs.length > 0 && (
-        <div style={{ marginTop: '2rem' }}>
-          <h3>Průběh simulace podle instance</h3>
-          <Chart
-            type="bar"
-            data={getChartData()}
-            options={{
-              indexAxis: 'y',
-              parsing: {
-                xAxisKey: 'x',
-                x2AxisKey: 'x2',
-                yAxisKey: 'y',
-              },
-              responsive: true,
-              plugins: {
-                legend: {
-                  display: false,
-                },
-                tooltip: {
-                  callbacks: {
-                    label: context => {
-                      const start = context.raw.x;
-                      const end = context.raw.x2;
-                      const name = context.raw.name;
-                      return `Aktivita: ${name}, Od: ${start}, Do: ${end}`;
-                    },
-                  },
-                },
-              },
-              scales: {
-                x: {
-                  type: 'linear',
-                  title: {
-                    display: true,
-                    text: 'Čas'
-                  },
-                  beginAtZero: true
-                  
-                },
-                y: {
-                  type: 'category',
-                  title: {
-                    display: true,
-                    text: 'Instance'
-                  },
-                  ticks: {
-                    autoSkip: false
-                  },
-                  offset: true
-                }
-              }
-            }}
-          />
-        </div>
-      )}
+        )}
+
+      {stats.general && Object.keys(stats.general).length > 0 && (
+  <div style={{ marginTop: '2rem' }}>
+    <h3>General info</h3>
+    <table className="table table-striped">
+      <thead>
+        <tr>
+          <th>Info</th>
+          <th>Údaj</th>
+        </tr>
+      </thead>
+      <tbody>
+        {DisplayGeneralData}
+      </tbody>
+    </table>
+  </div>
+)}
+    
+
+      {stats.activites && Object.keys(stats.activites).length > 0 && (
+  <div style={{ marginTop: '2rem' }}>
+    <h3>Statistika aktivit</h3>
+    <table className="table table-striped">
+      <thead>
+        <tr>
+          <th rowSpan="2">#</th>
+          <th rowSpan="2">Aktivita</th>
+          <th rowSpan="2">Počet průchodů</th>
+          <th rowSpan="2">% inst.</th>
+          <th colSpan="3">Celkový čas</th>
+          <th colSpan="3">Čas provádění</th>
+          <th colSpan="3">Čas provádění bez offtime</th>
+          <th colSpan="3">Čas čekání</th>
+          <th colSpan="3">Cena</th>
+        </tr>
+        <tr>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Avg</th>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Avg</th>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Avg</th>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Avg</th>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Avg</th>
+        </tr>
+      </thead>
+      <tbody>
+        {DisplayData}
+      </tbody>
+    </table>
+  </div>
+)}
+
+  
+  <div ><h2>Heatmapa - čas provádění</h2>
+  <div ref={executionContainerRef} style={{ width: '100%', height: '600px', border: '1px solid #ccc', marginBottom: '2rem' }} />
+
+  <h2>Heatmapa - čekací doby</h2>
+  <div ref={waitingContainerRef} style={{ width: '100%', height: '600px', border: '1px solid #ccc' }} /></div>
+
+
+  
+
     </div>
   );
 

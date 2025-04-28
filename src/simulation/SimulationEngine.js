@@ -10,14 +10,15 @@ import { Activity } from '../model/Activity';
 
 export class SimulationEngine {
     constructor(diagram) {
-      this.currentTime = 0;  
+      this.currentTime = 0; 
+      this.simulatedTime = new Date(diagram.getStartTime()); 
       this.resourcePools = {}; 
       this.queueByResourceType = {};  
       this.log = []; 
 
       this.startEvent;
-
       this.arrivals = [];
+      this.diagram = diagram;
 
       this.loadEngineDetailsFromDiagram(diagram);
       
@@ -38,9 +39,6 @@ export class SimulationEngine {
       })
 
       this.generateArrivalTimes(diagram);
-
-      console.log(this);
-
  
     }
 
@@ -113,35 +111,36 @@ export class SimulationEngine {
         this.queueByResourceType[resourceType].queue({ task: workItem, priority: instanceID });
       }
   
-      
    
     async run() {
       const sleepingItems = new Set();
 
-      while ((this.hasTasks() || sleepingItems.size > 0 || this.arrivals.length > 0) && this.currentTime < 1000000) {
+      while ((this.hasTasks() || sleepingItems.size > 0 || this.arrivals.length > 0) /*&& this.currentTime < 100*/) {
         // SPUŠTĚNÍ NOVÝCH INSTANCÍ
         while (this.arrivals.length > 0 && this.currentTime >= this.arrivals[0].time) {
           const arrival = this.arrivals.shift(); 
           let workItem = this.logEvent(this.startEvent,arrival.instanceId+1);
           this.handleTokenMovement(workItem);
    
-          console.log(`Přidána instance ${arrival.instanceId+1} v čase ${this.currentTime}`);
+        
         }
 
         // POSUN SPÍCÍCH
         for (const item of sleepingItems) {
    
-          item.task.lowerRemainingExecutionTime();
+          if(this.isResourceCurrentlyWorking(item.resource)) {
+            item.task.lowerRemainingExecutionTime();
 
-          // UVOLNENI ZDROJU A DOKONČENÝCH
-          if (item.task.getRemainingExecutionTime() < 1) {
-            console.log("Dokonceny work item:")
-            console.log(item);
-            console.log("")
-            this.resourcePools[item.resource.getDescription()].push(item.resource);
-            this.endTask(item.task);
-            sleepingItems.delete(item);
+            // UVOLNENI ZDROJU A DOKONČENÝCH
+            if (item.task.getRemainingExecutionTime() < 1) {
+              
+              this.resourcePools[item.resource.getDescription()].push(item.resource);
+              this.endTask(item.task);
+              sleepingItems.delete(item);
+            }
+
           }
+          
         }
 
 
@@ -151,33 +150,64 @@ export class SimulationEngine {
           const queue = this.queueByResourceType[resourceType];
           const availableResources = this.resourcePools[resourceType];
 
-          while (availableResources.length > 0 && queue.length > 0) {
-            console.log('tst')
-
-            const resource = availableResources.shift();
-            const taskWrapper = queue.dequeue();
-            const task = taskWrapper.task;
-            task.setStartTime(this.currentTime);
-            sleepingItems.add({task: task, resource: resource});
+          if(availableResources.length > 0 && this.isResourceCurrentlyWorking(availableResources[0])) {
+            while (availableResources.length > 0 && queue.length > 0) {
+            
+              const resource = availableResources.shift();
+              const taskWrapper = queue.dequeue();
+              const task = taskWrapper.task;
+              task.setStartTime(this.currentTime);
+              sleepingItems.add({task: task, resource: resource});
+  
+            
+    
+            }
+          }
 
           
-      
-
-          }
         }
 
         
       
         this.currentTime += 1;
+        this.simulatedTime.setSeconds(this.simulatedTime.getSeconds() + 1)
       }
+
     
-      console.log(this);
-        console.log("Simulace skončena.");
-        console.log('Log simulace:', this.log);
-        console.log(this)
+
     
       }
   
+    isResourceCurrentlyWorking(resource){
+      
+      let timetableName = resource.getWorkingHours();
+      let timetable = this.diagram.getTimetableByName(timetableName);
+
+      let day = this.simulatedTime.getDay(); 
+      if (day == 0) {
+        day = 7;
+      }
+
+      let isWorkday = day >= timetable.getBeginDay() && day <= timetable.getEndDay();
+      if (isWorkday) {
+        
+
+        let hour = this.simulatedTime.getHours();
+        let minute = this.simulatedTime.getMinutes();
+
+        let beginTime = timetable.getBeginTime().split(':');
+        let endTime = timetable.getEndTime().split(':');
+
+   
+        if ((hour > beginTime[0] || (hour == beginTime[0] && minute >= beginTime[1])) && (hour < endTime[0] || (hour == endTime[0]  && minute <= endTime[1]))) {
+          return true;
+        }
+
+      }
+
+      return false;
+      
+    }
     
     hasTasks() {
       for (let resourceType in this.queueByResourceType) {
@@ -195,9 +225,6 @@ export class SimulationEngine {
       
       this.handleTokenMovement(task);
 
-      
-
-      //console.log(`Úkol ${task.getID()} z instance ${instanceID} dokončen ve čase ${taskEndTime}`);
     }
 
     handleTokenMovement(task) {

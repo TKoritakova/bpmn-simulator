@@ -110,5 +110,8 @@ export class WorkItem {
         return this.instanceID;
     }
 
+    getExecutionTime() {
+        return this.executionTime;
+    }
   
 }

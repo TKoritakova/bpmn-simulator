@@ -318,10 +318,31 @@ export class BPMNAssembler {
         }
 
         data.forEach(timetable => {
-            let createdTimetable = new Timetable(timetable.name, timetable.beginday, timetable.endday, timetable.begintime, timetable.endtime);
+            let createdTimetable = new Timetable(timetable.name, this.convertDayToNumber(timetable.beginday), this.convertDayToNumber(timetable.endday), timetable.begintime, timetable.endtime);
             diagram.addTimetable(createdTimetable);
         }); 
        
+    }
+
+    static convertDayToNumber(day){
+        switch (day) {
+            case "Monday":
+              return 1;
+            case "Tuesday":
+              return 2;
+            case "Wednesday":
+                return 3;
+            case "Thursday":
+              return 4;
+            case "Friday":
+              return 5;
+            case "Saturday":
+              return 6;
+            case "Sunday":
+              return 7;
+            default:
+              return 0;
+          }
     }
       
     static processSimulationDataParticipants(participant,data) {

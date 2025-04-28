@@ -4,7 +4,7 @@
         <arrivalmean>5</mean>
         <arrivalstddeviation>1</stddeviation>
         <arrivalunit>Minute</unit>
-        <numberofinstances>12</numberofinstances>
+        <numberofinstances>15</numberofinstances>
         <starttime>12/5/2025 9:00</starttime>
         <currency>CZK</currency>
     </scenariospecs>
@@ -14,7 +14,7 @@
         <id>Process_Zakaznik</id>
         <name>Customer</name>
         <number>2</number>
-        <costperhour>1</costperhour>
+        <costperhour>60</costperhour>
         <timetable>Default</timetable>
     </recource>
   

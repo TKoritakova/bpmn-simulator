@@ -32,6 +32,10 @@ export class BPMNDiagram {
       return this.objects.find(obj => obj.getID() == id) || null;
     }
 
+    getObjectByDescription(description) {
+      return this.objects.find(obj => obj.getDescription() == description) || null;
+    }
+
     addTimetable(timetable) {
       if (timetable instanceof Timetable) {
         this.timetables.push(timetable);
