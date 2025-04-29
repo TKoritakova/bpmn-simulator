@@ -210,7 +210,7 @@ export class Statistics {
 
       static prepareValueForReading(value) {
 
-        if (value == null || value <= 0) return "0 sekund";
+        if (value == null || value <= 0) return "0 sec";
       
         const secondsInMinute = 60;
         const secondsInHour = 60 * secondsInMinute;
@@ -285,6 +285,36 @@ export class Statistics {
           case "efektivnost":
           case "efektivnost1":
             return value.toFixed(2) + " %";
+        
+          default:
+            return value;
+        }
+      
+      }
+
+
+      static convertInstancesValues(description, value, diagram) {
+
+        switch (description) {
+          case "minPrice":
+          case "avgPrice":
+          case "maxPrice":
+            return value.toFixed(2) + ' ' + diagram.getCurrency();
+        
+          case "minWholeDuration":
+          case "avgWholeDuration":
+          case "maxWholeDuration":
+          case "minDuration":
+          case "avgDuration":
+          case "maxDuration":
+          case "minDurationWithoutOfftime":
+          case "avgDurationWithoutOfftime":
+          case "maxDurationWithoutOfftime":
+          case "minWaitingForExecution":
+          case "avgWaitingForExecution":
+          case "maxWaitingForExecution":
+            return this.prepareValueForReading(value);
+
         
           default:
             return value;

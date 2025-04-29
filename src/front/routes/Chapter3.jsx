@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { View } from '../components/View';
 
+/*https://recharts.org/en-US/examples/SimpleBarChart*/
 
 
-
-export default function Chapter1() {
+export default function Chapter3() {
     const [bpmnXml, setBpmnXml] = useState(null);
 
 
@@ -25,24 +25,12 @@ export default function Chapter1() {
 
   
 
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const text = await file.text();
-    setBpmnXml(text);
-  };
-
-
 
   return (
-    <div>
-      <h1>BPMN Viewer</h1>
+    <div className='test'>
+      <h1>Simulace</h1>
 
-      {/* Tlačítko pro nahrání nového BPMN souboru */}
-      <input type="file" accept=".bpmn,.xml" onChange={handleFileChange} />
 
-      {/* Pokud máme XML, zobrazíme komponentu View pro vykreslení diagramu */}
       {bpmnXml && <View xml={bpmnXml} />}
 
       
