@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState, PureComponent } from 'react';
 import BpmnViewer from 'bpmn-js';
-import { BPMNAssembler } from '../bpmn-parsing/BPMNAssembler';
-import { Statistics } from '../simulation/Statistics';
-import { SimulationEngine } from '../simulation/SimulationEngine';
+import { BPMNAssembler } from '../../bpmn-parsing/BPMNAssembler';
+import { Statistics } from '../../simulation/Statistics';
+import { SimulationEngine } from '../../simulation/SimulationEngine';
 import {  BarChart,  Bar,  XAxis,  YAxis,  CartesianGrid,  Tooltip,  Legend,  Rectangle,  ResponsiveContainer,} from 'recharts';
 
 
@@ -54,30 +54,8 @@ function colorizeDiagram(viewer, stats, type = 'execution') {
       });
     }
 
-  
-    /*
-  
-    overlays.add('Activity_PlatbaSamoobsluha', {
-      position: {
-        top: 0,
-        left: 0
-      },
-      html: overlayHtml
-    });*/
-
-    /*const element = elementRegistry.get(id);
-    if (element) {
-      const value = getValue(info);
-      const color = getColorForValue(value);
-
-      modeling.setColor(element, {
-        fill: color,
-        stroke: 'black'
-      });
-    }*/
-  }
 }
-
+}
 
 
 export function View({ xml }) {
@@ -198,8 +176,14 @@ export function View({ xml }) {
     )
   );
 
-  
-
+  const DisplayInstanceData = Object.entries(stats.instances || {})
+  .filter(([key]) => key !== 'instances')
+  .map(([key, value], index) => (
+    <tr key={index}>
+      <td>{key}</td>
+      <td>{Statistics.convertInstancesValues(key,value,diagram)}</td>
+    </tr>
+  ));
 
 
   let barData;
@@ -214,41 +198,14 @@ export function View({ xml }) {
     <div>
       <div
         ref={containerRef}
-        style={{ width: '100%', height: '600px', border: '1px solid #ccc' }}
+        style={{ width: '90%', height: '400px', border: '1px solid #ccc' }}
       />
 
       <button onClick={runSimulation} disabled={simulationRunning}>
         {simulationRunning ? 'Simulace běží...' : 'Simuluj'}
       </button>
 
-      {stats.instances && Object.keys(stats.instances).length > 0 && (
-        <div style={{ width: '100%', height: '300px', border: '1px solid #ccc' }}>
-    <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          width={500}
-          height={300}
-          data={barData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="totalWholeDuration" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
-          <Bar dataKey="totalDuration" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
-          <Bar dataKey="totalDurationWithoutOfftime" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
-          <Bar dataKey="totalWaitingForExecution" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
-        </BarChart>
-      </ResponsiveContainer>
-      </div>
-
-        )}
+      
 
       {stats.general && Object.keys(stats.general).length > 0 && (
   <div style={{ marginTop: '2rem' }}>
@@ -267,6 +224,51 @@ export function View({ xml }) {
   </div>
 )}
     
+    {stats.instances && Object.keys(stats.instances).length > 0 && (
+      <div><h3>Statistiky instancí</h3>
+        <div style={{ width: '90%', height: '300px', border: '1px solid #ccc' }}>
+          
+    <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          width={500}
+          height={300}
+          data={barData}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="totalWholeDuration" fill="#8884d8" activeBar={<Rectangle fill="#4842b8" />} />
+          <Bar dataKey="totalDuration" fill="#82ca9d" activeBar={<Rectangle fill="#33a65e"  />} />
+          <Bar dataKey="totalDurationWithoutOfftime" fill="#cc5a52" activeBar={<Rectangle fill="#c4271b"  />} />
+          <Bar dataKey="totalWaitingForExecution" fill="#cde069" activeBar={<Rectangle fill="#8ba11d"  />} />
+        </BarChart>
+      </ResponsiveContainer>
+      </div>
+      <div style={{ marginTop: '2rem' }}>
+    
+    <table className="table table-striped">
+      <thead>
+        <tr>
+          <th>Info</th>
+          <th>Údaj</th>
+        </tr>
+      </thead>
+      <tbody>
+        {DisplayInstanceData}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+        )}
 
       {stats.activites && Object.keys(stats.activites).length > 0 && (
   <div style={{ marginTop: '2rem' }}>
@@ -310,11 +312,21 @@ export function View({ xml }) {
 )}
 
   
-  <div ><h2>Heatmapa - čas provádění</h2>
-  <div ref={executionContainerRef} style={{ width: '100%', height: '600px', border: '1px solid #ccc', marginBottom: '2rem' }} />
-
-  <h2>Heatmapa - čekací doby</h2>
-  <div ref={waitingContainerRef} style={{ width: '100%', height: '600px', border: '1px solid #ccc' }} /></div>
+  <div >
+    <table style={{ width: '90%'}}>
+      <tr>
+        <td><h3>Heatmapa - čas provádění</h3></td>
+        <td><h3>Heatmapa - čekací doby</h3></td>
+      </tr>
+      <tr>
+        <td><div ref={executionContainerRef} style={{ width: '90%', height: '300px', border: '1px solid #ccc' }} /></td>
+        <td><div ref={waitingContainerRef} style={{ width: '90%', height: '300px', border: '1px solid #ccc' }} /></td>
+      </tr>
+    </table>
+    </div>
+  
+  
+  
 
 
   
