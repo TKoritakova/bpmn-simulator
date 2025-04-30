@@ -156,7 +156,7 @@ body {
 .home {
     background-color: var(--basic-bg-color);
     width: 90%;
-    height: 90%;
+    height: 85%;
     border-radius: 5px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -298,6 +298,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: auto;
   }
   
   .chapterSwiper .swiper-pagination-progressbar {
@@ -328,4 +329,121 @@ body {
 
   button:hover {
     background-color: var(--buton-bg-color-hover);
+}
+
+.slide {
+  padding: 20px;
+  padding-top: 0px;
+}
+
+.slide p, .slide ul, .slide li {
+  text-align: justify;
+}
+
+.easy-process {
+  display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    align-items: center;
+
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    justify-content: center;
+
+    gap: 10px;
+    position: relative;
+}
+
+.easy-process > * {
+  flex: 1;
+  border: 2px solid var(--buton-bg-color-hover);
+  border-radius: 3px;
+padding: 5px;
+  display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    align-items: center;
+
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    justify-content: center;
+}
+
+.easy-process > *:not(:last-child)::after {
+  content: '→';
+  color: var(--buton-bg-color-hover);
+  font-size:50px;
+  position: absolute;
+  margin-left: 25%;
+  transform: translateY(-8%);
+}
+
+.easy-process > *:hover {
+  background-color: var(--button-bg-color);
+  cursor: pointer;
+}
+
+.easy-process p {
+  text-align: center;
+  margin: 0px;
+}
+
+.easy-process .tooltip {
+  position: absolute;
+  top: 100%;
+  padding: 10px;
+  z-index: 10;
+  width: 22%;
+  margin-top: -2px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border: solid 2px var(--buton-bg-color-hover);
+  background-color: var(--button-bg-color);
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.easy-process .tooltip p {
+  text-align: justify;
+}
+
+.chapterSwiper button {
+  width: 120px;
+}
+
+.chapterSwiper .right {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+ 
+}
+
+.chapterSwiper .left {
+  position: absolute;
+  top: 0px;
+  left: 10px;
+ 
 }
