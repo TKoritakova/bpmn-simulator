@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 
-export default function Chap1Slide1({ setAllVisited }) {
+export default function Chap1Slide1({ setSlideFinished }) {
 
 
 
@@ -27,11 +27,17 @@ export default function Chap1Slide1({ setAllVisited }) {
     
       useEffect(() => {
         const all = visitedTooltips.every(Boolean);
-        setAllVisited(all);
+        
+        setSlideFinished(prev => ({
+          ...prev,
+          [1]: all
+        }));
+      
       }, [visitedTooltips]);
 
     return <div className="slide">
-        <h2>Co je to proces?</h2>
+        <div className='slide-h1-wrapper'><h1>Co je to proces?</h1></div>
+        <div className='slide-content-wrapper'>
 
 {/* Lit. 4, str 30 */}
 <p>Proces je možné chápat jako to, co společnosti dělají, když poskytují službu nebo produkt zákazníkům. Způsob, jakým je proces navržen a prováděn, ovlivňuje kvalitu služby nebo produktu a též efektivitu, s jakou jsou služby nebo produkty vytvářeny.</p>
@@ -49,7 +55,7 @@ export default function Chap1Slide1({ setAllVisited }) {
         <li>má jasně definovaný svůj začátek a konec.</li>
         <li>musí mít svého zákazníka, kterým může i být sama společnost, a musí pro něj mít hodnotu.</li>
     </ul>
-<h3>Příklad jednoduchého procesu: Nákup v supermarketu</h3>
+<h2>Příklad jednoduchého procesu: Nákup v supermarketu</h2>
 
 <div className="easy-process">
         {steps.map((step, index) => (
@@ -72,6 +78,6 @@ export default function Chap1Slide1({ setAllVisited }) {
         ))}
       </div>
 
-    </div>   
+    </div>   </div>
     ;
 }

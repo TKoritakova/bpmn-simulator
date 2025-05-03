@@ -1,23 +1,29 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import Chap1Slide1 from '../slides/Chap1Slide1';
 import Chap1Slide2 from '../slides/Chap1Slide2';
 import Chap1Slide3 from '../slides/Chap1Slide3';
+import Chap1Slide4 from '../slides/Chap1Slide4';
+import Chap1Slide5 from '../slides/Chap1Slide5';
+import Chap1Slide6 from '../slides/Chap1Slide6';
 
 const STORAGE_CURRENT = 'chapter1_current_slide';
 const STORAGE_MAX = 'chapter1_max_slide';
+const LOCAL_KEY_CHAP1_SUBMITTED = "chapter1-test-submitted";
 
 export default function Chapter1() {
   const swiperRef = useRef(null);
   const [current, setCurrent] = useState(0);
   const [max, setMax] = useState(0);
-  const [allVisitedInSlide1, setAllVisitedInSlide1] = useState(false);
+  const [slideFinished, setSlideFinished] = useState({});
+  const [submitted, setSubmitted] = useState(false);
 
 
-  const slideComponents = [<Chap1Slide1 setAllVisited={setAllVisitedInSlide1} />, <Chap1Slide2 />, <Chap1Slide3 />];
+  const slideComponents = [<Chap1Slide1 setSlideFinished={setSlideFinished} />, <Chap1Slide2 setSlideFinished={setSlideFinished} />, <Chap1Slide3 setSlideFinished={setSlideFinished}/>, <Chap1Slide4 setSlideFinished={setSlideFinished}/>, <Chap1Slide5 setSlideFinished={setSlideFinished}/>, <Chap1Slide6 setSlideFinished={setSlideFinished}/>];
  
 
   useEffect(() => {
@@ -29,6 +35,11 @@ export default function Chapter1() {
     if (!isNaN(savedMax)) {
       setMax(savedMax);
     }
+    const getSubmitted = localStorage.getItem(LOCAL_KEY_CHAP1_SUBMITTED);
+    if(getSubmitted) {
+      setSubmitted(true);
+    }
+
   }, []);
 
   useEffect(() => {
@@ -66,6 +77,8 @@ export default function Chapter1() {
     }
   };
 
+
+
   return (
     <>
       <Swiper
@@ -82,8 +95,12 @@ export default function Chapter1() {
           {SlideComponent}
           <div style={{ marginTop: '1rem' }}>
             {index > 0 && <button onClick={prevSlide} className='left'>Předchozí</button>}
-            {index < slideComponents.length - 1 && ((index == 0 && allVisitedInSlide1) || max > index  || index > 0) && (
+            {index < slideComponents.length - 1 && ((slideFinished[index+1]) || max > index) && (
               <button onClick={nextSlide} className='right'>Další</button>
+            )}
+            {index === slideComponents.length - 1 && ((slideFinished[index+1]) || submitted) && (
+              <Link to="/bpmn-simulator/lesson-2"><button className='right'>Další lekce</button></Link>
+              
             )}
           </div>
         </SwiperSlide>
