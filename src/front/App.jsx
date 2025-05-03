@@ -6,6 +6,7 @@ import WithNavbar from "./layouts/WithNavbar";
 import NoNavbar from "./layouts/NoNavbar";
 import Home from './routes/Home';
 import Chapter1 from './routes/Chapter1';
+import Chapter2 from './routes/Chapter2';
 import Chapter3 from './routes/Chapter3';
 
 
@@ -22,7 +23,7 @@ function App() {
         
         <Route element={<WithNavbar />}>
           <Route path="bpmn-simulator/lesson-1" element={<Chapter1 />} />
-          <Route path="bpmn-simulator/lesson-2" element={<Chapter1 />} />
+          <Route path="bpmn-simulator/lesson-2" element={<Chapter2 />} />
           <Route path="bpmn-simulator/lesson-3" element={<Chapter3 />} />
           <Route path="bpmn-simulator/lesson-4" element={<Chapter1 />} />
         </Route>
