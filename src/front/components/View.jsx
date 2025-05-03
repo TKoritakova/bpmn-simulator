@@ -314,6 +314,7 @@ export function View({ xml }) {
   
   <div >
     <table style={{ width: '90%'}}>
+      <tbody>
       <tr>
         <td><h3>Heatmapa - čas provádění</h3></td>
         <td><h3>Heatmapa - čekací doby</h3></td>
@@ -322,6 +323,7 @@ export function View({ xml }) {
         <td><div ref={executionContainerRef} style={{ width: '90%', height: '300px', border: '1px solid #ccc' }} /></td>
         <td><div ref={waitingContainerRef} style={{ width: '90%', height: '300px', border: '1px solid #ccc' }} /></td>
       </tr>
+      </tbody>
     </table>
     </div>
   

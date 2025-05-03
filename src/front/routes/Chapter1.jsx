@@ -1,22 +1,30 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
+import Chap1Slide1 from '../slides/Chap1Slide1';
+import Chap1Slide2 from '../slides/Chap1Slide2';
+import Chap1Slide3 from '../slides/Chap1Slide3';
+import Chap1Slide4 from '../slides/Chap1Slide4';
+import Chap1Slide5 from '../slides/Chap1Slide5';
+import Chap1Slide6 from '../slides/Chap1Slide6';
 
 const STORAGE_CURRENT = 'chapter1_current_slide';
 const STORAGE_MAX = 'chapter1_max_slide';
+const LOCAL_KEY_CHAP1_SUBMITTED = "chapter1-test-submitted";
 
 export default function Chapter1() {
   const swiperRef = useRef(null);
   const [current, setCurrent] = useState(0);
   const [max, setMax] = useState(0);
+  const [slideFinished, setSlideFinished] = useState({});
+  const [submitted, setSubmitted] = useState(false);
 
-  const slides = [
-    'Slide 1', 'Slide 2', 'Slide 3', 'Slide 4', 'Slide 5',
-    'Slide 6', 'Slide 7', 'Slide 8', 'Slide 9'
-  ];
 
+  const slideComponents = [<Chap1Slide1 setSlideFinished={setSlideFinished} />, <Chap1Slide2 setSlideFinished={setSlideFinished} />, <Chap1Slide3 setSlideFinished={setSlideFinished}/>, <Chap1Slide4 setSlideFinished={setSlideFinished}/>, <Chap1Slide5 setSlideFinished={setSlideFinished}/>, <Chap1Slide6 setSlideFinished={setSlideFinished}/>];
+ 
 
   useEffect(() => {
     const savedSlide = parseInt(localStorage.getItem(STORAGE_CURRENT), 10);
@@ -27,6 +35,11 @@ export default function Chapter1() {
     if (!isNaN(savedMax)) {
       setMax(savedMax);
     }
+    const getSubmitted = localStorage.getItem(LOCAL_KEY_CHAP1_SUBMITTED);
+    if(getSubmitted) {
+      setSubmitted(true);
+    }
+
   }, []);
 
   useEffect(() => {
@@ -64,6 +77,8 @@ export default function Chapter1() {
     }
   };
 
+
+
   return (
     <>
       <Swiper
@@ -75,15 +90,21 @@ export default function Chapter1() {
         allowTouchMove={false}
         keyboard={{ enabled: false }}
       >
-        {slides.map((text, index) => (
-          <SwiperSlide key={index}>
-            {text}
-            <div style={{ marginTop: '1rem' }}>
-              {index > 0 && <button onClick={prevSlide}>Předchozí</button>}
-              {index < slides.length - 1 && <button onClick={nextSlide}>Další</button>}
-            </div>
-          </SwiperSlide>
-        ))}
+        {slideComponents.map((SlideComponent, index) => (
+        <SwiperSlide key={index}>
+          {SlideComponent}
+          <div style={{ marginTop: '1rem' }}>
+            {index > 0 && <button onClick={prevSlide} className='left'>Předchozí</button>}
+            {index < slideComponents.length - 1 && ((slideFinished[index+1]) || max > index) && (
+              <button onClick={nextSlide} className='right'>Další</button>
+            )}
+            {index === slideComponents.length - 1 && ((slideFinished[index+1]) || submitted) && (
+              <Link to="/bpmn-simulator/lesson-2"><button className='right'>Další lekce</button></Link>
+              
+            )}
+          </div>
+        </SwiperSlide>
+      ))}
       </Swiper>
 
      

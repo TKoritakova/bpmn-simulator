@@ -3,9 +3,17 @@ import { Link } from 'react-router-dom';
 export default function Home() {
     return <div className="home">
       <h1>Výukový simulátor procesního řízení</h1>
-      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis pulvinar. Maecenas sollicitudin. Vivamus luctus egestas leo. Ut tempus purus at lorem. Phasellus et lorem id felis nonummy placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Integer malesuada. Maecenas fermentum, sem in pharetra pellentesque, velit turpis volutpat ante, in pharetra metus odio a lectus. Nulla accumsan, elit sit amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel leo. Nullam at arcu a est sollicitudin euismod. Maecenas aliquet accumsan leo. Integer vulputate sem a nibh rutrum consequat.</p>
+      
+  
+{/* Literatura 5, str. 17, též Literatura 4, strana 29*/}
+<p>Každá organizace, nehledě na sektor jejího působení, musí řídit své činnosti, které zahrnují <b>aktivity</b>, které její zaměstnanci provádí, <b>události</b>, kterým čelí, a <b>rozhodnutí</b>, která je nutná dělat. Pokud se tyto činnosti spojí do řady po sobě jdoucích úkonů k vykonání, která se ve společnosti opakovaně provádí, dostaneme strukturu, které se říká <b>proces</b>. Procesů je v každé organizaci několik - ať už je to vyřizování objednávek zákazníků, nábor zaměstance nebo samotná výroba produktu.</p>
 
-      <p>Nulla est. Aenean placerat. Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam. Mauris tincidunt sem sed arcu. Integer tempor. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Integer in sapien. Ut tempus purus at lorem. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+  <p><b>Procesní řízení</b> je způsob, jakým společnost může přistupovat ke svým činnostem. Umožňuje systematicky a efektivně <b>zachytit, navrhovat, provádět, dokumentovat, měřit, monitorovat a řídit</b> jak automatizované, tak neautomatizované procesy. Skrze něj lze procesy sladit s obchodní strategií, a tím zlepšit celkový výkon společnosti optimalizací procesů. Vylepšení procesů může zahrnovat snížení nákladů, prováděcích časů a procenta jejich neúspěšného dokončení. 
+ </p>
+
+ {/* Díky tomuto systematickému a promyšlenému přístupu k řízení procesů mohou firmy dosahovat lepších výsledků rychleji a flexibilněji. */}
+
+ <p>Cílem této aplikace je naučit porozumění základům procesního řízení, seznámit s nástroji pro popis procesů skrze notační jazyk BPMN a vyzkoušet měření a optimalizaci procesů v interaktivní simulaci.</p>
       
       <Link to="lesson-1">Přejít k výuce &gt;&gt;</Link>
       </div>
