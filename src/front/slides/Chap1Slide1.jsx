@@ -65,7 +65,7 @@ export default function Chap1Slide1({ setSlideFinished }) {
             onClick={() => toggleTooltip(index)}
             
           >
-            <p className="step">{step.text}</p>
+            <div className="step-heading"><p className="step">{step.text}</p></div>
             {openTooltips[index] && (
               <div className="tooltip">
                 <p><i>Co se zde děje?</i></p>
@@ -77,6 +77,8 @@ export default function Chap1Slide1({ setSlideFinished }) {
           </div>
         ))}
       </div>
+
+      <p className="action-label"><i>(Kliknutím na jednotlivé položky v příkladu procesu zobrazíte podrobnosti.)</i></p>
 
     </div>   </div>
     ;

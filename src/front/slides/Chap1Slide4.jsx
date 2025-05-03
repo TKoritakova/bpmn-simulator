@@ -6,7 +6,7 @@ export default function Chap1Slide4({ setSlideFinished }) {
     const texts = [{
         heading: 'Klíčový ukazatel výkonnosti',
         shortcut: 'KPI, Key Performance Indicator',
-        text: 'Jedná se o konkrétní a měřitelnou hodnotu, kterou určujeme efektivitu a výkonnost procesu. Zaměřuje se na hodnocení operativích veličin, například celkovou dobu trvání procesu, počet chyb v procesu či náklady na jeho provedení. Umožňuje tak sledovat průběžný výkon procesu a identifikovat slabá místa.<br><br>Z každé operatvní veličiny - tedy času, nákladů a kvality - lze získat více ukazatelů. K tomu slouží agregační funkce, které se volí na základě toho, co je pro proces vhodné sledovat. Příkladem může být průměrný čas nákupu, počet zákazníků za den nebo maxinimální a minimální doba strávená u pokladny.',
+        text: 'Jedná se o konkrétní a měřitelnou hodnotu, kterou určujeme efektivitu a výkonnost procesu. Zaměřuje se na hodnocení operativních veličin, například celkovou dobu trvání procesu, počet chyb v procesu či náklady na jeho provedení. Umožňuje tak sledovat průběžný výkon procesu a identifikovat slabá místa.<br><br>Z každé operativní veličiny - tedy času, nákladů a kvality - lze získat více ukazatelů. K tomu slouží agregační funkce, které se volí na základě toho, co je pro proces vhodné sledovat. Příkladem může být průměrný čas nákupu, počet zákazníků za den nebo maximální a minimální doba strávená u pokladny.',
     },{
         heading: 'Klíčový ukazatel cíle',
         shortcut: 'KGI, Key Goal Indicator',

@@ -4,13 +4,21 @@ import { useEffect, useState } from 'react';
 
 
 const LOCAL_KEY_CHAP1_SUBMITTED = "chapter1-test-submitted";
+const LOCAL_KEY_CHAP2_SUBMITTED = "chapter2-test-submitted";
+const LOCAL_KEY_CHAP3_SUBMITTED = "chapter3-test-submitted";
 
 export function Navbar() {
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted1, setSubmitted1] = useState(false);
+  const [submitted2, setSubmitted2] = useState(false);
+  const [submitted3, setSubmitted3] = useState(false);
 
   const checkStorage = () => {
-    const stored = localStorage.getItem(LOCAL_KEY_CHAP1_SUBMITTED);
-    setSubmitted(!!stored);
+    const stored1 = localStorage.getItem(LOCAL_KEY_CHAP1_SUBMITTED);
+    setSubmitted1(!!stored1);
+    const stored2 = localStorage.getItem(LOCAL_KEY_CHAP2_SUBMITTED);
+    setSubmitted2(!!stored2);
+    const stored3 = localStorage.getItem(LOCAL_KEY_CHAP3_SUBMITTED);
+    setSubmitted3(!!stored3);
   };
 
   useEffect(() => {
@@ -38,13 +46,19 @@ export function Navbar() {
 </svg></div></Link>
       <Link to="bpmn-simulator/lesson-1"><div className='circle'>1</div></Link> 
 
-      {submitted
+      {submitted1
         ? <Link to="bpmn-simulator/lesson-2"><div className='circle'>2</div></Link>
         : <div className='circle-disabled'>2</div>}
 
+      {submitted2
+        ? <Link to="bpmn-simulator/lesson-3"><div className='circle'>3</div></Link>
+        : <div className='circle-disabled'>3</div>}
 
-      <Link to="bpmn-simulator/lesson-3"><div className='circle'>3</div></Link> 
-      <Link to="bpmn-simulator/lesson-4"><div className='circle'>4</div></Link> 
+      {submitted3
+        ? <Link to="bpmn-simulator/lesson-4"><div className='circle'>4</div></Link>
+        : <div className='circle-disabled'>4</div>}
+
+
 
 
     </nav>

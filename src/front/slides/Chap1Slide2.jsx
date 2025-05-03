@@ -71,12 +71,12 @@ export default function Chap1Slide2({ setSlideFinished }) {
         <div className='slide-h1-wrapper'><h1>Vstupy a výstupy procesu</h1></div>
         <div className="slide-content-wrapper">
 
-        <p>Každý proces má svůj podnět, který ho spustí, a končí nějakým výsledkem. Těm se říká spouštěcí a koncové události a každý proces jich může, ale nemusí, mít více než jednu. Jsou to dva body, které ohraničují zbylé aktivity, události a rozhodnutí, které v rámci procesu zpracovávájí vstupy a mění je na výstupy.</p>
+        <p>Každý proces má svůj podnět, který ho spustí, a končí nějakým výsledkem. Tomuto podnětu a výsledku se říká spouštěcí a koncové události a každý proces jich může, ale nemusí, mít více než jednu. Jsou to dva body, které ohraničují zbylé aktivity, události a rozhodnutí, které v rámci procesu zpracovávájí vstupy a mění je na výstupy.</p>
         <ul>
             <li>V našem procesu je spouštěcí událostí vstup zákazníka do supermarketu.</li>
             <li>Koncovou událostí jeho odchod.</li>
         </ul>
-        <p>Vstupem do procesu může být cokoliv, co je nutné jeho vykonání. Může jít jak o informace, například údaje o zákazníkovi, tak o fyzické předměty, jako je materiál na výrobu produktu.</p>
+        <p>Vstupem do procesu může být cokoliv, co je nutné k jeho vykonání. Může jít jak o informace, například údaje o zákazníkovi, tak o fyzické předměty, jako je materiál na výrobu produktu.</p>
         <p>Výstupem procesu je objekt, který má pro zákazníka hodnotu, například hotový výrobek, poskytnutá služba nebo schválený dokument (smlouva).</p>
 
         <div className="options-section-wrapper">

@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
-import Chap1Slide1 from '../slides/Chap1Slide1';
+import Chap2Slide1 from '../slides/Chap2Slide1';
+import Chap2Slide2 from '../slides/Chap2Slide2';
+import Chap2Slide3 from '../slides/Chap2Slide3';
 
 
 const STORAGE_CURRENT = 'chapter2_current_slide';
@@ -19,7 +21,7 @@ export default function Chapter2() {
   const [submitted, setSubmitted] = useState(false);
 
 
-  const slideComponents = [<Chap1Slide1 setSlideFinished={setSlideFinished} />];
+  const slideComponents = [<Chap2Slide1 setSlideFinished={setSlideFinished} />,<Chap2Slide2 setSlideFinished={setSlideFinished} />,<Chap2Slide3 setSlideFinished={setSlideFinished} />];
  
 
   useEffect(() => {

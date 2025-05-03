@@ -61,7 +61,8 @@ export default function Chap1Slide5({ setSlideFinished }) {
 <div className="metrics-wrapper">
 {/* lit. 4 - str. 279 */}
 <div className="metrics">
-    <h2>Kvantitativní metriky</h2>  
+    <h2>Kvantitativní metriky</h2> 
+    <div className="metrics-content">
     <p>Tato skupina metrik je založena zejména na sledování veličiny času a v menší míře též nákladů. Poskytuje systematický vhled do procesu, ovšem její výsledky někdy nemusí být dostatečně detailní nebo nezkreslené pro použití při rozhodování. Jejich zlepšení lze docílit optimalizací procesů.</p>
 
     <p>První skupinou metrik, která sem spadá, jsou metriky vycházející z analýzy procesního toku (flow analysis). Tyto metriky se zaměřují na odhadování celkové výkonnosti procesu na základě určitých znalostí o průběhu jeho jednotlivých aktivit, událostí a rozhodnutí. Zařadit sem můžeme například:</p>
@@ -71,24 +72,24 @@ export default function Chap1Slide5({ setSlideFinished }) {
         <li>Průměrné náklady - pokud jsou známy náklady na jednotlivé náklady a počet provádění aktivit v rámci procesu, dají se výpočtem určit průměrné náklady na jedno provedení procesu.</li>
     </ul>
 
-    <p>Druhá skupina metrik jsou metriky založožené na analýze fronty (queuing analysis). Fronty vznikají kvůli vytížení zdrojů i jejich propojení napříč procesem, takže ne všechny aktivity je možné provést hned v okamžiku, kdy skončí jejich předchůdce. Díky těmto metrikám můžeme spočítat očekávanou délku fronty nebo očekávaný průměrný čas čekání každé aktivity.</p>
+    <p>Druhá skupina metrik jsou metriky založené na analýze fronty (queuing analysis). Fronty vznikají kvůli vytížení zdrojů i jejich propojení napříč procesem, takže ne všechny aktivity je možné provést hned v okamžiku, kdy skončí jejich předchůdce. Díky těmto metrikám můžeme spočítat očekávanou délku fronty nebo očekávaný průměrný čas čekání každé aktivity.</p>
 
     <p>Třetí skupinou jsou simulace, které jsou hlavní náplní této aplikace a budou více rozebrány dále.</p>
-</div>
+</div></div> 
 
 {/* lit 4 - str 237 */}
 <div className="metrics">
     <h2>Kvalitativní metriky</h2>  
-
-    <p>Kvalitativní analýza procesu je složitější na provedení, jelikož neexistuje žádný jeden správný způsob, jak dojít k dobrým výsledekům. Existují však techniky, které k nim obvykle vedou. Zlepšení výsledků těchto metrik zle docílit přepracováním procesů. Mezi tyto techniky patří:</p>
+    <div className="metrics-content">
+    <p>Kvalitativní analýza procesu je složitější na provedení, jelikož neexistuje žádný jeden správný způsob, jak dojít k dobrým výsledkům. Existují však techniky, které k nim obvykle vedou. Zlepšení výsledků těchto metrik lze docílit přepracováním procesů. Mezi tyto techniky patří:</p>
 
     <ul>
-        <li>Analýza přidané hodnoty (value-added analysis) - tato analýza dělí aktivity do tří skupiny: aktivity s přidanou hodnotou, které jsou potřebné pro zákazníka, aktivity s přidanou obchodní hodnotou, které jsou potřebné pro organizaci, a aktivity bez přidané hodnoty, které zahrnují vše, co nespadá do předchozích dvou kategorií.. Po rozdělené aktivit je možné určit poměry kategorií vůči sobě a zhodnotit přínosy procesu.</li>
+        <li>Analýza přidané hodnoty (value-added analysis) - tato analýza dělí aktivity do tří skupiny: aktivity s přidanou hodnotou, které jsou potřebné pro zákazníka, aktivity s přidanou obchodní hodnotou, které jsou potřebné pro organizaci, a aktivity bez přidané hodnoty, které zahrnují vše, co nespadá do předchozích dvou kategorií. Po rozdělení aktivit je možné určit poměry kategorií vůči sobě a zhodnotit přínosy procesu.</li>
         <li>Analýza odpadu (waste analysis) - tato analýza má za cíl určit a zredukovat aktivity, které nemají pro proces hodnotu. Existuje sedm zdrojů tohoto odpadu, například zbytečná transportace materiálů nebo dokumentů po organizaci, čas čekání u jednotlivých aktivit na doplnění materiálu, vstupu nebo uvolnění zdroje, nadměrné zpracování, tedy provádění úkolů, které nejsou nutné, nebo nadměrná produkce, která vytváří nepotřebné instance procesu.</li>
         <li>Analýza stakeholderů (stakeholder analysis)</li>
         <li>Analýza registru problémů (issue register analysis)</li>
     </ul>
-</div>
+</div></div>
 </div>
 
 <h2>Příklad - kvantitativní metriky procesu nákupu v supermarketu</h2>

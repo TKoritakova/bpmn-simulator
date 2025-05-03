@@ -7,7 +7,7 @@ export default function Chap1Slide3({ setSlideFinished }) {
         { text: "Pokladna", correct: true, reason: "Je potřebná k zaplacení zboží před opuštěním obchodu, tedy je zdrojem." },
         { text: "Prodavač/ka", correct: true, reason: "Skenuje položky nákupu před platbou a účastní se jejího provedení, je zdrojem." },
         { text: "Uklízeč/ka", correct: false, reason: "Byť je možné, že zákazník během svého nákupu potká osobu provádějící úklid, ta se přímo neúčastní jeho nákupu a nijak výsledek procesu neovlivňuje, neb není pro aktivity potřebná." },
-        { text: "Nákupní košík / vozík", correct: true, reason: "Je zdrojem, jelikož usnadňuje nakupování a pohyb po supermarketu při aktivitách, kdy si zákazník vybírá zboží." },
+        { text: "Nákupní košík / vozík", correct: true, reason: "Je zdrojem, jelikož usnadňuje nakupování a pohyb po supermarketu při plnění aktivit (např. výběr zboží)." },
         { text: "Osobní automobil zákazníka", correct: false, reason: "Není zdrojem procesu, jelikož proces začíná až ve chvíli, kdy zákazník vstoupí do supermarketu. Cesta k němu či zpět domů není součástí procesu a tím pádem dopravní prostředek není jeho zdrojem." },
         { text: "Zákazník", correct: true, reason: "Je účastníkem procesu a provádí nákup, takže se řadí mezi zdroje." },
         { text: "Vedení supermarketu", correct: false, reason: "Řídí supermarket a jeho chod, ale přímo procesu nákupu se neúčastní." }
