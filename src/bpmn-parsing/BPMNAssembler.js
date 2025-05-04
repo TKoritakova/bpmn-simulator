@@ -171,7 +171,7 @@ export class BPMNAssembler {
     } else if (flowElement.$type == 'bpmn:DataObjectReference') { /* DATOVÝ OBJEKT */
         flowObject = new DataObject(flowElement.name, flowElement.id);                
     } else if (flowElement.$type == 'bpmn:IntermediateCatchEvent') { /* CATCHING EVENTY */
-        flowObject = this.addIntermediateCatchEvent(flowElement,diagram,ins,outs);
+        flowObject = this.addIntermediateCatchEvent(flowElement,ins,outs);
     } else {
         console.info('Element cannot be processed: ' + flowElement.id + ', ' + flowElement.name);
     }
