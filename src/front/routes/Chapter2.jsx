@@ -7,6 +7,8 @@ import { Navigation, Pagination } from 'swiper/modules';
 import Chap2Slide1 from '../slides/Chap2Slide1';
 import Chap2Slide2 from '../slides/Chap2Slide2';
 import Chap2Slide3 from '../slides/Chap2Slide3';
+import Chap2Slide4 from '../slides/Chap2Slide4';
+import Chap2Slide5 from '../slides/Chap2Slide5';
 
 
 const STORAGE_CURRENT = 'chapter2_current_slide';
@@ -21,7 +23,7 @@ export default function Chapter2() {
   const [submitted, setSubmitted] = useState(false);
 
 
-  const slideComponents = [<Chap2Slide1 setSlideFinished={setSlideFinished} />,<Chap2Slide2 setSlideFinished={setSlideFinished} />,<Chap2Slide3 setSlideFinished={setSlideFinished} />];
+  const slideComponents = [<Chap2Slide1 setSlideFinished={setSlideFinished} />,<Chap2Slide2 setSlideFinished={setSlideFinished} />,<Chap2Slide3 setSlideFinished={setSlideFinished} />,<Chap2Slide4 setSlideFinished={setSlideFinished} />,<Chap2Slide5 setSlideFinished={setSlideFinished} />];
  
 
   useEffect(() => {
@@ -97,7 +99,7 @@ export default function Chapter2() {
               <button onClick={nextSlide} className='right'>Další</button>
             )}
             {index === slideComponents.length - 1 && ((slideFinished[index+1]) || submitted) && (
-              <Link to="/bpmn-simulator/lesson-2"><button className='right'>Další lekce</button></Link>
+              <Link to="/bpmn-simulator/lesson-3"><button className='right'>Další lekce</button></Link>
               
             )}
           </div>

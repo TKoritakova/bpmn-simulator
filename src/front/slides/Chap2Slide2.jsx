@@ -40,14 +40,14 @@ export default function Chap2Slide2({ setSlideFinished }) {
         <div className='slide-h1-wrapper'><h1>Notace pro modelování a BPMN</h1></div>
         <div className='slide-content-wrapper'>
 
-            <p>Model na předchozí stránce sice poskytuje visualizaci procesu, ovšem je příliš jednoduchý a jeho tvorba nemá žádná pravidla pro to, jak co znázronit. Z těch důvodů používáme pro modelování procesů modelovací notace. Těch je celá řada a mezi nejznámější patří UML (Unified Modeling Language), EPC (Event Driven Process Chain), BPEL (Business Process Execution Language) a BPMN (Business Process Model and Notation).</p>
+            <p>Model na předchozí stránce sice poskytuje vizualizaci procesu, ovšem je příliš jednoduchý a jeho tvorba nemá žádná pravidla pro to, jak co znázornit. Z těch důvodů používáme pro modelování procesů modelovací notace. Těch je celá řada a mezi nejznámější patří UML (Unified Modeling Language), EPC (Event Driven Process Chain), BPEL (Business Process Execution Language) a BPMN (Business Process Model and Notation).</p>
 
       
             <h2>BPMN (Business Process Model and Notation)</h2>
 
             <p>BPMN je notace, která standardizuje modelování procesů a je čitelná pro technické i netechnické uživatele, jelikož je intuitivnější než ostatní zmíněné notace.</p>
 
-            <p>Umožňuje vizuálně znázornit, jak jednotlivé činnosti v organizaci probíhají, kdo je vykonává a jak jsou mezi sebou propojeny. Použítse dá například pro návrh a optimalizaci interních procesů organizce, automatizaci podnikových informačních systémů a analýzu efektivity procesů.</p>
+            <p>Umožňuje vizuálně znázornit, jak jednotlivé činnosti v organizaci probíhají, kdo je vykonává a jak jsou mezi sebou propojeny. Použít se dá například pro návrh a optimalizaci interních procesů organizce, automatizaci podnikových informačních systémů a analýzu efektivity procesů.</p>
 
             <p>Na obrázku níže je model z předchozí stránky přepsaný do bpmn notace. Pro zachování jednoduchosti zatím nejsou dodržena všechna pravidla notace, takže model není zcela správně a je určen pouze pro prvotní porovnání obou zápisů.</p>
 
