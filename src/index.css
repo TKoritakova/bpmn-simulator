@@ -725,7 +725,31 @@ p.action-label {
 }
 
 .bpmn-diagram-basics {
-  width: 200px;
+  width: 250px;
   height: 500px;
 
+}
+
+.bpmn-diagram-description-wrapper {
+  display: flex;
+  margin: 25px;
+  gap:10px;
+}
+
+.diagram-description {
+  flex: 1;
+}
+
+.diagram-description-item {
+  width:95%;
+  color: var(--nav-text-color); 
+  background-color: #6aaed970;
+  border-radius: 3px;
+  padding: 5px 10px;
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.diagram-description-item p {
+  margin: 0px;
 }
