@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import BpmnViewer from 'bpmn-js';
 
 
 const LOCAL_KEY_STATE = "chapter2-test-state";
 const LOCAL_KEY_SUBMITTED = "chapter2-test-submitted";
 
 export default function Chap2Slide5({ setSlideFinished }) {
+
+    const containerSupermarketObjRef = useRef(null);
+    const viewerSupermarketRef = useRef(null);
 
     const [answers, setAnswers] = useState({});
     const [submitted, setSubmitted] = useState(false);
@@ -15,6 +19,26 @@ export default function Chap2Slide5({ setSlideFinished }) {
         if (stored) setAnswers(JSON.parse(stored));
         const submitted = localStorage.getItem(LOCAL_KEY_SUBMITTED);
         if (submitted) setSubmitted(true);
+
+
+        fetch('supermarket-ver3.bpmn') 
+          .then(res => res.text())
+          .then(text => {
+              
+              if (!viewerSupermarketRef.current) {
+                  viewerSupermarketRef.current = new BpmnViewer({ container: containerSupermarketObjRef.current });
+              }
+              viewerSupermarketRef.current.importXML(text).then(async () => {
+                  viewerSupermarketRef.current.get('canvas').zoom('fit-viewport');                
+                          
+              }).catch(err => {
+                  console.error('Chyba při načítání BPMN XML:', err);
+              });
+          })
+          .catch(err => {
+          console.error('Chyba při načítání BPMN souboru:', err);
+          });
+
     }, []);
 
 
@@ -32,72 +56,84 @@ export default function Chap2Slide5({ setSlideFinished }) {
         window.dispatchEvent(new Event("storageUpdated"));
         setSlideFinished(prev => ({
           ...prev,
-          [6]: true
+          [5]: true
         }));
     };
 
   const questions = [
     {
       id: 1,
-      question: "Co je to proces?",
+      question: "Který z elementů není v modelu použit?",
       options: {
-        a: "Jednorázová činnost, kterou provádí zaměstnanec.",
-        b: "Sada propojených aktivit vedoucích k výstupu.",
-        c: "Seznam úkolů, které je třeba splnit.",
-        d: "Aktivity a události, které je spouští.",
+        a: "Událost",
+        b: "Zprávový tok",
+        c: "Paralelní brána",
+        d: "Exkluzivní brána",
       },
-      correct: "b",
-      explanation: "Na začátku této lekce je řečeno, že proces je sada propojených aktivit, událostí a rozhodnutí, které přeměňují vstupy na výstupy za účelem dosažení konkrétního cíle. Nejedná se tak o jednorázovou činnost ani seznam úkolů ke splnění, stejně jako nejde jen o aktivity a události, ty musí být navzájem propojeny."
+      correct: "c",
+      explanation: "Mezi události se počítají i spouštěcí a koncové události, tedy tento element se v procesu vyskytuje. Zprávový tok je použit placení u klasické pokladny a vyřízení reklamace. Všechny použité brány jsou exkluzivní, takže správnou odpovědí je, že model neobsahuje paralelní bránu."
     },
     {
         id: 2,
-        question: "Jaký zdroj/zdroje je potřeba pro proces výroby auta?",
+        question: "K čemu v modelu slouží exkluzivní brána s otázkou „Je zboží dostupné?“?",
         options: {
-          a: "Papírové formuláře.",
-          b: "Obchodní zástupce společnosti.",
-          c: "Stroje a suroviny.",
-          d: "Dodavatel materiálů.",
+          a: "Rozhoduje, jestli zákazník opustí supermarket.",
+          b: "Rozhoduje, jestli zákazník může vložit dané zboží do košíku.",
+          c: "Rozhoduje, jestli zákazník půjde vyřídit reklamaci.",
+          d: "Rozhoduje, jestli zákazník bude spokojený.",
         },
-        correct: "c",
-        explanation: "Zdroje procesu označují kohokoliv nebo cokoliv, co je v procesu nutné k provádění aktivit. Proces výroby nepotřebuje nutně žádné papírové formuláře ani obchodního zástupce společnosti, který se účastní procesu prodeje auta, nikoliv přímo jeho výroby. Dodavatel materiálů se výroby jako takové též neúčastní, proces, jehož je zdrojem, může být například proces naskladnění materiálů."
+        correct: "b",
+        explanation: "Brána se nachází na samém začátku modelu ve fázi vybírání zboží a slouží k určení toho, jestli zákazník najde danou položku v regálech. Ostatní možnosti popisují jiná místa v modelu nebo se v něm vůbec nevyskytují."
       },
       {
         id: 3,
-        question: "Co je nejvhodnější KPI pro proces expedice objednávek eshopu?",
+        question: "Která z následujících věcí je vykonána pouze v případě, že zaměstnanec špatně naskenuje položky nákupu?",
         options: {
-          a: "Průměrný čas doručení objednávek.",
-          b: "Počet použitých barev obalových materiálů.",
-          c: "Maximální velikost objednávky.",
-          d: "Celkové náklady na nákup doručovacích vozidel."
+          a: "Zaplatit u samoobslužné pokladny",
+          b: "Zkontrolovat nákup",
+          c: "Vložit zboží do košíku",
+          d: "Vyřídit reklamaci"
         },
-        correct: "a",
-        explanation: "KPI je konkrétní a měřitelná hodnota, kterou se hodnotí efektivita a výkonnost procesu. Do této definice spadá průměrný čas doručení objednávek. Naopak barvy použitých obalových materiálu nám o efektivitě a výkonnosti nic neřeknou. Maximální velikost objednávky sice do definice KPI spadá, ale je spíše statistickým údajem a rozhodně má menší význman než průměrný čas. Náklady na nákup doručovacích vozidel do tohoto procesu nespadají, vozidla se budou nakupovat v jiném, odděleném procesu - zde by mělo význam jen sledování nákladů na jejich provoz, například spotřeba a cena paliva."
+        correct: "d",
+        explanation: "Z otázky je patrné, že činnost musí být po fázi placení, čímž se automaticky vyloučí všechny možnosti, které jsou před ním, tedy vkládání zboží do košíku a zaplacení u samoobslužné pokladny. Kontrola nákupu se odehraje po platbě u klasické poklady vždy a na základě jejího výsledku se rozhoduje, jestli dojde k reklamaci. K té se přistoupí právě v okamžiku, kdy je nákup špatně naskenován."
       },
       {
         id: 4,
-        question: "Co platí o kvantitativních metrikách?",
+        question: "Kolika způsoby je možné podle tohoto modelu zaplatit?",
         options: {
-          a: "Vyhodnocují efektivitu procesu na základě osobních zkušeností zaměstnanců.",
-          b: "Neobsahují žádné výpočty, protože jsou čistě subjektivní.",
-          c: "Jsou založeny především na sledování času a nákladů a poskytují systematický pohled na proces.",
-          d: "Sledují hlavně názory a spokojenost zákazníků procesu."
+          a: "0",
+          b: "1",
+          c: "2",
+          d: "3"
         },
         correct: "c",
-        explanation: "Kvantitativní metriky jsou založeny na sledování konkrétních veličin jako je čas nebo náklady. Nejedná se tedy o subjektivní hodnocení, osobní zkušenosti nebo názory."
+        explanation: "V modelu jsou dvě možnosti platby - u klasické a samoobslužné pokladny."
 
 
       },
       {
         id: 5,
-        question: "Společnost poskytující služby překladů textů chce zlepšit svůj proces pro objednávky od zákazníků. Vedení společnosti se rozhodne zaměřit na dobu trvání procesu, dostupnosti a vytížení překladatelů, délky textů k překladu podle počtu slov a celkové tržby za měsíc. Který z následujících výroků není v souladu s principy procesního řízení?",
+        question: "Co se stane po zaplacení na klasické pokladně, pokud je vše v pořádku?",
         options: {
-          a: "Doba trvání procesu je kvantitativní metrika a může nám sloužit jako podklad pro tvorbu KPI.",
-          b: "Celkové tržby za měsíc mohou být KGI a hodnotit, zda byl splněn strategický cíl v podobě překročení řečené hranice chtěných tržeb.",
-          c: "Délka textů k překladu je údaj, který ovlivňuje dobu trvání procesu, a tedy je vhodné ho sledovat jako metriku.",
-          d: "Vytížení překladatelů nelze pomocí metrik sledovat, jelikož neexistuje způsob jak určit přesný pohyb zdrojů v procesu a jejich konkrétní využití k plnění aktivit.",
+          a: "Zákazník jde reklamovat nákup.",
+          b: "Proces začne od začátku.",
+          c: "Zákazník rovnou odchází ze supermarketu.",
+          d: "Zákazník zkontroluje svůj nákup a odchází ze supermarketu.",
         },
         correct: "d",
         explanation: "Vytížení zdrojů pracujících na procesu naopak je jednou z častých metrik, které je možné sledovat a které jsou zajímavé pro optimalizaci procesů. Na základě těchto pozorování je možné přerozdělit práci více efektivně nebo najmout další zaměstance, čímž je možné snížit i čekací časy, zkrátit procesní fronty a tím pádem vylepšit celkové časy trvání procesu. Ostatní možnosti uvádí správné odpovědi."
+      },
+      {
+        id: 6,
+        question: "Jak model co nejlépe upravit, aby řešil i následující: pokud zákazník nemá dostupný preferovaný produkt, hledá nejprve jeho alternativy než se případně posune na další produkt; zákazník si volí pokladnu podle toho, kde je nejmenší fronta; pokud na začátku nejsou dostupné košíky, zákazník čeká, až budou dostupné.",
+        options: {
+          a: "Na začátek procesu se přidá exkluzivní brána, která se bude ptát, zda jsou dostupné košíky. Pokud ano, bude aktivována cesta k existující bráně zjišťující, zda je dostupné zboží. Pokud ne, bude aktivována cesta k časovači, který bude vyčkávat na volné košíky, a následně se též napojí na existující bránu o dostupnosti zboží. Větev o nedostupnosti zboží z této brány rozšíříme o aktivitu hledání alternativy. Před výběr způsobu platby přidáme aktivitu kontroly délky front a stávající exkluzivní bránu upravíme tak, aby reagovala na délku fronty změnou její otázky.",
+          b: "Na začátek procesu se přidá paralelní brána. Jedna její větev bude aktivovat cestu k existující bráně zjišťující, zda je dostupné zboží. Druhá bude mít cestu k časovači, který bude vyčkávat na volné košíky a jakmile bude nějaký volný, vezme si ho. Obě větve se spojí před výběrem způsobu platby, kam přidáme aktivitu kontroly délky front a stávající exkluzivní bránu upravíme tak, aby reagovala na délku fronty změnou její otázky.",
+          c: "Na začátek procesu se přidá aktivita vyčkat na košík. Větev o nedostupnosti zboží z první exkluzivní brány rozšíříme o aktivitu hledání alternativy, za kterou ještě umístíme ještě exkluzivní bránu. Ta se bude ptát, jestli zákazník zboží našel a zda ho chce, pokud ano, zboží vloží do košíku. Jinak pokračuje k další položce nákupního seznamu. Před výběr způsobu platby přidáme aktivitu kontroly délky front.",
+          d: "Na začátek procesu se přidá aktivita vyčkat na košík následovaná aktivitou vzít si košík. Větev o nedostupnosti zboží rozšíříme o exkluzivní bránu, která bude řešit, zda je dostupná alternativa. Pokud ano, vložíme ji do košíku, pokud ne, pokračujeme k další položce nákupu. Před placení na klasické pokladně přidáme aktivitu kontroly délky front.",
+        },
+        correct: "a",
+        explanation: "Z nabízených možností je nejlepší možnost A, která nějakým způsobem plní alespoň částečně všechny požadavky. Možnost B řeší dostupnost košíků nesprávným způsobem, protože zákazník na košík nečeká a jde rovnou nakupovat, stejně jako vůbec nezohledňuje hledání alternativních produktů. Možnost C má na začátku aktivitu vyčkat na košík, což by v ideálním případě měl být spíše časovač. Zároveň přisuzuje jedné bráně dvě rozhodnutí, což by mělo být řešeno dvěmi, a nakonec sice kontroluje délku front, ale už na základě této informace nic nedělá. Možnost D má obdobný problém na začátku jako možnost C, dále pak kontroluje délku front jen u platby u klasické pokladny a u samoobslužné ji nezohledňuje."
       },
   ];
 
@@ -105,6 +141,13 @@ export default function Chap2Slide5({ setSlideFinished }) {
     return <div className="slide">
     <div className='slide-h1-wrapper'><h1>Závěrečné shrnutí</h1></div>
     <div className="slide-content-wrapper ">
+
+    <div className='bpmn-diagram-wrapper'>
+        <div
+        ref={containerSupermarketObjRef}
+        className='bpmn-diagram-supermarketver2'
+        />
+    </div>
 
        
     {questions.map((q) => (

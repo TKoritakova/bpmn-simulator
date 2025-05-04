@@ -512,6 +512,8 @@ body {
   overflow-y: auto;
   flex: 1;
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
   
 }
 
@@ -615,12 +617,15 @@ p.heading-tooltip {
 .question-answers-wrapper input[type="radio"] {
   appearance: none;
   background-color: var(--basic-bg-color);
-  margin: 0;
   margin-left: 5px;
   margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 0px;
   color: var(--nav-text-color);
   width: 17px;
   height: 17px;
+  min-width: 17px;
+  min-height: 17px;
   border: 2px solid var(--nav-text-color);
   border-radius: 50%;
   display: grid;
@@ -659,8 +664,6 @@ p.heading-tooltip {
 .answer-wrapper {
 
     display: flex;
-
-    align-items: center;
     gap: 8px;
 }
 
@@ -730,6 +733,34 @@ p.action-label {
 
 }
 
+.bpmn-diagram-pools {
+  width: 380px;
+  height: 450px;
+}
+
+.bpmn-diagram-supermarketver1 {
+  width: 100%;
+  max-width: 1100px;
+  min-height:300px;
+  height: auto;
+  margin-bottom:20px;
+  margin-top:10px;
+}
+
+.bpmn-diagram-supermarketver2 {
+  width: 100%;
+  max-width: 1100px;
+  min-height:400px;
+  height: auto;
+  margin-bottom:20px;
+  margin-top:10px;
+}
+
+.bpmn-diagram-dataobj {
+  width: 150px;
+  height: 180px;
+}
+
 .bpmn-diagram-description-wrapper {
   display: flex;
   margin: 25px;
@@ -753,3 +784,4 @@ p.action-label {
 .diagram-description-item p {
   margin: 0px;
 }
+

@@ -99,7 +99,7 @@ export default function Chapter2() {
               <button onClick={nextSlide} className='right'>Další</button>
             )}
             {index === slideComponents.length - 1 && ((slideFinished[index+1]) || submitted) && (
-              <Link to="/bpmn-simulator/lesson-2"><button className='right'>Další lekce</button></Link>
+              <Link to="/bpmn-simulator/lesson-3"><button className='right'>Další lekce</button></Link>
               
             )}
           </div>
