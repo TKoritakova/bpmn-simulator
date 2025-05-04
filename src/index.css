@@ -771,7 +771,7 @@ p.action-label {
   flex: 1;
 }
 
-.diagram-description-item {
+.diagram-description-item, .simulation-scenario-description-item {
   width:95%;
   color: var(--nav-text-color); 
   background-color: #6aaed970;
