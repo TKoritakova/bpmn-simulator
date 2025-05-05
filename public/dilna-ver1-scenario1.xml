@@ -2,8 +2,8 @@
     <scenariospecs>
         <arrivaldistribution>Normal</arrivaldistribution>
         <arrivalmean>12</mean>
-        <arrivalstddeviation>4</stddeviation>
-        <arrivalunit>Minute</unit>
+        <arrivalstddeviation>8</stddeviation>
+        <arrivalunit>Day</unit>
         <numberofinstances>10</numberofinstances>
         <starttime>12/5/2025 9:00</starttime>
         <currency>CZK</currency>
@@ -47,29 +47,29 @@
         <id>Activity_DiagnostikovatAutomobil</id>
         <resource>Automechanik</resource>
         <distribution>Normal</distribution>
-        <mean>10</mean>
-        <stddeviation>3</stddeviation>
-        <unit>Minute</unit>
+        <mean>4</mean>
+        <stddeviation>2</stddeviation>
+        <unit>Hour</unit>
         <fixedcost>0</fixedcost>
     </element>
     <element>
         <type>Activity</type>
         <id>Activity_NaskladnitMaterial</id>
         <resource>Skladník</resource>
-        <distribution>Normal</distribution>
-        <mean>10</mean>
-        <stddeviation>3</stddeviation>
-        <unit>Minute</unit>
+        <distribution>Fixed</distribution>
+        <mean>1</mean>
+        <stddeviation></stddeviation>
+        <unit>Hour</unit>
         <fixedcost>0</fixedcost>
     </element>
     <element>
         <type>Activity</type>
         <id>Activity_ObjednatMaterial</id>
         <resource>Skladník</resource>
-        <distribution>Normal</distribution>
-        <mean>10</mean>
-        <stddeviation>3</stddeviation>
-        <unit>Minute</unit>
+        <distribution>Fixed</distribution>
+        <mean>1</mean>
+        <stddeviation></stddeviation>
+        <unit>Hour</unit>
         <fixedcost>0</fixedcost>
     </element>
     <element>
@@ -77,9 +77,9 @@
         <id>Activity_OpravitAutomobil</id>
         <resource>Automechanik</resource>
         <distribution>Normal</distribution>
-        <mean>10</mean>
+        <mean>5</mean>
         <stddeviation>3</stddeviation>
-        <unit>Minute</unit>
+        <unit>Day</unit>
         <fixedcost>0</fixedcost>
     </element>
     <element>
@@ -87,8 +87,8 @@
         <id>Activity_VypocitatCenuOpravy</id>
         <resource>Obchodník</resource>
         <distribution>Normal</distribution>
-        <mean>10</mean>
-        <stddeviation>3</stddeviation>
+        <mean>90</mean>
+        <stddeviation>60</stddeviation>
         <unit>Minute</unit>
         <fixedcost>0</fixedcost>
     </element>
@@ -97,8 +97,8 @@
         <id>Activity_ZkontrolovatMaterialy</id>
         <resource>Skladník</resource>
         <distribution>Normal</distribution>
-        <mean>10</mean>
-        <stddeviation>3</stddeviation>
+        <mean>60</mean>
+        <stddeviation>30</stddeviation>
         <unit>Minute</unit>
         <fixedcost>0</fixedcost>
     </element>
@@ -120,9 +120,9 @@
         <type>IntermediateEvent</type>
         <id>Event_VyckatNaMaterial</id>
         <distribution>Normal</distribution>
-        <mean>10</mean>
+        <mean>4</mean>
         <stddeviation>3</stddeviation>
-        <unit>Minute</unit>
+        <unit>Day</unit>
     </element>
 
     <element>

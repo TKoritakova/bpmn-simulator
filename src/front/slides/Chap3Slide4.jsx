@@ -42,16 +42,17 @@ export default function Chap3Slide4({ setSlideFinished }) {
   const runSimulation = async () => {
       setSimulationRunning(true); 
     
+      console.log("sim start")
       const engine = new SimulationEngine(diagram);
     
       await engine.run();
-      
+      console.log("sim stats")
       setLogs(engine.log);
     
       const statistics = Statistics.createStatistics(engine.log, diagram);
       setStats(statistics);
   
-      
+      console.log("sim end")
     
       setSimulationRunning(false);
     };
