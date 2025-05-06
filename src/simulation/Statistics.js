@@ -9,7 +9,6 @@ export class Statistics {
         result["activites"] = this.generateActivityStatistics(log,diagram);
       
 
-        console.log(result)
 
         return result;
     }

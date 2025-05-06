@@ -40,21 +40,39 @@ export default function Chap3Slide4({ setSlideFinished }) {
   }, []);
 
   const runSimulation = async () => {
-      setSimulationRunning(true); 
-    
-      console.log("sim start")
-      const engine = new SimulationEngine(diagram);
-    
-      await engine.run();
-      console.log("sim stats")
-      setLogs(engine.log);
-    
-      const statistics = Statistics.createStatistics(engine.log, diagram);
-      setStats(statistics);
-  
-      console.log("sim end")
-    
-      setSimulationRunning(false);
+      
+      setSimulationRunning(true);
+
+      const worker = new Worker(
+        new URL('../../workers/simulationWorker.js', import.meta.url), // přizpůsob cestu!
+        { type: 'module' }
+      );
+
+
+      // Odešli serializovaný diagram
+      worker.postMessage({
+        diagramData: diagram.toSerializableObject()
+      });
+
+      // Získání výsledku
+      worker.onmessage = (event) => {
+        const { log, stats, error } = event.data;
+
+        if (error) {
+          console.error('Chyba ze simulace:', error);
+          setSimulationRunning(false);
+          return;
+        }
+
+        setLogs(log);
+        setStats(stats);
+        setSimulationRunning(false);
+      };
+
+      worker.onerror = (err) => {
+        console.error('Worker selhal:', err);
+        setSimulationRunning(false);
+      };
     };
 
     const formatDate = (date) => {
@@ -92,6 +110,13 @@ export default function Chap3Slide4({ setSlideFinished }) {
 
 
     return <div className="slide">
+      
+          {simulationRunning && (
+        <div className="simulation-overlay">
+          <p className="loading-dots">Simulace probíhá</p>
+        </div>
+      )}
+
       <div className='slide-h1-wrapper'><h1>První simulace</h1></div>
       <div className='slide-content-wrapper'>
 
