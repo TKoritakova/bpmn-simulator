@@ -771,7 +771,7 @@ p.action-label {
   flex: 1;
 }
 
-.diagram-description-item {
+.diagram-description-item, .simulation-scenario-description-item {
   width:95%;
   color: var(--nav-text-color); 
   background-color: #6aaed970;
@@ -785,3 +785,30 @@ p.action-label {
   margin: 0px;
 }
 
+.first-simulation-container input[type="text"], .first-simulation-container select {
+  appearance: none;
+  border: 0px;
+  background-color: var(--basic-bg-color);
+  color: var(--nav-text-color);
+  font-family: var(--site-font);
+  font-size: 18px;
+  
+}
+
+.first-simulation-container select:disabled  {
+  opacity: 1;
+}
+
+.first-simulation-container form > * {
+  display: flex;
+  gap:10px;
+}
+
+.first-simulation-container form > * > * {
+  flex: 1;
+}
+
+.first-simulation-container label {
+  text-align: right;
+  font-style: italic;
+}

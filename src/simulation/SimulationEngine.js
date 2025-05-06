@@ -19,6 +19,7 @@ export class SimulationEngine {
       this.startEvent;
       this.arrivals = [];
       this.diagram = diagram;
+      this.sleepingItems = new Set();
 
       this.loadEngineDetailsFromDiagram(diagram);
       
@@ -113,30 +114,29 @@ export class SimulationEngine {
   
    
     async run() {
-      const sleepingItems = new Set();
 
-      while ((this.hasTasks() || sleepingItems.size > 0 || this.arrivals.length > 0) /*&& this.currentTime < 100*/) {
+
+      while ((this.hasTasks() || this.sleepingItems.size > 0 || this.arrivals.length > 0) /*&& this.currentTime < 100000*/) {
         // SPUŠTĚNÍ NOVÝCH INSTANCÍ
         while (this.arrivals.length > 0 && this.currentTime >= this.arrivals[0].time) {
           const arrival = this.arrivals.shift(); 
           let workItem = this.logEvent(this.startEvent,arrival.instanceId+1);
           this.handleTokenMovement(workItem);
-   
-        
         }
 
         // POSUN SPÍCÍCH
-        for (const item of sleepingItems) {
-   
-          if(this.isResourceCurrentlyWorking(item.resource)) {
+        for (const item of this.sleepingItems) {
+          if(item.resource === "none" || this.isResourceCurrentlyWorking(item.resource)) {
             item.task.lowerRemainingExecutionTime();
 
             // UVOLNENI ZDROJU A DOKONČENÝCH
             if (item.task.getRemainingExecutionTime() < 1) {
-              
-              this.resourcePools[item.resource.getDescription()].push(item.resource);
+              if (item.resource != "none") {
+                this.resourcePools[item.resource.getDescription()].push(item.resource);
+              }
+           
               this.endTask(item.task);
-              sleepingItems.delete(item);
+              this.sleepingItems.delete(item);
             }
 
           }
@@ -157,7 +157,7 @@ export class SimulationEngine {
               const taskWrapper = queue.dequeue();
               const task = taskWrapper.task;
               task.setStartTime(this.currentTime);
-              sleepingItems.add({task: task, resource: resource});
+              this.sleepingItems.add({task: task, resource: resource});
   
             
     
@@ -242,9 +242,18 @@ export class SimulationEngine {
 
       while (descendants.length > 0) {
         let descendant = descendants.shift();
+    
 
-        if (descendant instanceof Activity || descendant instanceof TimerEvent || descendant instanceof MessageEvent) {
+        if (descendant instanceof Activity) {
           this.addWorkItemToQueue(descendant, descendant.getResource(), task.getInstanceID());
+
+        } else if (descendant instanceof TimerEvent || descendant instanceof MessageEvent) {
+
+  
+          let workItem = new WorkItem(task.getInstanceID(), descendant, this.currentTime);
+          /*workItem.setStartTime(this.currentTime);*/
+          this.sleepingItems.add({task: workItem, resource: "none"})
+        
         } else if (descendant instanceof Gateway) {
           //handle gateway
           if (Array.isArray(descendant.getOuts()) && descendant.getOuts().length > 0) {

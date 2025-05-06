@@ -34,7 +34,7 @@ function App() {
       const handler = () => checkStorage();
       window.addEventListener("storageUpdatedApp", handler);
   
-      return () => window.removeEventListener("storageUpdatedApp", handler);
+      
     }, []);
 
 

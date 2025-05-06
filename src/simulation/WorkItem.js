@@ -1,5 +1,7 @@
 import { Activity } from "../model/Activity";
 import random from 'random';
+import { TimerEvent } from "../model/TimerEvent";
+import { MessageEvent } from "../model/MessageEvent";
 
 export class WorkItem {
   
@@ -15,6 +17,11 @@ export class WorkItem {
     if (item instanceof Activity) {
         this.resourceNeeded = item.getResource();
         this.generateExectuionTime();
+    } else if (item instanceof TimerEvent || item instanceof MessageEvent) {
+        this.resourceNeeded = null;
+        this.startTime = readyToBeExecuted;
+        this.generateExectuionTime();
+    
     } else {
         this.resourceNeeded = null;
     }
