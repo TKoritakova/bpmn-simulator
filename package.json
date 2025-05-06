@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -r git@github.com:TKoritakova/bpmn-simulator.git"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "bpmn-js": "^18.4.0",
