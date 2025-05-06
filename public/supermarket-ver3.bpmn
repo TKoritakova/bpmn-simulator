@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1b2683m" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.29.0">
+  <bpmn:collaboration id="Collaboration_1q9jxq5">
+    <bpmn:participant id="Participant_Zakaznik" name="Zákazník" processRef="Process_Zakaznik" />
+    <bpmn:participant id="Participant_Obchod" name="Zaměstnanec supermarketu" processRef="Process_Obchod" />
+    <bpmn:messageFlow id="Flow_ReklamaceZakaznik" sourceRef="Activity_Reklamace" targetRef="Participant_Obchod" />
+    <bpmn:messageFlow id="Flow_ReklamaceObchod" sourceRef="Participant_Obchod" targetRef="Activity_Reklamace" />
+    <bpmn:messageFlow id="Flow_PlatbaZakaznik" sourceRef="Activity_PlatbaPokladna" targetRef="Participant_Obchod" />
+    <bpmn:messageFlow id="Flow_PlatbaObchod" sourceRef="Participant_Obchod" targetRef="Activity_PlatbaPokladna" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Zakaznik" isExecutable="false">
+    <bpmn:exclusiveGateway id="Gateway_KdePlatit" name="Kde chce zákazník zaplatit?">
+      <bpmn:incoming>Flow_ZakaznikVse_KdePlatit</bpmn:incoming>
+      <bpmn:outgoing>Flow_KdePlatit_PlatbaPokladna</bpmn:outgoing>
+      <bpmn:outgoing>Flow_KdePlatit_PlatbaSamoobsluha</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_ZakaznikVse" name="Prošel již zákazník celý svůj nákupní seznam?">
+      <bpmn:incoming>Flow_VyberZbozi_ZakaznikVse</bpmn:incoming>
+      <bpmn:incoming>Flow_0tjx9yx</bpmn:incoming>
+      <bpmn:outgoing>Flow_ZakaznikVse_KdePlatit</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ZakaznikVse_Spoj1</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:startEvent id="StartEvent_VstupDoSupermarketu" name="Příchod do supermarketu">
+      <bpmn:outgoing>Flow_VstupDoSupermarketu_Spoj1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_VyberZbozi" name="Vložit zboží do košíku">
+      <bpmn:incoming>Flow_Spoj1_VyberZbozi</bpmn:incoming>
+      <bpmn:outgoing>Flow_VyberZbozi_ZakaznikVse</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_Spoj1" name="Je zboží dostupné?">
+      <bpmn:incoming>Flow_VstupDoSupermarketu_Spoj1</bpmn:incoming>
+      <bpmn:incoming>Flow_ZakaznikVse_Spoj1</bpmn:incoming>
+      <bpmn:outgoing>Flow_Spoj1_VyberZbozi</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0tjx9yx</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_PlatbaSamoobsluha" name="Zaplatit u samoobslužné pokladny">
+      <bpmn:incoming>Flow_KdePlatit_PlatbaSamoobsluha</bpmn:incoming>
+      <bpmn:outgoing>Flow_PlatbaSamoobsluha_OdchodPoSamo</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_OdchodPoSamo" name="Uložení nákupu do tašek, odchod ze supermarketu">
+      <bpmn:incoming>Flow_PlatbaSamoobsluha_OdchodPoSamo</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_ZakaznikVse_KdePlatit" name="Ano" sourceRef="Gateway_ZakaznikVse" targetRef="Gateway_KdePlatit" />
+    <bpmn:sequenceFlow id="Flow_KdePlatit_PlatbaPokladna" name="Klasická pokladna" sourceRef="Gateway_KdePlatit" targetRef="Activity_PlatbaPokladna" />
+    <bpmn:sequenceFlow id="Flow_KdePlatit_PlatbaSamoobsluha" name="Samoobslužná pokladna" sourceRef="Gateway_KdePlatit" targetRef="Activity_PlatbaSamoobsluha" />
+    <bpmn:sequenceFlow id="Flow_VyberZbozi_ZakaznikVse" sourceRef="Activity_VyberZbozi" targetRef="Gateway_ZakaznikVse" />
+    <bpmn:sequenceFlow id="Flow_ZakaznikVse_Spoj1" name="Ne" sourceRef="Gateway_ZakaznikVse" targetRef="Gateway_Spoj1" />
+    <bpmn:sequenceFlow id="Flow_VstupDoSupermarketu_Spoj1" sourceRef="StartEvent_VstupDoSupermarketu" targetRef="Gateway_Spoj1" />
+    <bpmn:sequenceFlow id="Flow_Spoj1_VyberZbozi" name="Ano" sourceRef="Gateway_Spoj1" targetRef="Activity_VyberZbozi" />
+    <bpmn:sequenceFlow id="Flow_PlatbaSamoobsluha_OdchodPoSamo" sourceRef="Activity_PlatbaSamoobsluha" targetRef="Event_OdchodPoSamo" />
+    <bpmn:sequenceFlow id="Flow_PlatbaPokladna_KontrolaNakupu" sourceRef="Activity_PlatbaPokladna" targetRef="Activity_KontrolaNakupu" />
+    <bpmn:sequenceFlow id="Flow_KontrolaNakupu_VseOK" sourceRef="Activity_KontrolaNakupu" targetRef="Gateway_VseOK" />
+    <bpmn:sequenceFlow id="Flow_VseOK_Reklamace" name="Ne" sourceRef="Gateway_VseOK" targetRef="Activity_Reklamace" />
+    <bpmn:sequenceFlow id="Flow_Reklamace_OdchodReklamace" sourceRef="Activity_Reklamace" targetRef="Event_OdchodReklamace" />
+    <bpmn:sequenceFlow id="Flow_VseOK_OdchodPokladna" name="Ano" sourceRef="Gateway_VseOK" targetRef="Event_OdchodPokladna" />
+    <bpmn:dataObjectReference id="DataObjectReference_NakupniSeznam" name="Nákupní seznam" dataObjectRef="DataObject_0rv9oyg" />
+    <bpmn:dataObject id="DataObject_0rv9oyg" />
+    <bpmn:sequenceFlow id="Flow_0tjx9yx" name="Ne" sourceRef="Gateway_Spoj1" targetRef="Gateway_ZakaznikVse" />
+    <bpmn:exclusiveGateway id="Gateway_VseOK" name="Je nákup v pořádku?">
+      <bpmn:incoming>Flow_KontrolaNakupu_VseOK</bpmn:incoming>
+      <bpmn:outgoing>Flow_VseOK_OdchodPokladna</bpmn:outgoing>
+      <bpmn:outgoing>Flow_VseOK_Reklamace</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_Reklamace" name="Vyřídit reklamaci">
+      <bpmn:incoming>Flow_VseOK_Reklamace</bpmn:incoming>
+      <bpmn:outgoing>Flow_Reklamace_OdchodReklamace</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_OdchodReklamace" name="Odchod z obchodu">
+      <bpmn:incoming>Flow_Reklamace_OdchodReklamace</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Activity_PlatbaPokladna" name="Zaplatit u klasické pokladny">
+      <bpmn:incoming>Flow_KdePlatit_PlatbaPokladna</bpmn:incoming>
+      <bpmn:outgoing>Flow_PlatbaPokladna_KontrolaNakupu</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_KontrolaNakupu" name="Zkontrolovat nákup">
+      <bpmn:incoming>Flow_PlatbaPokladna_KontrolaNakupu</bpmn:incoming>
+      <bpmn:outgoing>Flow_KontrolaNakupu_VseOK</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_OdchodPokladna" name="Odchod ze supermarketu">
+      <bpmn:incoming>Flow_VseOK_OdchodPokladna</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:process id="Process_Obchod" isExecutable="false" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1q9jxq5">
+      <bpmndi:BPMNShape id="Participant_1avn5td_di" bpmnElement="Participant_Zakaznik" isHorizontal="true">
+        <dc:Bounds x="151" y="80" width="1269" height="280" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_11im7sl_di" bpmnElement="Gateway_KdePlatit" isMarkerVisible="true">
+        <dc:Bounds x="725" y="195" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="785" y="206" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_04m3jft_di" bpmnElement="Gateway_ZakaznikVse" isMarkerVisible="true">
+        <dc:Bounds x="565" y="195" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="606" y="233" width="67" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_VstupDoSupermarketu">
+        <dc:Bounds x="202" y="202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="186" y="245" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0o8rx60_di" bpmnElement="Activity_VyberZbozi">
+        <dc:Bounds x="430" y="180" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0d5xorn_di" bpmnElement="Gateway_Spoj1" isMarkerVisible="true">
+        <dc:Bounds x="345" y="195" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="304" y="236" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r56xn8_di" bpmnElement="Activity_PlatbaSamoobsluha">
+        <dc:Bounds x="850" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09n6wbf_di" bpmnElement="Activity_PlatbaPokladna">
+        <dc:Bounds x="850" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1k6ss29_di" bpmnElement="Event_OdchodPoSamo">
+        <dc:Bounds x="1002" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="978" y="175" width="85" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15x6mn6_di" bpmnElement="Activity_KontrolaNakupu">
+        <dc:Bounds x="980" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17r0l08_di" bpmnElement="Activity_Reklamace">
+        <dc:Bounds x="1230" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_01cad6y_di" bpmnElement="Gateway_VseOK" isMarkerVisible="true">
+        <dc:Bounds x="1135" y="265" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1133" y="325" width="55" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fxqndt_di" bpmnElement="Event_OdchodReklamace">
+        <dc:Bounds x="1362" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1356" y="315" width="48" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_19fmqpj_di" bpmnElement="DataObjectReference_NakupniSeznam">
+        <dc:Bounds x="282" y="135" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="259" y="192" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0db3t5a_di" bpmnElement="Event_OdchodPokladna">
+        <dc:Bounds x="1142" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1126" y="135" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0jgeuzh_di" bpmnElement="Flow_ZakaznikVse_KdePlatit">
+        <di:waypoint x="615" y="220" />
+        <di:waypoint x="725" y="220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="640" y="202" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_168cltg_di" bpmnElement="Flow_KdePlatit_PlatbaPokladna">
+        <di:waypoint x="750" y="245" />
+        <di:waypoint x="750" y="290" />
+        <di:waypoint x="850" y="290" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="751" y="312" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fega9f_di" bpmnElement="Flow_KdePlatit_PlatbaSamoobsluha">
+        <di:waypoint x="750" y="195" />
+        <di:waypoint x="750" y="150" />
+        <di:waypoint x="850" y="150" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="751" y="116" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lfuv8x_di" bpmnElement="Flow_VyberZbozi_ZakaznikVse">
+        <di:waypoint x="530" y="220" />
+        <di:waypoint x="565" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cqyvw6_di" bpmnElement="Flow_ZakaznikVse_Spoj1">
+        <di:waypoint x="590" y="195" />
+        <di:waypoint x="590" y="150" />
+        <di:waypoint x="370" y="150" />
+        <di:waypoint x="370" y="195" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="602" y="163" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ydfdqh_di" bpmnElement="Flow_VstupDoSupermarketu_Spoj1">
+        <di:waypoint x="238" y="220" />
+        <di:waypoint x="345" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jr7uhm_di" bpmnElement="Flow_Spoj1_VyberZbozi">
+        <di:waypoint x="395" y="220" />
+        <di:waypoint x="430" y="220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="400" y="202" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1uc3o43_di" bpmnElement="Flow_PlatbaSamoobsluha_OdchodPoSamo">
+        <di:waypoint x="950" y="150" />
+        <di:waypoint x="1002" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07kvnz9_di" bpmnElement="Flow_PlatbaPokladna_KontrolaNakupu">
+        <di:waypoint x="950" y="290" />
+        <di:waypoint x="980" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12h2enz_di" bpmnElement="Flow_KontrolaNakupu_VseOK">
+        <di:waypoint x="1080" y="290" />
+        <di:waypoint x="1135" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0niaeqe_di" bpmnElement="Flow_VseOK_Reklamace">
+        <di:waypoint x="1185" y="290" />
+        <di:waypoint x="1230" y="290" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1195" y="273" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wrnuri_di" bpmnElement="Flow_Reklamace_OdchodReklamace">
+        <di:waypoint x="1330" y="290" />
+        <di:waypoint x="1362" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09wymqm_di" bpmnElement="Flow_VseOK_OdchodPokladna">
+        <di:waypoint x="1160" y="265" />
+        <di:waypoint x="1160" y="208" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1135" y="233" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tjx9yx_di" bpmnElement="Flow_0tjx9yx">
+        <di:waypoint x="370" y="245" />
+        <di:waypoint x="370" y="300" />
+        <di:waypoint x="590" y="300" />
+        <di:waypoint x="590" y="245" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382" y="253" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_04pnmii_di" bpmnElement="Participant_Obchod" isHorizontal="true">
+        <dc:Bounds x="151" y="390" width="1269" height="100" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ul9dfg_di" bpmnElement="Flow_ReklamaceZakaznik">
+        <di:waypoint x="1260" y="330" />
+        <di:waypoint x="1260" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a7901b_di" bpmnElement="Flow_ReklamaceObchod">
+        <di:waypoint x="1290" y="390" />
+        <di:waypoint x="1290" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1knb9pk_di" bpmnElement="Flow_PlatbaZakaznik">
+        <di:waypoint x="890" y="330" />
+        <di:waypoint x="890" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a46g2n_di" bpmnElement="Flow_PlatbaObchod">
+        <di:waypoint x="920" y="390" />
+        <di:waypoint x="920" y="330" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
