@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0302bl1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.29.0">
+  <bpmn:collaboration id="Collaboration_1xz8xft">
+    <bpmn:participant id="Participant_Spolecnost" name="Společnost zabývající se repasováním automobilů" processRef="Process_Spolecnost" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Spolecnost" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1nv06q3">
+      <bpmn:lane id="Lane_ObchodniOddeleni" name="Obchodní oddělení">
+        <bpmn:flowNodeRef>StartEvent_PrijetiAutomobilu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_VypocitatCenuOpravy</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Dilna" name="Dílna">
+        <bpmn:flowNodeRef>Activity_DiagnostikovatAutomobil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_OpravitAutomobil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_AutomobilOpraven</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Sklad" name="Sklad">
+        <bpmn:flowNodeRef>Activity_NaskladnitMaterial</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_ObjednatMaterial</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_VseNaskladneno</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Spoj1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_ZkontrolovatMaterialy</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_VyckatNaMaterial</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_PrijetiAutomobilu" name="Přijetí automobilu">
+      <bpmn:outgoing>Flow_PrijetiAutomobilu_DiagnostikovatAutomobil</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_DiagnostikovatAutomobil" name="Diagnostikovat automobil">
+      <bpmn:incoming>Flow_PrijetiAutomobilu_DiagnostikovatAutomobil</bpmn:incoming>
+      <bpmn:outgoing>Flow_DiagnostikovatAutomobil_VypocitatCenuOpravy</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_NaskladnitMaterial" name="Naskladnit materiál">
+      <bpmn:incoming>Flow_VyckatNaMaterial_NaskladnitMaterial</bpmn:incoming>
+      <bpmn:outgoing>Flow_NaskladnitMaterial_Spoj1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_ObjednatMaterial" name="Objednat materiál">
+      <bpmn:incoming>Flow_VseNaskladneno_ObjednatMaterial</bpmn:incoming>
+      <bpmn:outgoing>Flow_ObjednatMaterial_VyckatNaMaterial</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_VseNaskladneno" name="Je vše naskladněno?">
+      <bpmn:incoming>Flow_ZkontrolovatMaterialy_VseNaskladneno</bpmn:incoming>
+      <bpmn:outgoing>Flow_VseNaskladneno_ObjednatMaterial</bpmn:outgoing>
+      <bpmn:outgoing>Flow_VseNaskladneno_OpravitAutomobil</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_OpravitAutomobil" name="Opravit automobil">
+      <bpmn:incoming>Flow_VseNaskladneno_OpravitAutomobil</bpmn:incoming>
+      <bpmn:outgoing>Flow_OpravitAutomobil_AutomobilOpraven</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_AutomobilOpraven" name="Automobil opraven">
+      <bpmn:incoming>Flow_OpravitAutomobil_AutomobilOpraven</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_PrijetiAutomobilu_DiagnostikovatAutomobil" sourceRef="StartEvent_PrijetiAutomobilu" targetRef="Activity_DiagnostikovatAutomobil" />
+    <bpmn:sequenceFlow id="Flow_DiagnostikovatAutomobil_VypocitatCenuOpravy" sourceRef="Activity_DiagnostikovatAutomobil" targetRef="Activity_VypocitatCenuOpravy" />
+    <bpmn:sequenceFlow id="Flow_VypocitatCenuOpravy_Spoj1" sourceRef="Activity_VypocitatCenuOpravy" targetRef="Gateway_Spoj1" />
+    <bpmn:sequenceFlow id="Flow_NaskladnitMaterial_Spoj1" sourceRef="Activity_NaskladnitMaterial" targetRef="Gateway_Spoj1" />
+    <bpmn:sequenceFlow id="Flow_Spoj1_ZkontrolovatMaterialy" sourceRef="Gateway_Spoj1" targetRef="Activity_ZkontrolovatMaterialy" />
+    <bpmn:sequenceFlow id="Flow_ZkontrolovatMaterialy_VseNaskladneno" sourceRef="Activity_ZkontrolovatMaterialy" targetRef="Gateway_VseNaskladneno" />
+    <bpmn:sequenceFlow id="Flow_ObjednatMaterial_VyckatNaMaterial" sourceRef="Activity_ObjednatMaterial" targetRef="Event_VyckatNaMaterial" />
+    <bpmn:sequenceFlow id="Flow_VyckatNaMaterial_NaskladnitMaterial" sourceRef="Event_VyckatNaMaterial" targetRef="Activity_NaskladnitMaterial" />
+    <bpmn:sequenceFlow id="Flow_VseNaskladneno_ObjednatMaterial" name="Ne" sourceRef="Gateway_VseNaskladneno" targetRef="Activity_ObjednatMaterial" />
+    <bpmn:sequenceFlow id="Flow_VseNaskladneno_OpravitAutomobil" name="Ano" sourceRef="Gateway_VseNaskladneno" targetRef="Activity_OpravitAutomobil" />
+    <bpmn:sequenceFlow id="Flow_OpravitAutomobil_AutomobilOpraven" sourceRef="Activity_OpravitAutomobil" targetRef="Event_AutomobilOpraven" />
+    <bpmn:dataObjectReference id="DataObjectReference_DiagnostikaAutomobilu" name="Diagnostika automobilu" dataObjectRef="DataObject_07i2svx" />
+    <bpmn:dataObject id="DataObject_07i2svx" />
+    <bpmn:task id="Activity_VypocitatCenuOpravy" name="Vypočítat cenu opravy">
+      <bpmn:incoming>Flow_DiagnostikovatAutomobil_VypocitatCenuOpravy</bpmn:incoming>
+      <bpmn:outgoing>Flow_VypocitatCenuOpravy_Spoj1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_Spoj1">
+      <bpmn:incoming>Flow_VypocitatCenuOpravy_Spoj1</bpmn:incoming>
+      <bpmn:incoming>Flow_NaskladnitMaterial_Spoj1</bpmn:incoming>
+      <bpmn:outgoing>Flow_Spoj1_ZkontrolovatMaterialy</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Activity_ZkontrolovatMaterialy" name="Zkontrolovat dostupnost materiálů na skladě">
+      <bpmn:incoming>Flow_Spoj1_ZkontrolovatMaterialy</bpmn:incoming>
+      <bpmn:outgoing>Flow_ZkontrolovatMaterialy_VseNaskladneno</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:intermediateCatchEvent id="Event_VyckatNaMaterial" name="Vyčkat na dodání materiálu">
+      <bpmn:incoming>Flow_ObjednatMaterial_VyckatNaMaterial</bpmn:incoming>
+      <bpmn:outgoing>Flow_VyckatNaMaterial_NaskladnitMaterial</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1o5bfff" />
+    </bpmn:intermediateCatchEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1xz8xft">
+      <bpmndi:BPMNShape id="Participant_0hu951v_di" bpmnElement="Participant_Spolecnost" isHorizontal="true">
+        <dc:Bounds x="156" y="62" width="1234" height="370" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0qwwgo9_di" bpmnElement="Lane_Sklad" isHorizontal="true">
+        <dc:Bounds x="186" y="187" width="1204" height="120" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1po56wu_di" bpmnElement="Lane_Dilna" isHorizontal="true">
+        <dc:Bounds x="186" y="307" width="1204" height="125" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_03635lw_di" bpmnElement="Lane_ObchodniOddeleni" isHorizontal="true">
+        <dc:Bounds x="186" y="62" width="1204" height="125" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_PrijetiAutomobilu">
+        <dc:Bounds x="252" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="227" y="83" width="86" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1c8qrwo_di" bpmnElement="Activity_DiagnostikovatAutomobil">
+        <dc:Bounds x="340" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gxvoeb_di" bpmnElement="Activity_NaskladnitMaterial">
+        <dc:Bounds x="1160" y="210" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rp1s61_di" bpmnElement="Activity_ObjednatMaterial">
+        <dc:Bounds x="950" y="210" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0ieu9eu_di" bpmnElement="Gateway_VseNaskladneno" isMarkerVisible="true">
+        <dc:Bounds x="865" y="225" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="815" y="206" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cy8714_di" bpmnElement="Activity_OpravitAutomobil">
+        <dc:Bounds x="840" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05tgmid_di" bpmnElement="Event_AutomobilOpraven">
+        <dc:Bounds x="1312" y="352" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1308" y="316" width="49" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1mmo8ix_di" bpmnElement="DataObjectReference_DiagnostikaAutomobilu">
+        <dc:Bounds x="402" y="205" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="395" y="262" width="58" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1amkbd8_di" bpmnElement="Activity_VypocitatCenuOpravy">
+        <dc:Bounds x="480" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1o9kcov_di" bpmnElement="Gateway_Spoj1" isMarkerVisible="true">
+        <dc:Bounds x="625" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pjnchv_di" bpmnElement="Activity_ZkontrolovatMaterialy">
+        <dc:Bounds x="700" y="210" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ho26wg_di" bpmnElement="Event_VyckatNaMaterial">
+        <dc:Bounds x="1092" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1068" y="275" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1he3u20_di" bpmnElement="Flow_PrijetiAutomobilu_DiagnostikovatAutomobil">
+        <di:waypoint x="288" y="120" />
+        <di:waypoint x="314" y="120" />
+        <di:waypoint x="314" y="370" />
+        <di:waypoint x="340" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vugu36_di" bpmnElement="Flow_DiagnostikovatAutomobil_VypocitatCenuOpravy">
+        <di:waypoint x="440" y="370" />
+        <di:waypoint x="460" y="370" />
+        <di:waypoint x="460" y="130" />
+        <di:waypoint x="480" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vlh4r5_di" bpmnElement="Flow_VypocitatCenuOpravy_Spoj1">
+        <di:waypoint x="580" y="125" />
+        <di:waypoint x="600" y="125" />
+        <di:waypoint x="600" y="250" />
+        <di:waypoint x="625" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1px9cfp_di" bpmnElement="Flow_NaskladnitMaterial_Spoj1">
+        <di:waypoint x="1210" y="210" />
+        <di:waypoint x="1210" y="200" />
+        <di:waypoint x="650" y="200" />
+        <di:waypoint x="650" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1evioq8_di" bpmnElement="Flow_Spoj1_ZkontrolovatMaterialy">
+        <di:waypoint x="675" y="250" />
+        <di:waypoint x="700" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03iiw3a_di" bpmnElement="Flow_ZkontrolovatMaterialy_VseNaskladneno">
+        <di:waypoint x="800" y="250" />
+        <di:waypoint x="865" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1030mm5_di" bpmnElement="Flow_ObjednatMaterial_VyckatNaMaterial">
+        <di:waypoint x="1050" y="250" />
+        <di:waypoint x="1092" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0e0iml7_di" bpmnElement="Flow_VyckatNaMaterial_NaskladnitMaterial">
+        <di:waypoint x="1128" y="250" />
+        <di:waypoint x="1160" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wncn30_di" bpmnElement="Flow_VseNaskladneno_ObjednatMaterial">
+        <di:waypoint x="915" y="250" />
+        <di:waypoint x="950" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="922" y="232" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10o8n8y_di" bpmnElement="Flow_VseNaskladneno_OpravitAutomobil">
+        <di:waypoint x="890" y="275" />
+        <di:waypoint x="890" y="330" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="896" y="282" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18e42dy_di" bpmnElement="Flow_OpravitAutomobil_AutomobilOpraven">
+        <di:waypoint x="940" y="370" />
+        <di:waypoint x="1312" y="370" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
