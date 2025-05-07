@@ -1,6 +1,9 @@
 import { BPMNObject } from "./BPMNObject";
 import { Timetable } from "./Timetable";
 import { deserializeBPMNObject } from "../bpmn-parsing/BPMNObjectFactory";
+import { BPMNAssembler } from '../bpmn-parsing/BPMNAssembler.js';
+import { FlowObject } from '../model/FlowObject.js';
+import { ConnectingObject } from '../model/ConnectingObject.js';
 
 export class BPMNDiagram {
   constructor() {
@@ -135,6 +138,31 @@ export class BPMNDiagram {
 
     return d;
   }
+
+    createCopyForSimulation() {
+      const newDiagram = BPMNDiagram.fromSerializableObject(this.toSerializableObject());
+
+      newDiagram.getAllObjects().forEach(element => {
+        /* PŘIDÁNÍ MESSAGE SPOJENÍ */
+        if (element instanceof ConnectingObject && element.getType() === 'message') {
+            BPMNAssembler.addMessageConnections(newDiagram, element);
+        }
+
+        /* VYTVOŘENÍ ODKAZOVÝCH PROPOJŮ */
+        if (element instanceof FlowObject) {
+            BPMNAssembler.createReferenceConnectionsFlowObj(newDiagram, element);
+
+        } else if (element instanceof ConnectingObject) {
+            BPMNAssembler.createReferenceConnectionsConnectingObj(newDiagram, element);
+        } 
+        
+    });
+
+
+      return newDiagram;
+
+
+    }
     
   }
   

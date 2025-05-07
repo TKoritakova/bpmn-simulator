@@ -4,7 +4,7 @@
         <arrivalmean>12</mean>
         <arrivalstddeviation>8</stddeviation>
         <arrivalunit>Day</unit>
-        <numberofinstances>10</numberofinstances>
+        <numberofinstances>20</numberofinstances>
         <starttime>12/5/2025 9:00</starttime>
         <currency>CZK</currency>
     </scenariospecs>
