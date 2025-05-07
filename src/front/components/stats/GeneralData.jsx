@@ -52,10 +52,10 @@ export function GeneralData({ stats, diagram }) {
       
 
       {stats.general && Object.keys(stats.general).length > 0 && (
-        <div>
-  <div style={{ marginTop: '2rem' }}>
-    <h3>General info</h3>
-    <table className="table table-striped">
+        <div className="general-data">
+ 
+    <h3>Celkové údaje o simualaci</h3>
+    <table className="table-striped table-general">
       <thead>
         <tr>
           <th>Info</th>
@@ -81,9 +81,10 @@ export function GeneralData({ stats, diagram }) {
         </tr>
       </tbody>
     </table>
-  </div>
+
   
   
+        <div className='general-data-charts'>
         <PieChart width={400} height={400}>
           <Pie
             data={data}
@@ -119,6 +120,7 @@ export function GeneralData({ stats, diagram }) {
           </Pie>
           <Legend /> 
         </PieChart>
+        </div>
     
   
   </div>
