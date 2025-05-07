@@ -24,4 +24,23 @@ export class Gateway extends FlowObject {
   getProbabilities() {
     return this.probabilities
   }
+
+
+  toSerializableObject() {
+    return {
+      type: 'Gateway',
+      description: this.description,
+      ID: this.ID,
+      typeGateway: this.type,
+      probabilities: this.probabilities,
+      ins: this.ins.map(obj => obj.getID()),  
+      outs: this.outs.map(obj => obj.getID())
+    };
+  }
+
+  static fromSerializableObject(data) {
+    const obj = new Gateway(data.description, data.ID, data.typeGateway, data.ins, data.outs);
+    obj.probabilities = data.probabilities;
+    return obj;
+  }
 }

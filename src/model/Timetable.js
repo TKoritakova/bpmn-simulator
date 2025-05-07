@@ -27,6 +27,20 @@ export class Timetable {
     getEndTime() {
         return this.endTime;
     }
+
+    toSerializableObject() {
+        return {
+          name: this.name,
+          beginDay: this.beginDay,
+          endDay: this.endDay,
+          beginTime: this.beginTime,
+          endTime: this.endTime
+        };
+      }
+    
+      static fromSerializableObject(data) {
+        return new Timetable(data.name, data.beginDay, data.endDay, data.beginTime, data.endTime);
+      }
  
   }
   

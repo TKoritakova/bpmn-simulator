@@ -1,18 +1,23 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useReducer } from "react";
 import BpmnViewer from 'bpmn-js';
 import { BPMNAssembler } from '../../bpmn-parsing/BPMNAssembler';
 import { Statistics } from '../../simulation/Statistics';
 import { SimulationEngine } from '../../simulation/SimulationEngine';
 import { GeneralData } from "../components/stats/GeneralData";
+import { Heatmap } from "../components/stats/Heatmap";
 
 export default function Chap3Slide4({ setSlideFinished }) {
 
   const containerWorkshopRef = useRef(null);
   const viewerWorkshopRef = useRef(null);
   const [diagram, setDiagram] = useState(null);
+  const [diagram2, setDiagram2] = useState(null);
   const [simulationRunning, setSimulationRunning] = useState(false);
   const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState({});
+  const [logs2, setLogs2] = useState([]);
+  const [stats2, setStats2] = useState({});
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   useEffect(() => {
     fetch('dilna-ver1.bpmn') 
@@ -40,21 +45,81 @@ export default function Chap3Slide4({ setSlideFinished }) {
   }, []);
 
   const runSimulation = async () => {
-      setSimulationRunning(true); 
-    
-      console.log("sim start")
-      const engine = new SimulationEngine(diagram);
-    
-      await engine.run();
-      console.log("sim stats")
-      setLogs(engine.log);
-    
-      const statistics = Statistics.createStatistics(engine.log, diagram);
-      setStats(statistics);
-  
-      console.log("sim end")
-    
-      setSimulationRunning(false);
+      
+      setSimulationRunning(true);
+
+      const worker = new Worker(
+        new URL('../../workers/simulationWorker.js', import.meta.url), // přizpůsob cestu!
+        { type: 'module' }
+      );
+
+
+      // Odešli serializovaný diagram
+      worker.postMessage({
+        diagramData: diagram.toSerializableObject()
+      });
+
+      // Získání výsledku
+      worker.onmessage = (event) => {
+        const { log, stats, error } = event.data;
+
+        if (error) {
+          console.error('Chyba ze simulace:', error);
+          setSimulationRunning(false);
+          return;
+        }
+
+        setLogs(log);
+        setStats(stats);
+
+        
+        setDiagram2(diagram.createCopyForSimulation());
+        setSimulationRunning(false);
+      };
+
+      worker.onerror = (err) => {
+        console.error('Worker selhal:', err);
+        setSimulationRunning(false);
+      };
+
+    };
+
+    const runSimulation2 = async () => {
+      
+      setSimulationRunning(true);
+
+      const worker = new Worker(
+        new URL('../../workers/simulationWorker.js', import.meta.url), // přizpůsob cestu!
+        { type: 'module' }
+      );
+
+
+      // Odešli serializovaný diagram
+      worker.postMessage({
+        diagramData: diagram2.toSerializableObject()
+      });
+
+      // Získání výsledku
+      worker.onmessage = (event) => {
+        const { log, stats, error } = event.data;
+
+        if (error) {
+          console.error('Chyba ze simulace:', error);
+          setSimulationRunning(false);
+          return;
+        }
+
+        setLogs2(log);
+        setStats2(stats);
+
+        setSimulationRunning(false);
+      };
+
+      worker.onerror = (err) => {
+        console.error('Worker selhal:', err);
+        setSimulationRunning(false);
+      };
+
     };
 
     const formatDate = (date) => {
@@ -84,6 +149,63 @@ export default function Chap3Slide4({ setSlideFinished }) {
       Weeks: 'Týdny',
     };
 
+    const getWarehouse = (diagramNumber) => {
+      let dia;
+      if (diagramNumber == 1) {
+        dia = diagram;
+      } else if (diagramNumber == 2) {
+        dia = diagram2;
+      } else {
+        return;
+      }
+
+
+      const gateway = dia.getObjectByID("Gateway_VseNaskladneno");
+      if (gateway) {
+        const probability = gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil");
+        if (probability) {
+          if (probability.probability >= 0.65) {
+            return "High"
+          } else if (probability.probability <= 0.35) {
+            return "Low"
+          } else {
+            return "Middle"
+          }
+        }
+      }
+      return null;
+    }
+    
+    const saveWarehouse = (value, diagramNumber) =>{
+      let dia;
+      if (diagramNumber == 1) {
+        dia = diagram;
+      } else if (diagramNumber == 2) {
+        dia = diagram2;
+      } else {
+        return;
+      }
+
+      const gateway = dia.getObjectByID("Gateway_VseNaskladneno");
+      if (gateway) {
+        switch (value) {
+          case "High":
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.65;
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.35;
+            break;
+          case "Low": 
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.35;
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.65;
+            break;
+          case "Middle":
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.5;
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.5;
+            break;
+        }
+ 
+      }
+    }
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -92,6 +214,13 @@ export default function Chap3Slide4({ setSlideFinished }) {
 
 
     return <div className="slide">
+      
+          {simulationRunning && (
+        <div className="simulation-overlay">
+          <p className="loading-dots">Simulace probíhá</p>
+        </div>
+      )}
+
       <div className='slide-h1-wrapper'><h1>První simulace</h1></div>
       <div className='slide-content-wrapper'>
 
@@ -106,10 +235,10 @@ export default function Chap3Slide4({ setSlideFinished }) {
       </div>
 
       <h2>Spuštění první simulace</h2>
-      <p>Scénář simulace má nastavené tyto parametry:</p>
+      <p className="explanation">V první simulaci sledujeme běžný provoz dílny. Ta má k dispozici dva mechaniky, jednoho prodejce a jednoho skladníka, kteří plní své činnosti. Skladové zásoby jsou vysoké, což znamená, že s 65% šancí jsou potřebné díly na skladě. Průměrně přichází jeden zákazník za dvanáct dní, ovšem normální rozdělení říká, že s největší pravděpodobností přijde mezi čtvrtým a dvacátým dnem. Simulace začíná v pondělí a cena je počítána v korunách. Parametry scénáře jsou přehledně vypsány zde:</p>
      
       <div className="first-simulation-container">
-      {diagram && (<form onSubmit={handleSubmit}>
+      {diagram && (<form>
         <div><label htmlFor="instances">Počet instancí:</label>         
           <input
             type="text"
@@ -165,19 +294,106 @@ export default function Chap3Slide4({ setSlideFinished }) {
             disabled
           />
         </div>
-      <button type="submit">Odeslat</button>
+        <div><label htmlFor="warehouse">Skladové zásoby:</label>                   
+          <select value={getWarehouse(1)} disabled id="warehouse">
+            <option value="Low">Nízké</option>
+            <option value="Middle">Střední</option>
+            <option value="High">Vysoké</option>
+          </select>
+        </div>
     </form>)}
     </div>
           
-      <button onClick={runSimulation} disabled={simulationRunning}>
-        {simulationRunning ? 'Simulace běží...' : 'Simuluj'}
+      <button onClick={runSimulation} disabled={simulationRunning} className="simulation-button">
+        {simulationRunning ? 'Simulace běží...' : 'Spusť simulaci'}
       </button>
 
-      {stats.general && Object.keys(stats.general).length > 0 && (
+      {stats.general && Object.keys(stats.general).length > 0 && (<div className="first-general-data-container">
+        <p className="explanation">Simulace poskytla první statistiky. V těch je možné vidět počet proběhlých instancí, celkovou cenu a celkovou dobu trvání. Dva grafy zároveň ukazují, jak byl čas v simulaci rozložen. První z nich dělí celkový čas na hodiny mimo pracovní dobu a ty v pracovní době, kam spadá jak čekání, tak samotná práce. Jejich poměr je pak lépe znázorněn na druhém grafu. Poslední jsou dvě heatmapy, které ukazují jak dlouho jednotlivé aktivity trvají vůči ostatním a jak dlouho čekají na své provedení. Stupnice je zelená (nečeká a netrvá příliš dlouho), žlutá, oranžová a červená. Dvacet instancí procesu je pro získání dobrých simulačních dat poměrně málo a při dalším spuštění simulace se mohou zásadně proměnit. Je možné si to před dalším postupem vyzkoušet - stačí znovu kliknout na tlačítko simulovat. </p>
           <GeneralData stats={stats} diagram={diagram}/>
+          <Heatmap stats={stats} diagram={diagram} file={'dilna-ver1.bpmn'}/>
+          </div>
 )}
 
-      </div>   
+
+      {diagram2 && (<form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="instances2">Počet instancí:</label>         
+          <input type="text" id="instances2" value={diagram2.getNumberOfInstances()} disabled />
+        </div>
+        <div><label htmlFor="arrivaldistribution2">Rozdělení příchodů:</label>                   
+          <select value={diagram2.getArrivalDistribution()} id="arrivaldistribution2" 
+                  onChange={(e) => {
+                    diagram2.setArrivalDistribution(e.target.value);
+                    forceUpdate();
+                  }}>
+            <option value="Fixed">Fixní</option>
+            <option value="Exponential">Exponenciální</option>
+            <option value="Normal">Normální</option>
+          </select>
+        </div>
+        <div><label htmlFor="arrivalmean2">Průměrná (střední) hodnota:</label>         
+          <input type="text" id="arrivalmean2" value={diagram.getArrivalMean()}
+            onChange={(e) => {
+              diagram2.setArrivalMean(e.target.value);
+              forceUpdate();
+            }}
+          />
+        </div>
+        {diagram2.getArrivalDistribution() == "Normal" && (<div><label htmlFor="arrivalstddeviation2">Standardní odchylka:</label>         
+          <input type="text" id="arrivalstddeviation2" value={diagram2.getArrivalStdDeviation()}
+            onChange={(e) => {
+              diagram2.setArrivalStdDeviation(e.target.value);
+              forceUpdate();
+            }}
+          />
+        </div>)}
+        <div><label htmlFor="arrivalunit2">Jednotka:</label>      
+          <select value={diagram2.getArrivalUnit()} id="arrivalunit2" 
+                    onChange={(e) => {
+                      diagram2.setArrivalUnit(e.target.value);
+                      forceUpdate();
+                    }}>
+              <option value="Second">Sekunda</option>
+              <option value="Minute">Minuta</option>
+              <option value="Hour">Hodina</option>
+              <option value="Day">Den</option>
+              <option value="Week">Týden</option>
+            </select>        
+        </div>
+        <div>
+          <label htmlFor="starttime2">Začátek simulace:</label>         
+          <input type="text" id="starttime2" value={formatDate(diagram.getStartTime())} disabled />
+        </div>
+        <div><label htmlFor="currency">Měna simulace:</label>         
+          <input type="text" id="currency" value={diagram.getCurrency() == "CZK" ? "Kč" : diagram.getCurrency()} disabled />
+        </div>
+        <div><label htmlFor="warehouse2">Skladové zásoby:</label>                   
+          <select value={getWarehouse(2)} id="warehouse2" 
+              onChange={(e) => {
+                saveWarehouse(e.target.value, 2);
+                forceUpdate();
+              }}>
+            <option value="Low">Nízké</option>
+            <option value="Middle">Střední</option>
+            <option value="High">Vysoké</option>
+          </select>
+        </div>
+      <button onClick={runSimulation2} disabled={simulationRunning}  type="submit">
+        {simulationRunning ? 'Simulace běží...' : 'Spusť simulaci'}
+      </button>
+    </form>)}
+
+    {stats2.general && Object.keys(stats2.general).length > 0 && (
+          <GeneralData stats={stats2} diagram={diagram2}/>
+)}
+
+
+
+
+    </div>
+
+    
     </div>
     ;
 }

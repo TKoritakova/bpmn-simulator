@@ -39,5 +39,8 @@ export class FlowObject extends BPMNObject {
     getOuts() {
       return this.outs;
     }
+
+    
   }
+
   

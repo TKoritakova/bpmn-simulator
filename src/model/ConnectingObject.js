@@ -28,5 +28,20 @@ export class ConnectingObject extends BPMNObject {
     setTarget(target) {
         this.target = target;
     }
+
+    toSerializableObject() {
+        return {
+          type: 'ConnectingObject',
+          description: this.description,
+          ID: this.ID,
+          source: this.source.getID(),
+          target: this.target.getID(),
+          connectionType: this.type
+        };
+      }
+    
+      static fromSerializableObject(data) {
+        return new ConnectingObject(data.description, data.ID, data.connectionType, data.source, data.target);
+      }
   }
   

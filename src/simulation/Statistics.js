@@ -9,7 +9,6 @@ export class Statistics {
         result["activites"] = this.generateActivityStatistics(log,diagram);
       
 
-        console.log(result)
 
         return result;
     }
@@ -208,39 +207,43 @@ export class Statistics {
         return result;
       }
 
-      static prepareValueForReading(value) {
+      static formatCzechUnit(count, forms) {
+        if (count === 1) return forms[0];
+        if (count >= 2 && count <= 4) return forms[1];
+        return forms[2];
+      }
 
-        if (value == null || value <= 0) return "0 sec";
-      
-        const secondsInMinute = 60;
-        const secondsInHour = 60 * secondsInMinute;
-        const secondsInDay = 24 * secondsInHour;
-        const secondsInWeek = 7 * secondsInDay;
-      
-        const weeks = Math.floor(value / secondsInWeek);
-        value %= secondsInWeek;
-      
-        const days = Math.floor(value / secondsInDay);
-        value %= secondsInDay;
-      
-        const hours = Math.floor(value / secondsInHour);
-        value %= secondsInHour;
-      
-        const minutes = Math.floor(value / secondsInMinute);
-        value %= secondsInMinute;
-      
-        const seconds = value.toFixed(0);
-      
+      static prepareValueForReading(value) {
+        if (value == null || value <= 0) return "0 sekund";
         const parts = [];
       
-        if (weeks > 0) parts.push(`${weeks} týd`);
-        if (days > 0) parts.push(`${days} dny`);
-        if (hours > 0) parts.push(`${hours} hod`);
-        if (minutes > 0) parts.push(`${minutes} min`);
-        if (seconds > 0) parts.push(`${seconds} sec`);
+        const units = [
+          { seconds: 60 * 60 * 24 * 7, name: ['týden', 'týdny', 'týdnů'] },
+          { seconds: 60 * 60 * 24, name: ['den', 'dny', 'dní'] },
+          { seconds: 60 * 60, name: ['hodina', 'hodiny', 'hodin'] },
+          { seconds: 60, name: ['minuta', 'minuty', 'minut'] },
+          { seconds: 1, name: ['sekunda', 'sekundy', 'sekund'] }
+        ];
       
-        return parts.join(" ");
+        for (const unit of units) {
+          const count = Math.floor(value / unit.seconds);
+          if (count > 0) {
+            parts.push({ count, name: this.formatCzechUnit(count, unit.name) });
+            value -= count * unit.seconds;
+          }
+        }
+ 
+        if (value > 0 && parts.length > 0) {
+          parts[parts.length - 1].count += 1;
+          parts[parts.length - 1].name = this.formatCzechUnit(parts[parts.length - 1].count, units.find(u => u.seconds === parts[parts.length - 1].seconds)?.name || []);
+        }
+      
+        const result = parts.slice(0, 2).map(p => `${p.count} ${p.name}`).join(' ');
+        return result;
       }
+      
+      
+      
 
       static convertGeneralDescriptions(value) {
 
@@ -273,8 +276,16 @@ export class Statistics {
 
         switch (description) {
           case "totalPrice":
-            return value.toFixed(2) + diagram.getCurrency();
-        
+            if (diagram.getCurrency() == "CZK") {
+              return new Intl.NumberFormat('cs-CZ', {
+                style: 'currency',
+                currency: 'CZK',
+                maximumFractionDigits: 0,
+                minimumFractionDigits: 0,
+              }).format(value);
+            } else {           
+              return value.toFixed(2) + diagram.getCurrency();
+            }
           case "totalRealExecutionTime":
           case "totalWholeDuration":
           case "totalDuration":

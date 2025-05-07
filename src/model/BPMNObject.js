@@ -24,4 +24,16 @@ export class BPMNObject {
     setID(ID) {
       this.ID = ID;
     }
+
+    toSerializableObject() {
+      return {
+        type: 'BPMNObject',
+        ID: this.ID,
+        description: this.description
+      };
+    }
+  
+    static fromSerializableObject(data) {
+      
+    }
   }

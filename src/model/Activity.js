@@ -66,4 +66,31 @@ export class Activity extends FlowObject {
   setResource(resource) {
     this.resource = resource;
   }
+
+  toSerializableObject() {
+    return {
+      type: 'Activity',
+      description: this.description,
+      ID: this.ID,
+      distribution: this.distribution,
+      mean: this.mean,
+      stdDeviation: this.stdDeviation,
+      unit: this.unit,
+      fixedCosts: this.fixedCosts,
+      resource: this.resource,
+      ins: this.ins.map(obj => obj.getID()),  
+      outs: this.outs.map(obj => obj.getID())
+    };
+  }
+
+  static fromSerializableObject(data) {
+    const obj = new Activity(data.description, data.ID, data.ins, data.outs);
+    obj.distribution = data.distribution;
+    obj.mean = data.mean;
+    obj.stdDeviation = data.stdDeviation;
+    obj.unit = data.unit;
+    obj.fixedCosts = data.fixedCosts;
+    obj.resource = data.resource;
+    return obj;
+  }
 }
