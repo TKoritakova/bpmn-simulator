@@ -333,7 +333,7 @@ export default function Chap3Slide4({ setSlideFinished }) {
           </select>
         </div>
         <div><label htmlFor="arrivalmean2">Průměrná (střední) hodnota:</label>         
-          <input type="text" id="arrivalmean2" value={diagram.getArrivalMean()}
+          <input type="text" id="arrivalmean2" value={diagram2.getArrivalMean()}
             onChange={(e) => {
               diagram2.setArrivalMean(e.target.value);
               forceUpdate();
@@ -384,8 +384,10 @@ export default function Chap3Slide4({ setSlideFinished }) {
       </button>
     </form>)}
 
-    {stats2.general && Object.keys(stats2.general).length > 0 && (
+    {stats2.general && Object.keys(stats2.general).length > 0 && (<div>
           <GeneralData stats={stats2} diagram={diagram2}/>
+          <Heatmap stats={stats2} diagram={diagram2} file={'dilna-ver1.bpmn'}/>
+          </div>
 )}
 
 

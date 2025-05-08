@@ -55,7 +55,7 @@ export default function Chap2Slide1({ setSlideFinished }) {
           <p>Modelování je tvorba zjednodušeného obrazu reality, který pomáhá lépe porozumět složitým systémům. Převádí se při něm popis procesu do modelu podle předem vydefinovaných vlastností daného procesu. Mezi ty patří pojmy vysvětlené v předchozí kapitole - aktivity, události a jejich propojení mezi sebou, dále to, jaké máme vstupy a výstupy aktivit  a jejich formu a jaké máme zdroje pro proces (lidé, technologie a další).</p>
 
           <h2>Model</h2>
-          <p>Model jako takový je abstrakce a zjednodušení problému s reálným základem. Modelem je možné snížit složitost problému tím, že z něj vybereme jen ty části reality, které s ním souvisí. Měl by mít svůj předmět, cílovou skupinu a konkrétní účel, pro který je tvořen. Nelze přímo definovat, jak vytvořit jeden nejlepší model, vždy musí být tvořen v závislosti na situaci. Máme různé druhy modelů, například:</p>
+          <p>Model jako takový je abstrakce a zjednodušení problému s reálným základem. Modelem je možné snížit složitost problému tím, že z něj vybereme jen ty části reality, které s ním souvisí. Měl by mít svůj předmět, cílovou skupinu a konkrétní účel, pro který je tvořen. Nelze přímo definovat jak vytvořit jeden nejlepší model, vždy musí být tvořen v závislosti na situaci. Máme různé druhy modelů, například:</p>
 
 
           <ul>
