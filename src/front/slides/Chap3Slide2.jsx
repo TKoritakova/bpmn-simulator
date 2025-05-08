@@ -18,7 +18,7 @@ export default function Chap3Slide2({ setSlideFinished }) {
       <div className='slide-content-wrapper'>
         {/* lit 4. - str. 303 */}
 
-        <p>Každá simulace potřebuje kromě modelu, který bude simulovat, i svá vstupní data. Těm se říká říká simulační scénář a může obsahovat tato data:</p>
+        <p>Každá simulace potřebuje kromě modelu, který bude simulovat, i svá vstupní data. Těm se říká říká simulační scénář a ten může obsahovat tato data:</p>
 
                 
         <div className='simulation-scenario-description'>
@@ -32,7 +32,7 @@ export default function Chap3Slide2({ setSlideFinished }) {
                   <li>Exponenciální - příchody se řídí exponenciálním rozdělením. Do scenáře se zadává časová jednotka průměrná hodnota času mezi dvěma příchody.</li>
                 </ul>
               <p><b>Počet instancí</b> - určuje, kolik instancí se celkem v rámci simulace spustí. Některé nástroje mohou k počtu instancí též chtít procento, kolik jich na začátku a konci vyloučit, jelikož tato data mohou být zkreslená rozjezdem a dojezdem procesu (například mají jiné časy čekání ve frontě).</p>
-              <p><b>Začátek simualce</b> - konkrétní datum a čas, od kterého se simulace spustí. Má význam pro pracovní doby zdrojů, viz. dále.</p>
+              <p><b>Začátek simualce</b> - konkrétní datum a čas, od kterého se simulace spustí. Má význam pro pracovní doby zdrojů, viz dále.</p>
               <p><b>Měna simulace</b> - měna, ve které se simulace odehrává, slouží ke spočítání nákladů.</p>
             </div>
 

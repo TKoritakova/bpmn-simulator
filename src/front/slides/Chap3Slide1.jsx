@@ -18,11 +18,11 @@ export default function Chap3Slide1({ setSlideFinished }) {
       <div className='slide-content-wrapper'>
         {/* lit 4. - str. 303 */}
 
-        <p>Simulace procesů je velmi oblíbená technika pro kvantitativní analýzu procesních modelů. Umožňuje virtuálně napodobit chování reálných procesů a jejich průběh za různých podmínek. Jejím výstupem je simulační log, ale také statistické údaje o trvání procesu, průměrných čekacích časech a průměrném využití zdrojů. Využívá se tedy k:</p>
+        <p>Simulace procesů je velmi oblíbená technika pro kvantitativní analýzu procesních modelů. Umožňuje virtuálně napodobit chování reálných procesů a jejich průběh za různých podmínek. Jejím výstupem je simulační log a také statistické údaje o trvání procesu, průměrných čekacích časech a průměrném využití zdrojů. Využívá se tedy k:</p>
 
         <ul>
           <li>Testování a optimalizaci procesů bez rizika zásahu do reality.</li>
-          <li>Predikce možných problémů a úzkých míst procesu.</li>
+          <li>Predikci možných problémů a úzkých míst procesu.</li>
           <li>Zlepšení efektivity a snížení nákladů.</li>
         </ul>
 

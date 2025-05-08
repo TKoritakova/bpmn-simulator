@@ -40,7 +40,7 @@ export default function Chap2Slide2({ setSlideFinished }) {
         <div className='slide-h1-wrapper'><h1>Notace pro modelování a BPMN</h1></div>
         <div className='slide-content-wrapper'>
 
-            <p>Model na předchozí stránce sice poskytuje vizualizaci procesu, ovšem je příliš jednoduchý a jeho tvorba nemá žádná pravidla pro to, jak co znázornit. Z těch důvodů používáme pro modelování procesů modelovací notace. Těch je celá řada a mezi nejznámější patří UML (Unified Modeling Language), EPC (Event Driven Process Chain), BPEL (Business Process Execution Language) a BPMN (Business Process Model and Notation).</p>
+            <p>Model na předchozí stránce sice poskytuje vizualizaci procesu, ovšem je příliš jednoduchý a jeho tvorba nemá žádná pravidla pro to jak co znázornit. Z těchto důvodů používáme pro modelování procesů modelovací notace. Těch je celá řada a mezi nejznámější patří UML (Unified Modeling Language), EPC (Event Driven Process Chain), BPEL (Business Process Execution Language) a BPMN (Business Process Model and Notation).</p>
 
       
             <h2>BPMN (Business Process Model and Notation)</h2>
