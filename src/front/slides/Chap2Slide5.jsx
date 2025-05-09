@@ -178,7 +178,7 @@ export default function Chap2Slide5({ setSlideFinished }) {
       {!submitted ? (
         <button onClick={handleSubmit}>Odeslat test</button>
       ) : (
-        <p><i>Test byl odeslán. Výsledky jsou uloženy.</i></p>
+        <div className="test-submitted"><p>Test byl odeslán. Výsledky jsou uloženy.</p></div>
       )}
 
         </div>

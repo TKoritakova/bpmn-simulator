@@ -166,19 +166,15 @@ export function Heatmap({ stats, diagram, file  }) {
 
 
   return (
-    <div>
-        <table style={{ width: '90%'}}>
-            <tbody>
-                <tr>
-                    <td><h3>Heatmapa - čas provádění</h3></td>
-                    <td><h3>Heatmapa - čekací doby</h3></td>
-                </tr>
-                <tr>
-                    <td><div ref={containerWorkshopRef1} style={{ width: '90%', height: '300px', border: '1px solid #ccc' }} /></td>
-                    <td><div ref={containerWorkshopRef2} style={{ width: '90%', height: '300px', border: '1px solid #ccc' }} /></td>
-                </tr>
-            </tbody>
-        </table>
+    <div className='heatmap-section-container'>
+      <div className='heatmap-container'>
+        <h3>Heatmapa - čas provádění</h3>
+        <div ref={containerWorkshopRef1} className='heatmap' />
+      </div>
+      <div className='heatmap-container'>
+        <h3>Heatmapa - čekací doby</h3>
+        <div ref={containerWorkshopRef2} className='heatmap'/>
+      </div>
     </div>
   );
 

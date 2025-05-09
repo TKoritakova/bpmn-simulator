@@ -73,7 +73,7 @@ export function GeneralData({ stats, diagram }) {
         </tr>
         <tr>
           <td>Začátek - konec:</td>
-          <td><div>{formatDate(diagram.getStartTime())} - {formatDate(new Date(diagram.getStartTime().getTime() + stats.general.totalRealExecutionTime * 1000))} ({Statistics.convertGeneralValues("totalRealExecutionTime",stats.general.totalRealExecutionTime,diagram)})</div></td>
+          <td><div>{formatDate(diagram.getStartTime())} - {formatDate(new Date(diagram.getStartTime().getTime() + stats.general.totalRealExecutionTime * 1000))} <br /> ({Statistics.convertGeneralValues("totalRealExecutionTime",stats.general.totalRealExecutionTime,diagram)})</div></td>
         </tr>
         <tr>
           <td>Celkový součet času instancí:</td>
