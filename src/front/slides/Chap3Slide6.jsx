@@ -9,7 +9,7 @@ import { ActivitiesData } from "../components/stats/ActivitiesData";
 const LOCAL_KEY_STATS = "chapter3-default-simulation-stats";
 const LOCAL_KEY_DIAGRAM = "chapter3-default-simulation-diagram";
 
-export default function Chap3Slide5({ setSlideFinished }) {
+export default function Chap3Slide6({ setSlideFinished }) {
 
   const containerWorkshopRef = useRef(null);
   const viewerWorkshopRef = useRef(null);
@@ -111,6 +111,18 @@ export default function Chap3Slide5({ setSlideFinished }) {
       return new Intl.DateTimeFormat('cs-CZ', options).format(date);
     };
 
+    const translations = {
+      Second: 'Sekunda',
+      Seconds: 'Sekundy',
+      Minute: 'Minuta',
+      Minutes: 'Minuty',
+      Hour: 'Hodina',
+      Hours: 'Hodiny',
+      Day: 'Den',
+      Days: 'Dny',
+      Week: 'Týden',
+      Weeks: 'Týdny',
+    };
 
     const getWarehouse = () => {
 
@@ -130,7 +142,28 @@ export default function Chap3Slide5({ setSlideFinished }) {
       return null;
     }
     
-   
+    const saveWarehouse = (value) =>{
+     
+      const gateway = diagram.getObjectByID("Gateway_VseNaskladneno");
+      if (gateway) {
+        switch (value) {
+          case "High":
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.65;
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.35;
+            break;
+          case "Low": 
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.35;
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.65;
+            break;
+          case "Middle":
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.5;
+            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.5;
+            break;
+        }
+ 
+      }
+    }
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -236,7 +269,11 @@ export default function Chap3Slide5({ setSlideFinished }) {
           <div><input type="text" id="currency" value={diagram.getCurrency() == "CZK" ? "Kč" : diagram.getCurrency()} disabled /></div>
         </div>
         <div><label htmlFor="warehouse">Skladové zásoby:</label>                   
-          <div><select value={getWarehouse()} id="warehouse" disabled>
+          <div><select value={getWarehouse()} id="warehouse" 
+              onChange={(e) => {
+                saveWarehouse(e.target.value);
+                forceUpdate();
+              }}>
             <option value="Low">Nízké</option>
             <option value="Middle">Střední</option>
             <option value="High">Vysoké</option>

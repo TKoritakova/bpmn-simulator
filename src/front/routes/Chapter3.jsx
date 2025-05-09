@@ -8,6 +8,7 @@ import Chap3Slide1 from '../slides/Chap3Slide1';
 import Chap3Slide2 from '../slides/Chap3Slide2';
 import Chap3Slide3 from '../slides/Chap3Slide3';
 import Chap3Slide4 from '../slides/Chap3Slide4';
+import Chap3Slide5 from '../slides/Chap3Slide5';
 
 
 
@@ -23,7 +24,7 @@ export default function Chapter3() {
   const [submitted, setSubmitted] = useState(false);
 
 
-  const slideComponents = [<Chap3Slide1 setSlideFinished={setSlideFinished} />,<Chap3Slide2 setSlideFinished={setSlideFinished} />,<Chap3Slide3 setSlideFinished={setSlideFinished} />,<Chap3Slide4 setSlideFinished={setSlideFinished} />];
+  const slideComponents = [<Chap3Slide1 setSlideFinished={setSlideFinished} />,<Chap3Slide2 setSlideFinished={setSlideFinished} />,<Chap3Slide3 setSlideFinished={setSlideFinished} />,<Chap3Slide4 setSlideFinished={setSlideFinished} />,<Chap3Slide5 setSlideFinished={setSlideFinished} />];
  
 
   useEffect(() => {

@@ -208,7 +208,7 @@ export class Statistics {
       }
 
       static formatCzechUnit(count, forms) {
-        if (count === 1) return forms[0];
+        if (count <= 1) return forms[0];
         if (count >= 2 && count <= 4) return forms[1];
         return forms[2];
       }
@@ -222,22 +222,17 @@ export class Statistics {
           { seconds: 60 * 60 * 24, name: ['den', 'dny', 'dní'] },
           { seconds: 60 * 60, name: ['hodina', 'hodiny', 'hodin'] },
           { seconds: 60, name: ['minuta', 'minuty', 'minut'] },
-          { seconds: 1, name: ['sekunda', 'sekundy', 'sekund'] }
+          { seconds: 1, name: ['sekunda', 'sekundy', 'sekund'] },
         ];
       
         for (const unit of units) {
           const count = Math.floor(value / unit.seconds);
           if (count > 0) {
-            parts.push({ count, name: this.formatCzechUnit(count, unit.name) });
-            value -= count * unit.seconds;
-          }
+          parts.push({ count, name: this.formatCzechUnit(count, unit.name) });
+          value -= count * unit.seconds;
         }
- 
-        if (value > 0 && parts.length > 0) {
-          parts[parts.length - 1].count += 1;
-          parts[parts.length - 1].name = this.formatCzechUnit(parts[parts.length - 1].count, units.find(u => u.seconds === parts[parts.length - 1].seconds)?.name || []);
         }
-      
+
         const result = parts.slice(0, 2).map(p => `${p.count} ${p.name}`).join(' ');
         return result;
       }
