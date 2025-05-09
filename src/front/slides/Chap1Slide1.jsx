@@ -45,17 +45,18 @@ export default function Chap1Slide1({ setSlideFinished }) {
 <p>Více formálně se dá říct, že proces:</p>
 
 <ul>
-        <li>je sada propojených aktivit, událostí a rozhodnutí, které přeměňují vstupy na výstupy za účelem dosažení konkrétního cíle.
+        <li>je <b>sada propojených aktivit, událostí a rozhodnutí</b>, které <b>přeměňují vstupy na výstupy</b> za účelem dosažení <b>konkrétního cíle</b>.
             <ul>
-                <li>aktivity - vždy jeden úkon, který je třeba v procesu provést</li>
-                <li>události - věci, které se dějí automaticky a nemají žádnou dobu trvání, ale spouští aktivity</li>
-                <li>rozhodnutí - místo, kde je třeba určit jakým způsobem se bude proces dále provádět</li>
+                <li><b>aktivity</b> - vždy jeden úkon, který je třeba v procesu provést</li>
+                <li><b>události</b> - věci, které se dějí automaticky a nemají žádnou dobu trvání, ale spouští aktivity</li>
+                <li><b>rozhodnutí</b> - místo, kde je třeba určit jakým způsobem se bude proces dále provádět</li>
             </ul>
         </li>
-        <li>má jasně definovaný svůj začátek a konec.</li>
-        <li>musí mít svého zákazníka, kterým může i být sama společnost, a musí pro něj mít hodnotu.</li>
+        <li>má jasně <b>definovaný svůj začátek a konec</b>.</li>
+        <li>musí mít svého <b>zákazníka</b>, kterým může i být sama společnost, a musí pro něj mít hodnotu.</li>
     </ul>
 <h2>Příklad jednoduchého procesu: Nákup v supermarketu</h2>
+<p className="explanation">Níže je umístěn příklad jednoduchého procesu, který je každý schopný si představit. Jedná se o velmi zjednodušenou verzi toho, co se při nákupu z pohledu nakupujícího děje. Každá krok má popsané, co se v něm děje, a zároveň připojených pár problémů, kterým může v daném kroku čelit. Napadají vás nějaké další?</p>
 
 <div className="easy-process">
         {steps.map((step, index) => (
@@ -78,7 +79,7 @@ export default function Chap1Slide1({ setSlideFinished }) {
         ))}
       </div>
 
-      <p className="action-label"><i>(Kliknutím na jednotlivé položky v příkladu procesu zobrazíte podrobnosti.)</i></p>
+      <p className="action-label"><i>(Kliknutím na jednotlivé položky v příkladu procesu zobrazíte jejich podrobnosti.)</i></p>
 
     </div>   </div>
     ;

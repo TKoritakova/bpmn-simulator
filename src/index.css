@@ -60,12 +60,13 @@ body {
     --basic-bg-color: whitesmoke;
     --nav-text-color: black;
     --button-bg-color: rgba(106, 174, 217,1);
-    --buton-bg-color-hover: rgba(53, 150, 212,1);
+    --button-bg-color-hover: rgba(53, 150, 212,1);
     /*--shadow-color: #44d9b49f;
     --side-nav-bg-color: rgba(245, 245, 245, 0.85);
     --nav-font: "Yanone Kaffeesatz", sans-serif;*/
     --site-font: "Noto Sans", sans-serif;
     --nav-font: "Sarala", sans-serif;
+    --explanation-color: #6aaed970;
 
     font-family: var(--site-font);
     font-weight: 400;
@@ -158,7 +159,7 @@ body {
 }
 
 .home a:hover {
-    background-color: var(--buton-bg-color-hover);
+    background-color: var(--button-bg-color-hover);
 }
 
 .sidenav {
@@ -291,7 +292,7 @@ body {
   }
 
   button:hover {
-    background-color: var(--buton-bg-color-hover);
+    background-color: var(--button-bg-color-hover);
 }
 
 .slide {
@@ -335,20 +336,19 @@ body {
 }
 
 .step-heading {
-  border: 2px solid var(--buton-bg-color-hover);
+  border: 2px solid var(--button-bg-color-hover);
   border-radius: 3px;
-  padding: 5px;
-  width: 90%;
+  width: 100%;
   position: relative;
 }
 
-.easy-process > *:not(:last-child) > .step-heading::after {
+.easy-process > *:not(:last-child) > .step-heading::before {
   content: '→';
-  color: var(--buton-bg-color-hover);
-  font-size:50px;
+  color: var(--button-bg-color);
+  font-size:2em;
   position: absolute;
-  margin-left: 45%;
-  margin-top: -52px;
+  margin-left: 47%;
+  margin-top: -0.35em;
 }
 
 .easy-process .step-heading:hover {
@@ -358,19 +358,19 @@ body {
 
 .easy-process p {
   text-align: center;
-  margin: 0px;
+  margin: 5px;
 }
 
 .easy-process .tooltip {
  
   top: 100%;
-  padding: 10px;
+  padding: 0px;
   
-  width: 84%;
-  margin-top: -2px;
+  width: 98%;
+  margin-top: -1.5px;
   margin-bottom: 15px;
   font-size: 14px;
-  border: solid 2px var(--buton-bg-color-hover);
+  border: solid 2px var(--button-bg-color-hover);
   background-color: var(--button-bg-color);
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -453,9 +453,13 @@ body {
 }
 
 .option-explanation, .explanation {
-  background-color: #6aaed970;
+  background-color: var(--explanation-color);
   padding: 8px 15px;
   border-radius: 3px;
+}
+
+.explanation {
+  font-style: italic;
 }
 
 .options {
@@ -470,7 +474,7 @@ body {
   padding: 10px;
  
 
-  border: solid 2px var(--buton-bg-color-hover);
+  border: solid 2px var(--button-bg-color-hover);
   background-color: var(--button-bg-color);
   border-radius: 3px;
   cursor:pointer;
@@ -479,7 +483,7 @@ body {
 }
 
 .options p:hover {
-  background-color: var(--buton-bg-color-hover);
+  background-color: var(--button-bg-color-hover);
 }
 
 .slide-content-wrapper {
@@ -523,19 +527,20 @@ p.heading-tooltip {
   background-color: var(--button-bg-color);
   border-radius: 3px;
   cursor: pointer;
-  width:90%;
+  width:95%;
   text-align: center;
   margin-bottom: 0px;
 }
 
+
 .heading-tooltip:hover {
-  background-color: var(--buton-bg-color-hover);
+  background-color: var(--button-bg-color-hover);
 }
 
 .text-tooltip-container .tooltip {
   color: var(--nav-text-color); 
-  background-color: #6aaed970;
-  width: 90%;
+  background-color: var(--explanation-color);
+  width: 95%;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
 
@@ -565,7 +570,7 @@ p.heading-tooltip {
   padding: 5px 10px;
   font-weight: bolder;
   color: var(--nav-text-color); 
-  background-color: #6aaed970;
+  background-color: var(--explanation-color);
   width: 100%;
   border-radius: 3px;
 
@@ -622,7 +627,7 @@ p.heading-tooltip {
 
 
 .question-answers-wrapper input[type="radio"]:focus {
-  outline: 3px solid #6aaed970;
+  outline: 3px solid var(--explanation-color);
   outline-offset: 0;
 }
 
@@ -670,7 +675,7 @@ p.heading-tooltip {
 .metrics-content {
   width:90%;
   color: var(--nav-text-color); 
-  background-color: #6aaed970;
+  background-color: var(--explanation-color);
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   padding: 0px 20px;
@@ -748,7 +753,7 @@ p.action-label {
 .diagram-description-item, .simulation-scenario-description-item {
   width:95%;
   color: var(--nav-text-color); 
-  background-color: #6aaed970;
+  background-color: var(--explanation-color);
   border-radius: 3px;
   padding: 5px 10px;
   font-size: 17px;
@@ -883,4 +888,10 @@ button.simulation-button {
 
 .table-general {
   max-width: 70%;
+}
+
+.test-submitted {
+  display: flex;
+  justify-content: center;
+  font-style: italic;
 }
