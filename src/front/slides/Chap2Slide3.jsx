@@ -106,10 +106,12 @@ export default function Chap2Slide3({ setSlideFinished }) {
             <p><i>Modelování v BPMN je komplexní a jeho plné pochopení a naučení se všech pravidel přesahuje rozsah této aplikace. Pro zachování jednoduchosti bylo vybráno několik základních prvků a pravidel notace potřebných pro pochopení dalších lekcí.</i></p>
 
             <div className='bpmn-diagram-description-wrapper'>
-                <div className='bpmn-diagram-wrapper'><div
+                <div className='bpmn-diagram-wrapper'>
+                    <div
                     ref={containerElementsRef}
                     className='bpmn-diagram-basics'
-                /></div>
+                    />
+                </div>
                 <div className='diagram-description'>
                     {/* lit. 5 - str. 43 */}
                     <div className='diagram-description-item'><p><b>Aktivity</b> - základní elementy každého procesu. Představují práci, nějaký úkol, který je třeba vykonat pro získání chtěných výstupů. Většinou se pojmenovávají jako sloveso v infinitivu + podstatné jméno, např. odeslat zprávu nebo vybrat zboží. V diagramu vypadá jako obdélník.</p></div>
@@ -125,10 +127,10 @@ export default function Chap2Slide3({ setSlideFinished }) {
                             <li><b>Časovač</b> - událost, která pracuje s reálným časem. Použít se dá například pro spuštění procesu v určitý čas, jednorázově či opakovaně, pro vyčkání na příchod určitého času v procesu nebo pro čekání, až uplyne určitý časový interval. Značí se přidáním symbolu hodin do kruhu události.</li>
                         </ul>
                     </div>
-                    <div className='diagram-description-item'><p><b>Rozhodovací brány</b> - elementy, které podle podmínek na základě dat dostupných v procesu, větví proces. Značí se kosočtvercem a též je jich více druhů, například:</p>
+                    <div className='diagram-description-item'><p><b>Rozhodovací větvení</b> - elementy, které podle podmínek na základě dat dostupných v procesu, větví proces. Značí se kosočtvercem a též je jich více druhů, například:</p>
                         <ul>
-                            <li><b>Exkluzivní brána (XOR)</b> - brána, která se podle dat rozhodne, kterou z výstupních cest použije, přičemž vybírá vždy jen jednu z nich. Od jiných bran se liší přidáním X do kosočtverce a v diagramu ji většinou doplníme otázkou.</li>
-                            <li><b>Paralelní brána (AND)</b> - brána, která aktivuje všechny své výstupní cesty a používá se pro paralelizaci. V diagramu se značí přidáním plus do kosočtverce.</li>
+                            <li><b>Exkluzivní větvení (XOR)</b> - větvení, která se podle dat rozhodne, kterou z výstupních cest použije, přičemž vybírá vždy jen jednu z nich. Od jiných bran se liší přidáním X do kosočtverce a v diagramu ji většinou doplníme otázkou.</li>
+                            <li><b>Paralelní větvení (AND)</b> - větvení, která aktivuje všechny své výstupní cesty a používá se pro paralelizaci. V diagramu se značí přidáním plus do kosočtverce.</li>
                         </ul>
                     </div>
                     <div className='diagram-description-item'><p><b>Sekvenční toky</b> - představují logické a časové propojení jednotlivých aktivit, jejich návaznost. V diagramu vypadají jako šipky začínající v jednom elementu a končící v druhém, který na něj navazuje.</p></div>
@@ -136,8 +138,8 @@ export default function Chap2Slide3({ setSlideFinished }) {
 
             </div>
 
-            <h2>Příklad - proces nákupu</h2>
-            <p className='action-label'><i>Prohlédněte si upravený diagram procesu nákupu v supermarketu. Níže vyberte všechny problémy popsané na začátku předchozí lekce, se kterými tento diagram pracuje.</i></p>
+            <h2>Příklad: Proces nákupu v supermarketu</h2>
+            <p className='explanation'>Prohlédněte si upravený diagram procesu nákupu v supermarketu. Ten se v tomto případě zaměřuje pouze na pohled zákazníka, což je zcela v pořádku, protože procesy mohou mít různou úroveň míry detailu pro jeden či více zdrojů. Po prohlédnutí diagramu vyberte níže všechny problémy uvedené v první vizualizaci procesu, které popisují, co se může zákazníkovi v původních čtyřech krocích přihodit, se kterými tento diagram pracuje a je o jejich řešení rozšířen.</p>
 
             <div className='bpmn-diagram-wrapper'><div
                     ref={containerSupermarketRef}

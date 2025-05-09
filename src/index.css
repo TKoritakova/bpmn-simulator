@@ -698,6 +698,7 @@ p.action-label {
 .bpmn-diagram-wrapper {
   display: flex;
   justify-content: center;
+
 }
 
 .bpmn-diagram-easyprocess {

@@ -67,15 +67,15 @@ export default function Chap2Slide5({ setSlideFinished }) {
       options: {
         a: "Událost",
         b: "Zprávový tok",
-        c: "Paralelní brána",
-        d: "Exkluzivní brána",
+        c: "Paralelní větvení",
+        d: "Exkluzivní větvení",
       },
       correct: "c",
-      explanation: "Mezi události se počítají i spouštěcí a koncové události, tedy tento element se v procesu vyskytuje. Zprávový tok je použit placení u klasické pokladny a vyřízení reklamace. Všechny použité brány jsou exkluzivní, takže správnou odpovědí je, že model neobsahuje paralelní bránu."
+      explanation: "Mezi události se počítají i spouštěcí a koncové události, tedy tento element se v procesu vyskytuje. Zprávový tok je použit placení u klasické pokladny a vyřízení reklamace. Všechny použité větvení jsou exkluzivní, takže správnou odpovědí je, že model neobsahuje paralelní větvení."
     },
     {
         id: 2,
-        question: "K čemu v modelu slouží exkluzivní brána s otázkou „Je zboží dostupné?“?",
+        question: "K čemu v modelu slouží exkluzivní větvení s otázkou „Je zboží dostupné?“?",
         options: {
           a: "Rozhoduje, jestli zákazník opustí supermarket.",
           b: "Rozhoduje, jestli zákazník může vložit dané zboží do košíku.",
@@ -83,11 +83,11 @@ export default function Chap2Slide5({ setSlideFinished }) {
           d: "Rozhoduje, jestli zákazník bude spokojený.",
         },
         correct: "b",
-        explanation: "Brána se nachází na samém začátku modelu ve fázi vybírání zboží a slouží k určení toho, jestli zákazník najde danou položku v regálech. Ostatní možnosti popisují jiná místa v modelu nebo se v něm vůbec nevyskytují."
+        explanation: "větvení se nachází na samém začátku modelu ve fázi vybírání zboží a slouží k určení toho, jestli zákazník najde danou položku v regálech. Ostatní možnosti popisují jiná místa v modelu nebo se v něm vůbec nevyskytují."
       },
       {
         id: 3,
-        question: "Která z následujících věcí je vykonána pouze v případě, že zaměstnanec špatně naskenuje položky nákupu?",
+        question: "Která z následujících aktivit je vykonána pouze v případě, že zaměstnanec špatně naskenuje položky nákupu?",
         options: {
           a: "Zaplatit u samoobslužné pokladny",
           b: "Zkontrolovat nákup",
@@ -95,7 +95,7 @@ export default function Chap2Slide5({ setSlideFinished }) {
           d: "Vyřídit reklamaci"
         },
         correct: "d",
-        explanation: "Z otázky je patrné, že činnost musí být po fázi placení, čímž se automaticky vyloučí všechny možnosti, které jsou před ním, tedy vkládání zboží do košíku a zaplacení u samoobslužné pokladny. Kontrola nákupu se odehraje po platbě u klasické poklady vždy a na základě jejího výsledku se rozhoduje, jestli dojde k reklamaci. K té se přistoupí právě v okamžiku, kdy je nákup špatně naskenován."
+        explanation: "Z otázky je patrné, že aktivita musí být po fázi placení, čímž se automaticky vyloučí všechny možnosti, které jsou před ním, tedy vkládání zboží do košíku a zaplacení u samoobslužné pokladny. Kontrola nákupu se odehraje po platbě u klasické poklady vždy a na základě jejího výsledku se rozhoduje, jestli dojde k reklamaci. K té se přistoupí právě v okamžiku, kdy je nákup špatně naskenován."
       },
       {
         id: 4,
@@ -113,7 +113,7 @@ export default function Chap2Slide5({ setSlideFinished }) {
       },
       {
         id: 5,
-        question: "Co se stane po zaplacení na klasické pokladně, pokud je vše v pořádku?",
+        question: "Co se stane po dokončení aktivity zaplacení na klasické pokladně, pokud je vše v pořádku?",
         options: {
           a: "Zákazník jde reklamovat nákup.",
           b: "Proces začne od začátku.",
@@ -127,13 +127,13 @@ export default function Chap2Slide5({ setSlideFinished }) {
         id: 6,
         question: "Jak model co nejlépe upravit, aby řešil i následující: pokud zákazník nemá dostupný preferovaný produkt, hledá nejprve jeho alternativy než se případně posune na další produkt; zákazník si volí pokladnu podle toho, kde je nejmenší fronta; pokud na začátku nejsou dostupné košíky, zákazník čeká, až budou dostupné.",
         options: {
-          a: "Na začátek procesu se přidá exkluzivní brána, která se bude ptát, zda jsou dostupné košíky. Pokud ano, bude aktivována cesta k existující bráně zjišťující, zda je dostupné zboží. Pokud ne, bude aktivována cesta k časovači, který bude vyčkávat na volné košíky, a následně se též napojí na existující bránu o dostupnosti zboží. Větev o nedostupnosti zboží z této brány rozšíříme o aktivitu hledání alternativy. Před výběr způsobu platby přidáme aktivitu kontroly délky front a stávající exkluzivní bránu upravíme tak, aby reagovala na délku fronty změnou její otázky.",
-          b: "Na začátek procesu se přidá paralelní brána. Jedna její větev bude aktivovat cestu k existující bráně zjišťující, zda je dostupné zboží. Druhá bude mít cestu k časovači, který bude vyčkávat na volné košíky a jakmile bude nějaký volný, vezme si ho. Obě větve se spojí před výběrem způsobu platby, kam přidáme aktivitu kontroly délky front a stávající exkluzivní bránu upravíme tak, aby reagovala na délku fronty změnou její otázky.",
-          c: "Na začátek procesu se přidá aktivita vyčkat na košík. Větev o nedostupnosti zboží z první exkluzivní brány rozšíříme o aktivitu hledání alternativy, za kterou ještě umístíme ještě exkluzivní bránu. Ta se bude ptát, jestli zákazník zboží našel a zda ho chce, pokud ano, zboží vloží do košíku. Jinak pokračuje k další položce nákupního seznamu. Před výběr způsobu platby přidáme aktivitu kontroly délky front.",
-          d: "Na začátek procesu se přidá aktivita vyčkat na košík následovaná aktivitou vzít si košík. Větev o nedostupnosti zboží rozšíříme o exkluzivní bránu, která bude řešit, zda je dostupná alternativa. Pokud ano, vložíme ji do košíku, pokud ne, pokračujeme k další položce nákupu. Před placením na klasické pokladně přidáme aktivitu kontroly délky front.",
+          a: "Na začátek procesu se přidá exkluzivní větvení, která se bude ptát, zda jsou dostupné košíky. Pokud ano, bude aktivována cesta k existujícímu větvení zjišťujícímu, zda je dostupné zboží. Pokud ne, bude aktivována cesta k časovači, který bude vyčkávat na volné košíky, a následně se též napojí na existující větvení o dostupnosti zboží. Větev o nedostupnosti zboží z tohoto větvení rozšíříme o aktivitu hledání alternativy. Před výběr způsobu platby přidáme aktivitu kontroly délky front a stávající exkluzivní větvení upravíme tak, aby reagovalo na délku fronty změnou jeho otázky.",
+          b: "Na začátek procesu se přidá paralelní větvení. Jedna její větev bude aktivovat cestu k existujícímu větvení zjišťujícímu, zda je dostupné zboží. Druhá bude mít cestu k časovači, který bude vyčkávat na volné košíky a jakmile bude nějaký volný, vezme si ho. Obě větve se spojí před výběrem způsobu platby, kam přidáme aktivitu kontroly délky front a stávající exkluzivní větvení upravíme tak, aby reagovalo na délku fronty změnou jeho otázky.",
+          c: "Na začátek procesu se přidá aktivita vyčkat na košík. Větev o nedostupnosti zboží z prvního exkluzivního větvení rozšíříme o aktivitu hledání alternativy, za kterou ještě umístíme ještě exkluzivní větvení. To se bude ptát, jestli zákazník zboží našel a zda ho chce, pokud ano, zboží vloží do košíku. Jinak pokračuje k další položce nákupního seznamu. Před výběr způsobu platby přidáme aktivitu kontroly délky front.",
+          d: "Na začátek procesu se přidá aktivita vyčkat na košík následovaná aktivitou vzít si košík. Větev o nedostupnosti zboží rozšíříme o exkluzivní větvení, které bude řešit, zda je dostupná alternativa. Pokud ano, vložíme ji do košíku, pokud ne, pokračujeme k další položce nákupu. Před placením na klasické pokladně přidáme aktivitu kontroly délky front.",
         },
         correct: "a",
-        explanation: "Z nabízených možností je nejlepší možnost A, která nějakým způsobem plní alespoň částečně všechny požadavky. Možnost B řeší dostupnost košíků nesprávným způsobem, protože zákazník na košík nečeká a jde rovnou nakupovat, stejně jako vůbec nezohledňuje hledání alternativních produktů. Možnost C má na začátku aktivitu vyčkat na košík, což by v ideálním případě měl být spíše časovač. Zároveň přisuzuje jedné bráně dvě rozhodnutí, což by mělo být řešeno dvěmi, a nakonec sice kontroluje délku front, ale už na základě této informace nic nedělá. Možnost D má obdobný problém na začátku jako možnost C, dále pak kontroluje délku front jen u platby u klasické pokladny a u samoobslužné ji nezohledňuje."
+        explanation: "Z nabízených možností je nejlepší možnost A, která nějakým způsobem plní alespoň částečně všechny požadavky. Možnost B řeší dostupnost košíků nesprávným způsobem, protože zákazník na košík nečeká a jde rovnou nakupovat, stejně jako vůbec nezohledňuje hledání alternativních produktů. Možnost C má na začátku aktivitu vyčkat na košík, což by v ideálním případě měl být spíše časovač. Zároveň přisuzuje jednomu větvení dvě rozhodnutí, což by mělo být řešeno dvěmi, a nakonec sice kontroluje délku front, ale už na základě této informace nic nedělá. Možnost D má obdobný problém na začátku jako možnost C, dále pak kontroluje délku front jen u platby u klasické pokladny a u samoobslužné ji nezohledňuje."
       },
   ];
 
