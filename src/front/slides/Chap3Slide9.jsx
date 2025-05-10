@@ -197,7 +197,7 @@ export default function Chap3Slide8({ setSlideFinished }) {
                     info.setBeginDay(value % 7)
                     forceUpdate();
                   }
-                } })}>0
+                } })}>
                   <option value="1">Pondělí</option>
                   <option value="2">Úterý</option>
                   <option value="3">Středa</option>
@@ -324,7 +324,7 @@ export default function Chap3Slide8({ setSlideFinished }) {
         <form onSubmit={handleSubmit} className="simulation-form simulation-timetables">       
           {DisplayTimetables}
         
-          <button onClick={addTimetable} disabled={simulationRunning}  type="submit" className="simulation-button">
+          <button onClick={addTimetable}  type="submit" className="simulation-button">
             Přidat pracovní dobu
           </button>
 

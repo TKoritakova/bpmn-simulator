@@ -147,9 +147,9 @@ export default function Chap3Slide8({ setSlideFinished }) {
       {diagram && diagramFirstSimulation && statsFirstSimulation && (<form onSubmit={handleSubmit} className="simulation-form">
         
         
-        <div><label htmlFor="arrivalmean">Obchodní oddělení</label>         
+        <div><label htmlFor="resource-sales">Obchodní oddělení</label>         
           <div>
-            <input type="number" id="arrivalmean" value={diagram.getObjectByID("Lane_ObchodniOddeleni").getNumber()} 
+            <input type="number" id="resource-sales" value={diagram.getObjectByID("Lane_ObchodniOddeleni").getNumber()} 
               onChange={(e) => {
                 const value = Number(e.target.value);
                 if (value >= 1 && value <= 10) {
@@ -160,9 +160,9 @@ export default function Chap3Slide8({ setSlideFinished }) {
             />
           </div>
         </div>
-        <div><label htmlFor="arrivalmean2">Sklad</label>         
+        <div><label htmlFor="resource-warehouse">Sklad</label>         
           <div>
-            <input type="number" id="arrivalmean2" value={diagram.getObjectByID("Lane_Sklad").getNumber()} 
+            <input type="number" id="resource-warehouse" value={diagram.getObjectByID("Lane_Sklad").getNumber()} 
               onChange={(e) => {
                 const value = Number(e.target.value);
                 if (value >= 1 && value <= 10) {
@@ -173,9 +173,9 @@ export default function Chap3Slide8({ setSlideFinished }) {
             />
           </div>
         </div>
-        <div><label htmlFor="arrivalmean3">Dílna</label>         
+        <div><label htmlFor="resource-workshop">Dílna</label>         
           <div>
-            <input type="number" id="arrivalmean3" value={diagram.getObjectByID("Lane_Dilna").getNumber()} 
+            <input type="number" id="resource-workshop" value={diagram.getObjectByID("Lane_Dilna").getNumber()} 
               onChange={(e) => {
                 const value = Number(e.target.value);
                 if (value >= 1 && value <= 10) {

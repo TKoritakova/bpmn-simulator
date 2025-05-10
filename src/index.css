@@ -919,12 +919,13 @@ button.simulation-button {
   border: 1px solid var(--explanation-color);
 }
 
-.simulation-form {
+.simulation-form, .final-simulation-form {
   margin-bottom: 50px;
 }
 
 
-.simulation-form > *:not(:last-child) {
+.simulation-form > *:not(:last-child),
+.final-simulation-form > * {
   display: flex;
   gap: 10px;
   justify-content: center;
@@ -932,16 +933,21 @@ button.simulation-button {
   margin-bottom: 5px;
 }
 
-.simulation-form > *:not(:last-child) > * {
+
+
+.simulation-form > *:not(:last-child) > *,
+.final-simulation-form > * > * {
   flex: 1;
 }
 
-.simulation-form > *:not(:last-child) > *:last-child {
+.simulation-form > *:not(:last-child) > *:last-child,
+.final-simulation-form > * > *:last-child {
   display: flex;
   
 }
 
-.simulation-form label {
+.simulation-form label,
+.final-simulation-form label {
   text-align: right;
 }
 
@@ -949,8 +955,12 @@ button.simulation-button {
 .simulation-form input[type=text], 
 .simulation-form input[type=datetime-local],
 .simulation-form input[type=time],
-.simulation-form select {
-  
+.simulation-form select,
+.final-simulation-form input[type=number], 
+.final-simulation-form input[type=text], 
+.final-simulation-form input[type=datetime-local],
+.final-simulation-form input[type=time],
+.final-simulation-form select {
   
   border: 2px solid var(--button-bg-color);
   border-radius: 3px;
@@ -962,14 +972,19 @@ button.simulation-button {
   width: 200px;
 }
 
-.simulation-form select {
+.simulation-form select,
+.final-simulation-form select {
   width: 223px;
 }
 
 .simulation-form input[type=number]:disabled, 
 .simulation-form input[type=text]:disabled, 
 .simulation-form input[type=time]:disabled,
-.simulation-form select:disabled {
+.simulation-form select:disabled,
+.final-simulation-form input[type=number]:disabled, 
+.final-simulation-form input[type=text]:disabled, 
+.final-simulation-form input[type=time]:disabled,
+.final-simulation-form select:disabled {
   border: 2px solid #c5c5c5;
   color: #c5c5c5;
   background-color: var(--basic-bg-color);
@@ -1024,10 +1039,42 @@ button.simulation-button {
 }
 
 .simulation-form-resources {
-  width:95%;
+ 
   display: flex;
+  width:95%
+
 }
 
 .simulation-form-resources > *  {
   flex: 1;
+}
+
+
+.final-form-heading h3 {
+  justify-content: center;
+}
+
+.final-form-button-timetable {
+  justify-content: center;
+}
+
+p.resource-description {
+  text-align: right;
+  font-weight: bold;
+}
+
+
+
+.final-simulation-form-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border: 1px solid var(--explanation-color);
+  padding: 10px;
+  border-radius:3px;
+  align-items: center;
+}
+
+.simulation-form-resources label {
+  margin-right: 10px;
 }

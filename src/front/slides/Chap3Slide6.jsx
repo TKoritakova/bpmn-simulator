@@ -115,18 +115,6 @@ export default function Chap3Slide6({ setSlideFinished }) {
       return new Intl.DateTimeFormat('cs-CZ', options).format(date);
     };
 
-    const translations = {
-      Second: 'Sekunda',
-      Seconds: 'Sekundy',
-      Minute: 'Minuta',
-      Minutes: 'Minuty',
-      Hour: 'Hodina',
-      Hours: 'Hodiny',
-      Day: 'Den',
-      Days: 'Dny',
-      Week: 'Týden',
-      Weeks: 'Týdny',
-    };
 
     const getWarehouse = () => {
 

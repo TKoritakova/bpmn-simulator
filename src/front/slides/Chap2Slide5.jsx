@@ -83,7 +83,7 @@ export default function Chap2Slide5({ setSlideFinished }) {
           d: "Rozhoduje, jestli zákazník bude spokojený.",
         },
         correct: "b",
-        explanation: "větvení se nachází na samém začátku modelu ve fázi vybírání zboží a slouží k určení toho, jestli zákazník najde danou položku v regálech. Ostatní možnosti popisují jiná místa v modelu nebo se v něm vůbec nevyskytují."
+        explanation: "Větvení se nachází na samém začátku modelu ve fázi vybírání zboží a slouží k určení toho, jestli zákazník najde danou položku v regálech. Ostatní možnosti popisují jiná místa v modelu nebo se v něm vůbec nevyskytují."
       },
       {
         id: 3,
