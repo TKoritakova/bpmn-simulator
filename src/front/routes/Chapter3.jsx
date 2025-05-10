@@ -9,7 +9,10 @@ import Chap3Slide2 from '../slides/Chap3Slide2';
 import Chap3Slide3 from '../slides/Chap3Slide3';
 import Chap3Slide4 from '../slides/Chap3Slide4';
 import Chap3Slide5 from '../slides/Chap3Slide5';
-
+import Chap3Slide6 from '../slides/Chap3Slide6';
+import Chap3Slide7 from '../slides/Chap3Slide7';
+import Chap3Slide8 from '../slides/Chap3Slide8';
+import Chap3Slide9 from '../slides/Chap3Slide9';
 
 
 const STORAGE_CURRENT = 'chapter3_current_slide';
@@ -24,7 +27,7 @@ export default function Chapter3() {
   const [submitted, setSubmitted] = useState(false);
 
 
-  const slideComponents = [<Chap3Slide1 setSlideFinished={setSlideFinished} />,<Chap3Slide2 setSlideFinished={setSlideFinished} />,<Chap3Slide3 setSlideFinished={setSlideFinished} />,<Chap3Slide4 setSlideFinished={setSlideFinished} />,<Chap3Slide5 setSlideFinished={setSlideFinished} />];
+  const slideComponents = [<Chap3Slide1 setSlideFinished={setSlideFinished} />,<Chap3Slide2 setSlideFinished={setSlideFinished} />,<Chap3Slide3 setSlideFinished={setSlideFinished} />,<Chap3Slide4 setSlideFinished={setSlideFinished} />,<Chap3Slide5 setSlideFinished={setSlideFinished} />,<Chap3Slide6 setSlideFinished={setSlideFinished} />,<Chap3Slide7 setSlideFinished={setSlideFinished} />,<Chap3Slide8 setSlideFinished={setSlideFinished} />,<Chap3Slide9 setSlideFinished={setSlideFinished} />];
  
 
   useEffect(() => {

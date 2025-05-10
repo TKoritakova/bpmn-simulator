@@ -32,14 +32,14 @@ export default function Chap3Slide2({ setSlideFinished }) {
                   <li><b>Exponenciální</b> - vytváření nových instancí se řídí exponenciálním rozdělením. Toto rozdělení má křivku, která je nejstrmější na začátku a proto se většina je větší pravděpodobnost, že nová instance bude vytvořena tam, spíše než později - čím déle se čeká, tím menší pravděpodobnost výskytu je. Do scenáře se zadává časová jednotka průměrná hodnota frevence příchodů - například dvě instance za minutu. To znamená, že většina nových instancí se vyskytne do 30 sekund od té předchozí. Může se však stát, že to bude až po minutě a půl, ovšem je to málo pravděpodobné. Naopak případ do deseti sekund je velmi pravděpodobný.</li>
                 </ul>
               <p><b>Počet instancí</b> - určuje, kolik instancí se celkem v rámci simulace spustí. Některé nástroje mohou k počtu instancí též chtít procento, kolik jich na začátku a konci vyloučit, jelikož tato data mohou být zkreslená rozjezdem a dojezdem procesu (například mají jiné časy čekání ve frontě).</p>
-              <p><b>Začátek simualce</b> - konkrétní datum a čas, od kterého se simulace spustí. Má význam pro pracovní doby zdrojů, viz dále.</p>
+              <p><b>Začátek simulace</b> - <b>konkrétní datum a čas</b>, od kterého se simulace spustí. Má význam pro pracovní doby zdrojů, viz dále.</p>
               <p><b>Měna simulace</b> - měna, ve které se simulace odehrává, slouží ke spočítání nákladů.</p>
             </div>
 
 
             <div className='simulation-scenario-description-item'>
               <h2>Zdroje</h2>
-              <p>Zdroje jsou lidé či role, kteří na projektu pracují - tedy jsou to účastníci procesu. Taktéž to mohou být systémy, tedy jakékoliv aktivní zdroje definované při tvorbě procesu. Mohou být shodné s bazény a dráhami v modelu. Každému zdroji se nastaví jeho <b>jméno</b>, <b>kapacita</b> (tedy například kolik prodavačů je k dispozici), <b>mzda</b> za časový údaj a <b>pracovní doba</b>.</p>           
+              <p>Zdroje jsou lidé či role, kteří na procesu pracují - tedy jsou to účastníci procesu. Taktéž to mohou být systémy, tedy jakékoliv aktivní zdroje definované při tvorbě procesu. Mohou být shodné s bazény a dráhami v modelu. Každému zdroji se nastaví jeho <b>jméno</b>, <b>kapacita</b> (tedy například kolik prodavačů je k dispozici), <b>mzda</b> za časový údaj a <b>pracovní doba</b>.</p>           
             </div>
 
             <div className='simulation-scenario-description-item'>

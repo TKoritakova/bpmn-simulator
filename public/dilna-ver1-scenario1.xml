@@ -38,7 +38,7 @@
         <name>Default</name>
         <beginday>Monday</beginday>
         <endday>Friday</endday>
-        <begintime>9:00</begintime>
+        <begintime>09:00</begintime>
         <endtime>17:00</endtime>
     </timetable>
 

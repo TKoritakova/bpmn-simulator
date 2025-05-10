@@ -3,7 +3,7 @@ import { Statistics } from '../../../simulation/Statistics';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend  } from 'recharts';
 
 
-export function GeneralData({ stats, diagram }) {
+export function GeneralDataWithWeeklyCosts({ stats, diagram }) {
   
   const data = [
     { name: 'Čekání', value: stats.general.totalWaitingForExecution },
@@ -45,7 +45,23 @@ export function GeneralData({ stats, diagram }) {
     return new Intl.DateTimeFormat('cs-CZ', options).format(date);
   };
 
- 
+ const getWeeklyCosts = (stats) => {
+      let weeks = stats.general.totalRealExecutionTime / (60 * 60 * 24 * 7);
+      let costs = stats.general.totalPrice;
+      return costs/weeks;
+ };
+
+  const getWeeklyCosts2 = (stats, diagram) => {
+      let weeks = stats.general.totalRealExecutionTime / (60 * 60 * 24 * 7);
+      let costs = 0;
+      for (let key in stats.resources) {
+        let participant = stats.resources[key];
+    
+        costs += (participant.allShiftsLenght / 3600) * diagram.getObjectByID(participant.id).getCost();
+      }
+   
+      return costs/weeks;
+ };
 
   return (
     <div>
@@ -70,6 +86,18 @@ export function GeneralData({ stats, diagram }) {
         <tr>
           <td>Celková cena:</td>
           <td>{Statistics.convertGeneralValues("totalPrice",(stats.general.totalPrice+stats.general.totalWarehouse),diagram)} <br /> (z toho náklady na sklad: {Statistics.convertGeneralValues("totalPrice",stats.general.totalWarehouse,diagram)})</td>
+        </tr>
+        <tr>
+          <td>Týdenní mzdové náklady (jen odpracované aktivity):</td>
+          <td>
+            {Statistics.convertGeneralValues("totalPrice",getWeeklyCosts(stats),diagram)} 
+            </td>
+        </tr>
+        <tr>
+          <td>Týdenní mzdové náklady (skutečně vyplacená částka):</td>
+          <td>
+            {Statistics.convertGeneralValues("totalPrice",getWeeklyCosts2(stats, diagram),diagram)} 
+            </td>
         </tr>
         <tr>
           <td>Začátek - konec:</td>

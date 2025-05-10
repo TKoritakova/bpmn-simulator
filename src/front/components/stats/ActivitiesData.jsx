@@ -1,24 +1,9 @@
-import React, { useEffect, useRef, useState, PureComponent } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Statistics } from '../../../simulation/Statistics';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend  } from 'recharts';
 
 
 export function ActivitiesData({ stats }) {
   
-
-  const formatDate = (date) => {
-    const options = {
-      weekday: 'short',   
-      day: 'numeric',       
-      month: 'numeric',     
-      year: 'numeric',      
-      hour: 'numeric',      
-      minute: '2-digit',    
-      hour12: false        
-    };
-  
-    return new Intl.DateTimeFormat('cs-CZ', options).format(date);
-  };
 
     const DisplayData = Object.entries(stats.activites || {}).map(
       ([activityID, info], index) => (

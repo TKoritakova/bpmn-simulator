@@ -945,7 +945,11 @@ button.simulation-button {
   text-align: right;
 }
 
-.simulation-form input[type=number], .simulation-form input[type=text], .simulation-form select {
+.simulation-form input[type=number], 
+.simulation-form input[type=text], 
+.simulation-form input[type=datetime-local],
+.simulation-form input[type=time],
+.simulation-form select {
   
   
   border: 2px solid var(--button-bg-color);
@@ -962,7 +966,10 @@ button.simulation-button {
   width: 223px;
 }
 
-.simulation-form input[type=number]:disabled, .simulation-form input[type=text]:disabled, .simulation-form select:disabled {
+.simulation-form input[type=number]:disabled, 
+.simulation-form input[type=text]:disabled, 
+.simulation-form input[type=time]:disabled,
+.simulation-form select:disabled {
   border: 2px solid #c5c5c5;
   color: #c5c5c5;
   background-color: var(--basic-bg-color);
@@ -984,4 +991,43 @@ button.simulation-button {
 .table-activities > thead > *:last-child > th:nth-child(3),
 .table-activities > thead > *:last-child > th:nth-child(6) {
   border-right: 2px solid var(--nav-text-color);
+}
+
+.utilization-graphs {
+  display: flex;
+  flex-wrap: wrap;
+  gap:10px;
+  justify-content: center;
+}
+
+.simulation-form-timetables {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border: 1px solid var(--explanation-color);
+  padding: 10px;
+  border-radius:3px;
+}
+
+.simulation-form-timetables > * {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.simulation-timetables {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.simulation-form-resources {
+  width:95%;
+  display: flex;
+}
+
+.simulation-form-resources > *  {
+  flex: 1;
 }

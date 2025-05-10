@@ -5,13 +5,11 @@ import { GeneralData } from "../components/stats/GeneralData";
 import { Heatmap } from "../components/stats/Heatmap";
 import { BPMNDiagram } from "../../model/BPMNDiagram";
 import { ActivitiesData } from "../components/stats/ActivitiesData";
-import { HeatmapIterations } from "../components/stats/HeatmapIterations";
-
 
 const LOCAL_KEY_STATS = "chapter3-default-simulation-stats";
 const LOCAL_KEY_DIAGRAM = "chapter3-default-simulation-diagram";
 
-export default function Chap3Slide6({ setSlideFinished }) {
+export default function Chap3Slide7({ setSlideFinished }) {
 
   const containerWorkshopRef = useRef(null);
   const viewerWorkshopRef = useRef(null);
@@ -85,10 +83,8 @@ export default function Chap3Slide6({ setSlideFinished }) {
 
         setSlideFinished(prev => ({
           ...prev,
-          [6]: true
+          [7]: true
         }));
-
-        forceUpdate()
 
         setSimulationRunning(false);
       };
@@ -101,32 +97,12 @@ export default function Chap3Slide6({ setSlideFinished }) {
     };
 
    
-    const formatDate = (date) => {
-      const options = {
-        weekday: 'short',   
-        day: 'numeric',       
-        month: 'numeric',     
-        year: 'numeric',      
-        hour: 'numeric',      
-        minute: '2-digit',    
-        hour12: false        
-      };
-    
-      return new Intl.DateTimeFormat('cs-CZ', options).format(date);
-    };
 
-    const translations = {
-      Second: 'Sekunda',
-      Seconds: 'Sekundy',
-      Minute: 'Minuta',
-      Minutes: 'Minuty',
-      Hour: 'Hodina',
-      Hours: 'Hodiny',
-      Day: 'Den',
-      Days: 'Dny',
-      Week: 'Týden',
-      Weeks: 'Týdny',
-    };
+  const formatDateTimeLocal = (date) => {
+    const pad = (n) => n.toString().padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
 
     const getWarehouse = () => {
 
@@ -146,27 +122,7 @@ export default function Chap3Slide6({ setSlideFinished }) {
       return null;
     }
     
-    const saveWarehouse = (value) =>{
-     
-      const gateway = diagram.getObjectByID("Gateway_VseNaskladneno");
-      if (gateway) {
-        switch (value) {
-          case "High":
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.65;
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.35;
-            break;
-          case "Low": 
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.35;
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.65;
-            break;
-          case "Middle":
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.5;
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.5;
-            break;
-        }
- 
-      }
-    }
+
 
 
   const handleSubmit = (event) => {
@@ -183,12 +139,13 @@ export default function Chap3Slide6({ setSlideFinished }) {
         </div>
       )}
 
-      <div className='slide-h1-wrapper'><h1>Třetí simulace: Skladové zásoby</h1></div>
+      <div className='slide-h1-wrapper'><h1>Čtvrtá simulace: Začátek simulace</h1></div>
       <div className='slide-content-wrapper'>
 
       <div className='simulation-scenario-description-item'>
-        <h2>Opakování</h2>              
-          <p><b>Větvení</b> - všem větvením, které proces obsahuje, se musí přiřadit <b>pravděpodobnosti</b> k větvím, které z nich vychází. Jejich součet musí dát dohromady číslo jedna a určují, <b>s jakou pravděpodobností se určitá větev vykoná</b>. Pro případ, že se v procesu prochází danou branou vícekrát a je třeba rozlišit s jakou pravděpodobností se větve vykonají, umožňují některé simulační nástroje navíc pro každou větev nastavit několik hodnot - pro první, druhý, třetí, ... průchod branou.</p> 
+          <h2>Opakování</h2>
+          <p><b>Začátek simulace</b> - <b>konkrétní datum a čas</b>, od kterého se simulace spustí. Má význam pro pracovní doby zdrojů, viz dále.</p>
+          <p><b>Pracovní doby</b> - určují časy, v nichž zdroje pracují. Pracovních dob můžeme vytvořit několik a každé se nastavuje <b>jméno</b>, <b>první den práce v týdnu</b>, <b>poslední den práce v týdnu</b> a <b>dva časy</b>, mezi nimiž každý zdroj v jednom dni pracuje.</p>     
       </div>
        
       <div className='bpmn-diagram-wrapper'>
@@ -204,8 +161,7 @@ export default function Chap3Slide6({ setSlideFinished }) {
       )}
 
       {diagram && diagramFirstSimulation && statsFirstSimulation && (
-        <p className="explanation">V této simulaci je možné měnit skladové zásoby. Ty mohou dosahovat tří hladin - nízké, střední a vysoké. Pro simulaci hladina skladových zásob znamená nastavení pravděpodobnosti na větvení, které je v procesu označeno otázkou, zda je vše naskladněno. Nízké skladové zásoby znamenají, že s 65% pravděpobností se bude muset objednávat materiál. Střední poté mají tuto pravděpodobnost 50% a vysoké 35%. Jakkoliv se může zdát, že je logické tedy držet si spíše vysoké skladové zásoby, protože mají nejmenší pravděpodobnost zdržení v důsledku objednávání nových zásob, výše skladových zásob se promítá i do nákladů na proces.<br /><br />
-        Nízké skladové zásoby přidávají k celkové ceně procesu za každý měsíc, kdy proces běží (tj. 4 týdny pro zjednodušení), částku mezi 3 000 a 10 000 Kč. Střední poté částku mezi 10 000 Kč a 30 000 Kč a vysoké od 30 000 Kč výše. Z hlediska optimalizace nákladů není tedy vždy nejlepší možností držet si vysoké skladové zásoby.</p>
+        <p className="explanation">V tomto cvičení je možné měnit čas začátku simulace. Jak je naznačeno v úvodu, čas začátku má na simulaci též vliv. Jednotlivé zdroje mají různě nastavenou pracovní dobu a spuštění simulace se začátkem v pondělí a v pátek může znamenat změny v časech čekání i provádění aktivit. Stejně tak simulaci ovlivňuje i hodina spuštění.<br /><br />Vybírání data je omezeno rokem 2000 - zvolený rok musí být větší nebo roven tomuto roku. V opačném případě se datum neuloží.</p>
       )}
 
     
@@ -239,17 +195,24 @@ export default function Chap3Slide6({ setSlideFinished }) {
         </div>)}
         <div>
           <label htmlFor="starttime">Začátek simulace:</label>         
-          <div><input type="text" id="starttime" value={formatDate(diagram.getStartTime())} disabled /></div>
+          <div><input type="datetime-local" id="starttime" value={formatDateTimeLocal(diagram.getStartTime())} 
+            onChange={(e) => {
+              const value = e.target.value;              
+              if (value) {
+                const dateObj = new Date(value);
+                if (dateObj.getFullYear() >= 2000) {
+                  diagram.setStartTime(dateObj);
+                  forceUpdate();
+                } 
+              }
+            }}
+          /></div>
         </div>
         <div><label htmlFor="currency">Měna simulace:</label>         
           <div><input type="text" id="currency" value={diagram.getCurrency() == "CZK" ? "Kč" : diagram.getCurrency()} disabled /></div>
         </div>
         <div><label htmlFor="warehouse">Skladové zásoby:</label>                   
-          <div><select value={getWarehouse()} id="warehouse" 
-              onChange={(e) => {
-                saveWarehouse(e.target.value);
-                forceUpdate();
-              }}>
+          <div><select value={getWarehouse()} id="warehouse" disabled>
             <option value="Low">Nízké</option>
             <option value="Middle">Střední</option>
             <option value="High">Vysoké</option>
@@ -262,21 +225,18 @@ export default function Chap3Slide6({ setSlideFinished }) {
 
     {stats.general && Object.keys(stats.general).length > 0 && (<div>
       <h2>Výsledky simulace</h2>
-      <p className="explanation">Ke statistikám známým z předchozích simulací se i zde přidívá jedna nová. Jedná se o dvě heatmapy, které znázorňují následující: první ukazuje četnost průchodů daným elementem, druhá pak procento instancí procesu, v nichž byla daná aktivita spuštěna. Příslušné heatmapy byly doplněny opět i k výsledkům první simulace, které jsou porovnání dostupné na konci této stránky.<br/><br/>Spusťte si simulaci několikrát a pozorujte, jak se simulace chová vůči jiné výši skladových zásob. Jak to ovlivňuje cenu? Počty spuštění instancí? Časy trvání a čekání? Pomáhá něčemu mít nižší nebo vyšší skladové zásoby?</p>
+      <p className="explanation">Statistiky tentokrát obsahují pouze souhrnné informace, původní dvě heatmapy a statistiky aktivit. Spusťte simulaci s několika různými daty a časy a sledujte, jak se mění doby práce a čekání. Ovlivňuje zvolené datum začátku nějakým způsobem průběh instancí procesu? Čím to může být způsobeno?</p>
           <GeneralData stats={stats} diagram={diagram}/>
           <Heatmap stats={stats} diagram={diagram} file={'dilna-ver1.bpmn'}/>
-          <HeatmapIterations stats={stats} file={'dilna-ver1.bpmn'} />
           <ActivitiesData stats={stats} />
-          
           </div>
 )}
 
 {stats.general && Object.keys(stats.general).length > 0 && (<div>
       <h2>Výsledky první simulace simulace</h2>
-      <p className="explanation">Níže se nachází statistiky z první simulace, konkrétně jejího posledního spuštění. Jsou též rozšířené o příslušné heatmapy, aby bylo možné lépe provádět porovnání.</p>
+      <p className="explanation">Níže se nachází statistiky z první simulace, konkrétně jejího posledního spuštění, pro porovnání s daty z pozměněného scénáře.</p>
           <GeneralData stats={statsFirstSimulation} diagram={diagramFirstSimulation}/>
           <Heatmap stats={statsFirstSimulation} diagram={diagramFirstSimulation} file={'dilna-ver1.bpmn'}/>
-          <HeatmapIterations stats={statsFirstSimulation} file={'dilna-ver1.bpmn'} />
           <ActivitiesData stats={statsFirstSimulation} />
           </div>
 )}
