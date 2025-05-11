@@ -127,12 +127,12 @@ export default function Chap2Slide4({ setSlideFinished }) {
             <div className='bpmn-diagram-description-wrapper'>
                 <div className='diagram-description'>
                     {/* lit. 5 - str. 56 */}
-                    <div className='diagram-description-item'><p><b>Bazén</b> - bazén představuje zdroj procesu a nejčastěji osobu, která je zodpovědná za provádění úkolů v rámci procesu. Do bazénů vkládáme konkrétní aktivity a každý aktivita smí být umístěna jen v jednom bazénu. Značí se obdélníkem s oddělenou částí na začátku, kam se vepisuje, co bazén představuje. K bazénu je možné přistupovat jako k tzv. black boxu, tedy nevkládat do něj další elementy. Toho se využívá zejména pokud proces představuje nějakou externí stranu, u níž si nejsme jistí, jak proces na jejich straně funguje.</p> 
+                    <div className='diagram-description-item'><p><b>Bazén</b> - bazén představuje zdroj procesu a nejčastěji osobu, která je zodpovědná za provádění úkolů v rámci procesu - zdroj procesu, nejčastěji účastník nebo systém. Do bazénů vkládáme konkrétní aktivity a každý aktivita smí být umístěna jen v jednom bazénu. Značí se obdélníkem s oddělenou částí na začátku, kam se vepisuje, co bazén představuje. K bazénu je možné přistupovat jako k tzv. black boxu, tedy nevkládat do něj další elementy. Toho se využívá zejména pokud proces představuje nějakou externí stranu, u níž si nejsme jistí, jak proces na jejich straně funguje.</p> 
                     </div>
-                    <div className='diagram-description-item'><p><b>Dráha</b> - dráha je další dělení rolí a zodpovědností v rámci bazénu. Jako bazén si můžeme představit tedy třeba supermarket a jednotlivé dráhy v něm mohou být prodavač a manažer. Nejčastěji jsou do nich vepisovány pracovní role (prodavač), názvy oddělení (účetní oddělení) a aplikace (informační systém). I v tomto případě smí být aktivita jen v jedné dráze.</p></div>
+                    <div className='diagram-description-item'><p><b>Dráha</b> - dráha je další dělení rolí a zodpovědností v rámci bazénu. Nemusí být využita, ale pokud je, můžeme si tedy představit jako bazén například supermarket a jednotlivé dráhy v něm mohou být prodavač a manažer. Nejčastěji jsou do nich vepisovány pracovní role (prodavač), názvy oddělení (účetní oddělení) a aplikace (informační systém). I v tomto případě smí být aktivita jen v jedné dráze.</p></div>
                     <div className='diagram-description-item'><p><b>Zprávové toky</b> - zprávové toky představují komunikaci mezi jednotlivými bazény. V rámci jednoho bazénu se používají sekvenční toky, ale pro komunikaci za jeho hranicemi je třeba využít zpráv. Ty se značí čárkovanou šipkou s kolečkem u výchozího elementu a šipkou u jeho následníka.</p></div>
                     <div className='diagram-description-item'><p><b>Datové objekty</b> - datové objekty představují všechny formy informací, bez ohledu na jejich fyzickou podobu, které se v objevují. Mohou to být různé dokumenty, abstraktní informace nebo elektronické datové záznamy. Zobrazují se obdélníkem s ohnutým rohem.</p></div>
-                    <div className='diagram-description-item'><p><b>Úložiště</b> - představují místo, kam se informace ukládají mimo proces.</p></div>
+                    <div className='diagram-description-item'><p><b>Úložiště</b> - představují místo, kam se informace ukládají mimo proces. Může být zobrazen jako válec stejně jako na přiložené ukázce.</p></div>
                 </div>
 
                 <div>
@@ -152,8 +152,8 @@ export default function Chap2Slide4({ setSlideFinished }) {
             </div>
 
 
-            <h2>Příklad - proces nákupu</h2>
-            <p className='action-label'><i>Prohlédněte si znovu upravený diagram procesu nákupu v supermarketu. Níže vyberte všechny možnosti, které o něm platí.</i></p>
+            <h2>Příklad: Proces nákupu nákupu v supermarketu</h2>
+            <p className='explanation'>Prohlédněte si znovu upravený diagram procesu nákupu v supermarketu. I tentokrát se soustředí spíše na pohled zákazníka, ale byla přidána komunikace se supermarketem, který je zde ve formě black boxu a tedy neřešíme, jak proces konkrétně vypadá z jejich pohledu. Po prohlédnutí vyberte níže všechny možnosti, které o modelu platí.</p>
 
             <div className='bpmn-diagram-wrapper'>
                 <div

@@ -8,7 +8,12 @@ import Chap3Slide1 from '../slides/Chap3Slide1';
 import Chap3Slide2 from '../slides/Chap3Slide2';
 import Chap3Slide3 from '../slides/Chap3Slide3';
 import Chap3Slide4 from '../slides/Chap3Slide4';
-
+import Chap3Slide5 from '../slides/Chap3Slide5';
+import Chap3Slide6 from '../slides/Chap3Slide6';
+import Chap3Slide7 from '../slides/Chap3Slide7';
+import Chap3Slide8 from '../slides/Chap3Slide8';
+import Chap3Slide9 from '../slides/Chap3Slide9';
+import Chap3Slide10 from '../slides/Chap3Slide10';
 
 
 const STORAGE_CURRENT = 'chapter3_current_slide';
@@ -23,7 +28,7 @@ export default function Chapter3() {
   const [submitted, setSubmitted] = useState(false);
 
 
-  const slideComponents = [<Chap3Slide1 setSlideFinished={setSlideFinished} />,<Chap3Slide2 setSlideFinished={setSlideFinished} />,<Chap3Slide3 setSlideFinished={setSlideFinished} />,<Chap3Slide4 setSlideFinished={setSlideFinished} />];
+  const slideComponents = [<Chap3Slide1 setSlideFinished={setSlideFinished} />,<Chap3Slide2 setSlideFinished={setSlideFinished} />,<Chap3Slide3 setSlideFinished={setSlideFinished} />,<Chap3Slide4 setSlideFinished={setSlideFinished} />,<Chap3Slide5 setSlideFinished={setSlideFinished} />,<Chap3Slide6 setSlideFinished={setSlideFinished} />,<Chap3Slide7 setSlideFinished={setSlideFinished} />,<Chap3Slide8 setSlideFinished={setSlideFinished} />,<Chap3Slide9 setSlideFinished={setSlideFinished} />,<Chap3Slide10 setSlideFinished={setSlideFinished} />];
  
 
   useEffect(() => {
@@ -99,7 +104,7 @@ export default function Chapter3() {
               <button onClick={nextSlide} className='right'>Další</button>
             )}
             {index === slideComponents.length - 1 && ((slideFinished[index+1]) || submitted) && (
-              <Link to="/bpmn-simulator/lesson-3"><button className='right'>Další lekce</button></Link>
+              <Link to="/bpmn-simulator/lesson-4"><button className='right'>Další lekce</button></Link>
               
             )}
           </div>

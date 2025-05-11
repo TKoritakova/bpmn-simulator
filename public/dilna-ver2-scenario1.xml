@@ -54,6 +54,16 @@
     </element>
     <element>
         <type>Activity</type>
+        <id>Activity_PripravitAutomobil</id>
+        <resource>Automechanik</resource>
+        <distribution>Normal</distribution>
+        <mean>4</mean>
+        <stddeviation>2</stddeviation>
+        <unit>Hour</unit>
+        <fixedcost>0</fixedcost>
+    </element>
+    <element>
+        <type>Activity</type>
         <id>Activity_NaskladnitMaterial</id>
         <resource>Skladník</resource>
         <distribution>Fixed</distribution>
@@ -102,19 +112,27 @@
         <unit>Minute</unit>
         <fixedcost>0</fixedcost>
     </element>
+    <element>
+        <type>Activity</type>
+        <id>Activity_PredatAutomobil</id>
+        <resource>Obchodník</resource>
+        <distribution>Exponential</distribution>
+        <mean>60</mean>
+        <stddeviation></stddeviation>
+        <unit>Minute</unit>
+        <fixedcost>0</fixedcost>
+    </element>
    
 
     <element>
         <type>StartEvent</type>
-        <id>StartEvent_PrijetiAutomobilu</id>
+        <id>StartEvent_PrijetiObjednavky</id>
     </element>
 
     <element>
         <type>EndEvent</type>
-        <id>Event_AutomobilOpraven</id>
+        <id>Event_AutomobilPredan</id>
     </element>
-
-
 
     <element>
         <type>IntermediateEvent</type>
@@ -126,11 +144,29 @@
     </element>
 
     <element>
+        <type>IntermediateEvent</type>
+        <id>Event_ObdrzeniRozhodnuti</id>
+        <distribution>Normal</distribution>
+        <mean>4</mean>
+        <stddeviation>3</stddeviation>
+        <unit>Hour</unit>
+    </element>
+
+    <element>
         <type>Gateway</type>
         <type2>Exlusive</type2>
         <id>Gateway_Spoj1</id>
         <out>
             <id>Flow_Spoj1_ZkontrolovatMaterialy</id>
+            <probability>1</probability>
+        </out>
+    </element>
+    <element>
+        <type>Gateway</type>
+        <type2>Exlusive</type2>
+        <id>Gateway_Spoj2</id>
+        <out>
+            <id>Flow_Spoj2_PredatAutomobil</id>
             <probability>1</probability>
         </out>
     </element>
@@ -148,6 +184,20 @@
             <probability>0.65</probability>
         </out>
     </element>
+    <element>
+        <type>Gateway</type>
+        <type2>Exlusive</type2>
+        <id>Gateway_ZakazkaProvedena</id>
+        <out>
+            <id>Flow_ZakazkaProvedena_Spoj1</id>
+            <probability>0.85</probability>
+        </out>
+        <out>
+            <id>Flow_ZakazkaProvedena_Spoj2</id>
+            <probability>0.15</probability>
+        </out>
+    </element>
 
     
 </simulation>
+

@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useReducer } from 'react';
 import BpmnViewer from 'bpmn-js';
 
-function findMaxAvgDurationWithoutOfftime(stats) {
+function findMaxCount(stats) {
     let maxValue = -Infinity;
     let maxKey = null;
   
@@ -9,10 +9,10 @@ function findMaxAvgDurationWithoutOfftime(stats) {
       
         const activity = stats[key];
         if (
-          typeof activity.avgDurationWithoutOfftime === "number" &&
-          activity.avgDurationWithoutOfftime > maxValue
+          typeof activity.count === "number" &&
+          activity.count > maxValue
         ) {
-          maxValue = activity.avgDurationWithoutOfftime;
+          maxValue = activity.count;
           maxKey = key;
         }
       
@@ -21,18 +21,17 @@ function findMaxAvgDurationWithoutOfftime(stats) {
     return { key: maxKey, value: maxValue };
   }
 
-  function findMaxAvgWaitingForExecution(stats) {
+  function findMaxPercInstances(stats) {
     let maxValue = -Infinity;
     let maxKey = null;
   
     for (const key in stats) {
-      
+
         const activity = stats[key];
-        if (
-          typeof activity.avgWaitingForExecution === "number" &&
-          activity.avgWaitingForExecution > maxValue
+        const perc = Math.round(activity.percInstances)
+        if (perc > maxValue
         ) {
-          maxValue = activity.avgWaitingForExecution;
+          maxValue = perc;
           maxKey = key;
         }
       
@@ -41,30 +40,31 @@ function findMaxAvgDurationWithoutOfftime(stats) {
     return { key: maxKey, value: maxValue };
   }
 
-function colorizeDiagram(viewer, stats, type = 'execution') {
+function colorizeDiagram(viewer, stats, type = 'iterations') {
   viewer.get('overlays').clear();
   let overlays = viewer.get('overlays');
   let elementRegistry = viewer.get('elementRegistry');
   
   let getValue = (info) => {
-    if (type === 'execution') {
-      return info.avgDurationWithoutOfftime;
-    } else if (type === 'waiting') {
-      return info.avgWaitingForExecution;
+    if (type === 'iterations') {
+      return info.count;
+    } else if (type === 'percentage') {
+      return info.percInstances.toFixed(0);
     } else {
       return 0;
     }
   };
 
+
   let result;
-  if (type === 'execution') {
-    const max = findMaxAvgDurationWithoutOfftime(stats.activites).value;
+  if (type === 'iterations') {
+    const max = findMaxCount(stats.activites).value;
     result = {red: max * 0.67,
         orange: max * 0.5,
         yellow: max * 0.33
     }
-  } else if (type === 'waiting') {
-    const max = findMaxAvgWaitingForExecution(stats.activites).value;
+  } else if (type === 'percentage') {
+    const max = findMaxPercInstances(stats.activites).value;
     result = {red: max * 0.67,
         orange: max * 0.5,
         yellow: max * 0.33
@@ -73,47 +73,46 @@ function colorizeDiagram(viewer, stats, type = 'execution') {
     return null;
   }
 
+    for (const [id, info] of Object.entries(stats.activites || {})) {
+      let shape = elementRegistry.get(id);
+      if (shape) {
+        const value = getValue(info);
+        const overlayHtml = document.createElement('div');
+        if (value > result['red']) {
+          overlayHtml.className = 'highlight-overlay-red';
+        } else if (value > result['orange']) {
+          overlayHtml.className = 'highlight-overlay-orange';
+        } else if (value > result['yellow']) {
+          overlayHtml.className = 'highlight-overlay-yellow';
+        } else {
+          overlayHtml.className = 'highlight-overlay-green';
+        }
 
-  for (const [id, info] of Object.entries(stats.activites || {})) {
+        overlayHtml.style.width = shape.width + 'px';
+        overlayHtml.style.height = shape.height + 'px';
 
-    let shape = elementRegistry.get(id);
-    if (shape) {
-      const value = getValue(info);
-      const overlayHtml = document.createElement('div');
-      if (value > result['red']) {
-        overlayHtml.className = 'highlight-overlay-red';
-      } else if (value > result['orange']) {
-        overlayHtml.className = 'highlight-overlay-orange';
-      } else if (value > result['yellow']) {
-        overlayHtml.className = 'highlight-overlay-yellow';
-      } else {
-        overlayHtml.className = 'highlight-overlay-green';
+        overlays.add(id, {
+          position: {
+            top: 0,
+            left: 0
+          },
+          html: overlayHtml
+        });
       }
 
-      overlayHtml.style.width = shape.width + 'px';
-      overlayHtml.style.height = shape.height + 'px';
-
-      overlays.add(id, {
-        position: {
-          top: 0,
-          left: 0
-        },
-        html: overlayHtml
-      });
     }
-
-}
 }
 
 
-export function Heatmap({ stats, diagram, file  }) {
+export function HeatmapIterations({ stats, file  }) {
+ 
 
 
-  // wait
+  // iterations
   const containerWorkshopRef1 = useRef(null);
   const viewerWorkshopRef1 = useRef(null);
 
-  // execution
+  //percentage
   const containerWorkshopRef2 = useRef(null);
   const viewerWorkshopRef2 = useRef(null);
 
@@ -128,7 +127,7 @@ export function Heatmap({ stats, diagram, file  }) {
           }
           viewerWorkshopRef1.current.importXML(text).then(async () => {
             viewerWorkshopRef1.current.get('canvas').zoom('fit-viewport');                   
-            colorizeDiagram(viewerWorkshopRef1.current, stats, 'execution');
+            colorizeDiagram(viewerWorkshopRef1.current, stats, 'iterations');
           }).catch(err => {
               console.error('Chyba při načítání BPMN XML:', err);
           });
@@ -139,7 +138,7 @@ export function Heatmap({ stats, diagram, file  }) {
           }
           viewerWorkshopRef2.current.importXML(text).then(async () => {
             viewerWorkshopRef2.current.get('canvas').zoom('fit-viewport');                   
-            colorizeDiagram(viewerWorkshopRef2.current, stats, 'waiting');
+            colorizeDiagram(viewerWorkshopRef2.current, stats, 'percentage');
           }).catch(err => {
               console.error('Chyba při načítání BPMN XML:', err);
           });
@@ -158,11 +157,11 @@ export function Heatmap({ stats, diagram, file  }) {
   return (
     <div className='heatmap-section-container'>
       <div className='heatmap-container'>
-        <h3>Heatmapa - čas provádění</h3>
+        <h3>Heatmapa - počet spuštění aktivity</h3>
         <div ref={containerWorkshopRef1} className='heatmap' />
       </div>
       <div className='heatmap-container'>
-        <h3>Heatmapa - čekací doby</h3>
+        <h3>Heatmapa - % procesů</h3>
         <div ref={containerWorkshopRef2} className='heatmap'/>
       </div>
     </div>

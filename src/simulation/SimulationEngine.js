@@ -116,7 +116,7 @@ export class SimulationEngine {
     async run() {
 
 
-      while ((this.hasTasks() || this.sleepingItems.size > 0 || this.arrivals.length > 0) /*&& this.currentTime < 100000*/) {
+      while ((this.hasTasks() || this.sleepingItems.size > 0 || this.arrivals.length > 0) /*&& this.currentTime < 1000000*/) {
         // SPUŠTĚNÍ NOVÝCH INSTANCÍ
         while (this.arrivals.length > 0 && this.currentTime >= this.arrivals[0].time) {
           const arrival = this.arrivals.shift(); 
@@ -187,8 +187,10 @@ export class SimulationEngine {
       if (day == 0) {
         day = 7;
       }
-
-      let isWorkday = day >= timetable.getBeginDay() && day <= timetable.getEndDay();
+      
+      let startDay = timetable.getBeginDay() == 0 ? 7: timetable.getBeginDay();
+      let endDay = timetable.getEndDay() == 0 ? 7 : timetable.getEndDay();
+      let isWorkday = day >= startDay && day <= endDay;
       if (isWorkday) {
         
 

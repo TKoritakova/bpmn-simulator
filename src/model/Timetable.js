@@ -11,6 +11,10 @@ export class Timetable {
     getName() {
         return this.name;
     }
+
+    setName(name) {
+        this.name = name;
+    }
     
     getBeginDay() {
         return this.beginDay;
@@ -26,6 +30,22 @@ export class Timetable {
     
     getEndTime() {
         return this.endTime;
+    }
+
+    setBeginDay(beginDay) {
+        this.beginDay = beginDay;
+    }
+    
+    setEndDay(endDay) {
+        this.endDay = endDay;
+    }
+    
+    setBeginTime(beginTime) {
+        this.beginTime = beginTime;
+    }
+    
+    setEndTime(endTime) {
+        this.endTime = endTime;
     }
 
     toSerializableObject() {

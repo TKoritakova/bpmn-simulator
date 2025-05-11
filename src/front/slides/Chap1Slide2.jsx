@@ -71,17 +71,20 @@ export default function Chap1Slide2({ setSlideFinished }) {
         <div className='slide-h1-wrapper'><h1>Vstupy a výstupy procesu</h1></div>
         <div className="slide-content-wrapper">
 
-        <p>Každý proces má svůj podnět, který ho spustí, a končí nějakým výsledkem. Tomuto podnětu a výsledku se říká spouštěcí a koncové události a každý proces jich může, ale nemusí, mít více než jednu. Jsou to dva body, které ohraničují zbylé aktivity, události a rozhodnutí, které v rámci procesu zpracovávájí vstupy a mění je na výstupy.</p>
+        <p>Každý proces má svůj podnět, který ho spustí, a končí nějakým výsledkem. Tomuto podnětu a výsledku se říká <b>spouštěcí a koncové události</b> a každý proces jich může, ale nemusí, mít více než jednu. Jsou to dva body, které ohraničují zbylé aktivity, události a rozhodnutí, které v rámci procesu zpracovávájí vstupy a mění je na výstupy.</p>
         <ul>
-            <li>V našem procesu je spouštěcí událostí vstup zákazníka do supermarketu.</li>
-            <li>Koncovou událostí jeho odchod.</li>
+            <li>V procesu z předchozí stránky je spouštěcí událostí <b>vstup zákazníka do supermarketu</b>.</li>
+            <li>Koncovou událostí jeho <b>odchod</b>.</li>
         </ul>
-        <p>Vstupem do procesu může být cokoliv, co je nutné k jeho vykonání. Může jít jak o informace, například údaje o zákazníkovi, tak o fyzické předměty, jako je materiál na výrobu produktu.</p>
-        <p>Výstupem procesu je objekt, který má pro zákazníka hodnotu, například hotový výrobek, poskytnutá služba nebo schválený dokument (smlouva).</p>
+        <p><b>Vstupem</b> do procesu může být cokoliv, <b>co je nutné k jeho vykonání</b>. Může jít jak o informace, například údaje o zákazníkovi, tak o fyzické předměty, jako je materiál na výrobu produktu.</p>
+        <p><b>Výstupem</b> procesu je <b>objekt, který má pro zákazníka hodnotu</b>, například hotový výrobek, poskytnutá služba nebo schválený dokument (smlouva).</p>
+
+        <h2>Cvičení: Vstupy a výstupy procesu</h2>
+        <p className="explanation">Ve dvou cvičeních níže je nutné se zamyslet nad tím, co jsou vstupy a výstupy procesu nákupu v supermarketu, který je v této lekci představen. Co je nutné k jeho provedení a co je naopak jeho produktem?</p>
 
         <div className="options-section-wrapper">
             <div className="options-wrapper">
-                        <p><i>Vyberte všechny vstupy procesu nákupu v supermarketu:</i></p>
+                        <p><i>Vyberte všechny vstupy procesu:</i></p>
                         <div className="options">
                             {renderOptions(inputAnswers, clickedInputs, "input")}
                         </div>
@@ -89,7 +92,7 @@ export default function Chap1Slide2({ setSlideFinished }) {
             </div>
        
             <div className="options-wrapper">
-                        <p><i>Vyberte všechny výstupy procesu nákupu v supermarketu:</i></p>
+                        <p><i>Vyberte všechny výstupy procesu:</i></p>
                         <div className="options">
                             {renderOptions(outputAnswers, clickedOutputs, "output")}
                         </div>

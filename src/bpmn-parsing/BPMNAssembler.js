@@ -172,6 +172,8 @@ export class BPMNAssembler {
         flowObject = new DataObject(flowElement.name, flowElement.id);                
     } else if (flowElement.$type == 'bpmn:IntermediateCatchEvent') { /* CATCHING EVENTY */
         flowObject = this.addIntermediateCatchEvent(flowElement,ins,outs);
+    } else if ((flowElement.$type == 'bpmn:DataObject')) {
+        flowObject = new DataObject(flowElement.name, flowElement.id);
     } else {
         console.info('Element cannot be processed: ' + flowElement.id + ', ' + flowElement.name);
     }
@@ -339,7 +341,7 @@ export class BPMNAssembler {
             case "Saturday":
               return 6;
             case "Sunday":
-              return 7;
+              return 0;
             default:
               return 0;
           }

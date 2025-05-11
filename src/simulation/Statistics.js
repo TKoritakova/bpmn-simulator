@@ -1,4 +1,6 @@
 import { Activity } from "../model/Activity";
+import random from 'random';
+import { Participant } from "../model/Participant";
 
 export class Statistics {
     static createStatistics(log, diagram) {
@@ -7,7 +9,7 @@ export class Statistics {
         result["general"] = this.generateGeneralStatistics(log,diagram);
         result["instances"] = this.generateInstanceStatistics(log,diagram);
         result["activites"] = this.generateActivityStatistics(log,diagram);
-      
+        result["resources"] = this.generateResourceUtilization(log,diagram, result["general"]);
 
 
         return result;
@@ -19,6 +21,7 @@ export class Statistics {
         const stats = {
             numberOfInstances: diagram.getNumberOfInstances(),
             totalPrice: 0,
+            totalWarehouse: 0,
             totalRealExecutionTime: 0, //doba provádění v realitě
             totalWholeDuration: 0, //celkový čas - běh + čekání
             totalDuration: 0, //posčítaný čas všech běhů úloh
@@ -59,6 +62,8 @@ export class Statistics {
               }
             }
           }
+
+          stats.totalWarehouse = this.generateWarehouseCost(diagram,maxEndTime);
 
           stats.totalRealExecutionTime = maxEndTime;
           stats.efektivnost = stats.totalDuration / stats.totalWholeDuration * 100;
@@ -207,8 +212,123 @@ export class Statistics {
         return result;
       }
 
+      static countWorktimeForRecource(diagram,timetable,general) {
+        let resultSecs = []
+
+      
+        const startDate = diagram.getStartTime();
+        let day = startDate.getDay();
+        let hour = startDate.getHours();
+        let minute = startDate.getMinutes();
+        let remainingTime = general.totalRealExecutionTime;
+
+        let beginTime = timetable.getBeginTime().split(':').map(Number);
+        let endTime = timetable.getEndTime().split(':').map(Number);
+        let shiftLenght = (endTime[0] * 60 * 60 + endTime[1] * 60) - (beginTime[0] * 60 * 60 + beginTime[1] * 60)
+
+        while (remainingTime > 0) {          
+          const isWorkingDay = (day >= timetable.getBeginDay() && day <= timetable.getEndDay()); 
+         
+
+          if (isWorkingDay) {
+
+      
+            if ((hour > beginTime[0] || (hour == beginTime[0] && minute >= beginTime[1])) && (hour < endTime[0] || (hour == endTime[0]  && minute <= endTime[1]))) {
+              let timeUntilDayEnd = (60 * 60 * 24) - (hour * 60 * 60 + minute * 60);
+              let timeUntilShiftEnd = shiftLenght - ((endTime[0] * 60 * 60 + endTime[1] * 60) - (hour * 60 * 60 + minute * 60))
+                
+              if (remainingTime >= timeUntilDayEnd || remainingTime >= timeUntilShiftEnd) {
+                resultSecs.push(timeUntilShiftEnd);               
+              } else {
+                resultSecs.push(remainingTime); 
+              }
+              remainingTime -= timeUntilDayEnd;
+              hour = 0;
+              minute = 0;
+            } else if (hour < beginTime[0] || (hour == beginTime[0] && minute < beginTime[1])) {
+              let timeUntilDayEnd = (60 * 60 * 24) - (hour * 60 * 60 + minute * 60);
+              let timeShiftStart = (beginTime[0] * 60 * 60 +beginTime[1] * 60)
+
+              if (remainingTime <= timeShiftStart) {
+                remainingTime -= timeUntilDayEnd;
+                hour = 0;
+                minute = 0;
+              } else if (remainingTime <= (timeShiftStart + shiftLenght)) {
+                resultSecs.push(remainingTime - timeShiftStart);
+                remainingTime -= timeUntilDayEnd;
+                hour = 0;
+                minute = 0;
+              } else {
+                resultSecs.push(shiftLenght);
+                remainingTime -= timeUntilDayEnd;
+                hour = 0;
+                minute = 0;
+              }
+
+            } else {
+              let timeUntilDayEnd = (60 * 60 * 24) - (hour * 60 * 60 + minute * 60);
+              remainingTime -= timeUntilDayEnd;
+              hour = 0;
+              minute = 0;
+            }
+            
+
+            
+          } else {
+            let timeUntilDayEnd = (60 * 60 * 24) - (hour * 60 * 60 + minute * 60);
+            remainingTime -= timeUntilDayEnd;
+            hour = 0;
+            minute = 0;
+          }
+          
+          day = (day + 1) % 7;
+            
+        }
+
+        return resultSecs.reduce((a, b) => a + b, 0);
+        
+      }
+
+      static generateResourceUtilization(log, diagram, general) {
+        const result = {};
+        const participants = diagram.getAllObjects().filter(obj => obj instanceof Participant && obj.number > 0);
+        
+        for (const participant of participants) {
+          let shiftLenght = this.countWorktimeForRecource(diagram,diagram.getTimetableByName(participant.getWorkingHours()),general)
+
+          result[participant.getID()] = {
+            id: participant.getID(),
+            name: participant.getDescription(),
+            count: participant.getNumber(),
+            oneShiftsLenght: shiftLenght,
+            allShiftsLenght: shiftLenght * participant.getNumber(),
+            workedTime: 0
+          }
+
+          
+         
+        }
+
+        for (const workItem of log) {
+          let item = workItem.getItem();
+
+          if (item instanceof Activity) {
+            let resource = diagram.getObjectByDescription(item.getResource());
+            let executionTime = workItem.getExecutionTime();
+            result[resource.getID()].workedTime += executionTime;
+            
+          } 
+
+
+        }
+
+        return result;
+
+
+      }
+
       static formatCzechUnit(count, forms) {
-        if (count === 1) return forms[0];
+        if (count <= 1) return forms[0];
         if (count >= 2 && count <= 4) return forms[1];
         return forms[2];
       }
@@ -222,22 +342,17 @@ export class Statistics {
           { seconds: 60 * 60 * 24, name: ['den', 'dny', 'dní'] },
           { seconds: 60 * 60, name: ['hodina', 'hodiny', 'hodin'] },
           { seconds: 60, name: ['minuta', 'minuty', 'minut'] },
-          { seconds: 1, name: ['sekunda', 'sekundy', 'sekund'] }
+          { seconds: 1, name: ['sekunda', 'sekundy', 'sekund'] },
         ];
       
         for (const unit of units) {
           const count = Math.floor(value / unit.seconds);
           if (count > 0) {
-            parts.push({ count, name: this.formatCzechUnit(count, unit.name) });
-            value -= count * unit.seconds;
-          }
+          parts.push({ count, name: this.formatCzechUnit(count, unit.name) });
+          value -= count * unit.seconds;
         }
- 
-        if (value > 0 && parts.length > 0) {
-          parts[parts.length - 1].count += 1;
-          parts[parts.length - 1].name = this.formatCzechUnit(parts[parts.length - 1].count, units.find(u => u.seconds === parts[parts.length - 1].seconds)?.name || []);
         }
-      
+
         const result = parts.slice(0, 2).map(p => `${p.count} ${p.name}`).join(' ');
         return result;
       }
@@ -331,5 +446,27 @@ export class Statistics {
             return value;
         }
       
+      }
+
+      static generateWarehouseCost (diagram, simulationDuration) {
+
+        const gateway = diagram.getObjectByID("Gateway_VseNaskladneno");
+        if (gateway) {
+          const probability = gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil");
+          const weeks = simulationDuration / (3600 * 7 * 24 * 4)
+
+        if (probability) {
+          if (probability.probability >= 0.65) { //high
+            const generator = random.exponential(1/70000);
+            return (generator() + 30001) * weeks;            
+          } else if (probability.probability <= 0.35) { //low
+            return random.int(3000,10000) * weeks;
+          } else { //middle
+            return random.int(10001,30000) * weeks;
+          }
+        }
+      }
+      return null;
+
       }
 }

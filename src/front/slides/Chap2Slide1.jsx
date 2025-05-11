@@ -52,19 +52,18 @@ export default function Chap2Slide1({ setSlideFinished }) {
     return <div className="slide">
         <div className='slide-h1-wrapper'><h1>Co je to modelování?</h1></div>
         <div className='slide-content-wrapper'>
-          <p>Modelování je tvorba zjednodušeného obrazu reality, který pomáhá lépe porozumět složitým systémům. Převádí se při něm popis procesu do modelu podle předem vydefinovaných vlastností daného procesu. Mezi ty patří pojmy vysvětlené v předchozí kapitole - aktivity, události a jejich propojení mezi sebou, dále to, jaké máme vstupy a výstupy aktivit  a jejich formu a jaké máme zdroje pro proces (lidé, technologie a další).</p>
+          <p>Modelování je <b>tvorba zjednodušeného obrazu reality</b>, který pomáhá lépe porozumět složitým systémům. Převádí se při něm popis procesu do modelu podle předem <b>vydefinovaných vlastností daného procesu</b>. Mezi ty patří pojmy vysvětlené v předchozí kapitole - <b>aktivity, události a jejich propojení mezi sebou</b>, dále to, jaké máme <b>vstupy a výstupy aktivit</b> a jejich formu a jaké máme <b>zdroje pro proces</b> (lidé, technologie a další).</p>
 
           <h2>Model</h2>
-          <p>Model jako takový je abstrakce a zjednodušení problému s reálným základem. Modelem je možné snížit složitost problému tím, že z něj vybereme jen ty části reality, které s ním souvisí. Měl by mít svůj předmět, cílovou skupinu a konkrétní účel, pro který je tvořen. Nelze přímo definovat jak vytvořit jeden nejlepší model, vždy musí být tvořen v závislosti na situaci. Máme různé druhy modelů, například:</p>
-
+          <p>Model jako takový je <b>abstrakce a zjednodušení problému s reálným základem</b>. Modelem je možné snížit složitost problému tím, že z něj <b>vybereme jen ty části reality, které s ním souvisí</b>. Měl by mít svůj <b>předmět, cílovou skupinu a konkrétní účel</b>, pro který je tvořen. Nelze přímo definovat jak vytvořit jeden nejlepší model, vždy musí být tvořen v závislosti na situaci. Máme různé druhy modelů, například:</p>
 
           <ul>
-            <li>Fyzické modely - pod fyzickým modelem je možné si představit například prototypy výrobků.</li>
-            <li>Matematické modely - pod matematické modely spadají například rovnice popisující ekonomické vztahy.</li>
-            <li>Procesní modely - procesní modely jsou vizualizací pracovních postupů dané organizace a slouží k jejich analýze, optimalizaci a zlepšení efektivity.</li>
+            <li><b>Fyzické modely</b> - pod fyzickým modelem je možné si představit například prototypy výrobků.</li>
+            <li><b>Matematické modely</b> - pod matematické modely spadají například rovnice popisující ekonomické vztahy.</li>
+            <li><b>Procesní modely</b> - procesní modely jsou vizualizací pracovních postupů dané organizace a slouží k jejich analýze, optimalizaci a zlepšení efektivity.</li>
           </ul>
 
-          <p>Jednoduchým modelem může být příklad uvedený na začátku první lekce. Nyní ho rozšíříme o popis vlastností:</p>
+          <p>Jednoduchým modelem může být příklad uvedený na začátku první lekce. Nyní ho <b>rozšíříme o popis vlastností:</b></p>
 
           <div className="easy-process">
         {steps.map((step, index) => (
@@ -91,7 +90,7 @@ export default function Chap2Slide1({ setSlideFinished }) {
 
       <p className="action-label"><i>(Kliknutím na jednotlivé položky v modelu zobrazíte podrobnosti.)</i></p>
 
-
+      <p className="explanation">Pamatujete si na problémy, na které v jednotlivých krocích může zákazník narazit? Pokud ne, můžete si je připomenout na začátku předchozí lekce, jelikož budou v této lekci potřebné.</p>
 
 
     </div>   </div>

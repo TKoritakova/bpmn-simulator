@@ -47,7 +47,7 @@ export default function Chap1Slide6({ setSlideFinished }) {
         d: "Aktivity a události, které je spouští.",
       },
       correct: "b",
-      explanation: "Na začátku této lekce je řečeno, že proces je sada propojených aktivit, událostí a rozhodnutí, které přeměňují vstupy na výstupy za účelem dosažení konkrétního cíle. Nejedná se tak o jednorázovou činnost ani seznam úkolů ke splnění, stejně jako nejde jen o aktivity a události, ty musí být navzájem propojeny."
+      explanation: "Proces je sada propojených aktivit, událostí a rozhodnutí, které přeměňují vstupy na výstupy za účelem dosažení konkrétního cíle. Nejedná se tak o jednorázovou činnost ani seznam úkolů ke splnění, stejně jako nejde jen o aktivity a události, ty musí být navzájem propojeny."
     },
     {
         id: 2,
@@ -135,7 +135,7 @@ export default function Chap1Slide6({ setSlideFinished }) {
       {!submitted ? (
         <button onClick={handleSubmit}>Odeslat test</button>
       ) : (
-        <p><i>Test byl odeslán. Výsledky jsou uloženy.</i></p>
+        <div className="test-submitted"><p>Test byl odeslán. Výsledky jsou uloženy.</p></div>
       )}
 
         </div>
