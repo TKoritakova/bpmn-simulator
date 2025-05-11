@@ -14,8 +14,8 @@
       <bpmn:timerEventDefinition id="TimerEventDefinition_182h9vd" />
     </bpmn:intermediateCatchEvent>
     <bpmn:task id="Activity_0fq8tbh" name="Aktivita" />
-    <bpmn:exclusiveGateway id="Gateway_1fllcna" name="XOR brána" />
-    <bpmn:parallelGateway id="Gateway_1fgkivb" name="AND brána" />
+    <bpmn:exclusiveGateway id="Gateway_1fllcna" name="XOR větvení" />
+    <bpmn:parallelGateway id="Gateway_1fgkivb" name="AND větvení" />
     <bpmn:startEvent id="Event_0d7kw4a">
       <bpmn:outgoing>Flow_01mdo73</bpmn:outgoing>
     </bpmn:startEvent>
