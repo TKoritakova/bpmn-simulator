@@ -201,52 +201,7 @@ export function FinalSimulationForm({ diagram }) {
           <label htmlFor="instances">Počet instancí:</label>         
           <div><input type="text" id="instances" value={diagram.getNumberOfInstances()} disabled /></div>
         </div>
-        <div><label htmlFor="arrivaldistribution">Rozdělení příchodů:</label>                   
-        <div><select value={diagram.getArrivalDistribution()} id="arrivaldistribution" 
-                  onChange={(e) => {
-                    diagram.setArrivalDistribution(e.target.value);
-                    forceUpdate();
-                  }}>
-            <option value="Fixed">Fixní</option>
-            <option value="Exponential">Exponenciální</option>
-            <option value="Normal">Normální</option>
-          </select></div>
-        </div>
-        <div><label htmlFor="arrivalunit">Jednotka:</label>      
-        <div><select value={diagram.getArrivalUnit()} id="arrivalunit" 
-                    onChange={(e) => {
-                      diagram.setArrivalUnit(e.target.value);
-                      forceUpdate();
-                    }}>
-              <option value="Second">Sekunda</option>
-              <option value="Minute">Minuta</option>
-              <option value="Hour">Hodina</option>
-              <option value="Day">Den</option>
-              <option value="Week">Týden</option>
-            </select></div>       
-        </div>
-        <div><label htmlFor="arrivalmean">Průměrná (střední) hodnota:</label>         
-        <div><input type="number" id="arrivalmean" value={diagram.getArrivalMean()} 
-            onChange={(e) => {
-              const value = Number(e.target.value);
-              if (value >= 1 && value <= 50) {
-                diagram.setArrivalMean(value);
-                forceUpdate();
-              }
-            }}
-          /></div>
-        </div>
-        {diagram.getArrivalDistribution() == "Normal" && (<div><label htmlFor="arrivalstddeviation">Standardní odchylka:</label>         
-          <div><input type="number" id="arrivalstddeviation" value={diagram.getArrivalStdDeviation()}
-            onChange={(e) => {
-              const value = Number(e.target.value);
-              if (value >= 1 && value <= 50) {
-                diagram.setArrivalStdDeviation(value);
-                forceUpdate();
-              }
-            }}
-          /></div>
-        </div>)}
+        
         <div>
           <label htmlFor="starttime">Začátek simulace:</label>         
           <div><input type="datetime-local" id="starttime" value={formatDateTimeLocal(diagram.getStartTime())} 

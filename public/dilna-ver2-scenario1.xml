@@ -1,0 +1,203 @@
+<simulation>
+    <scenariospecs>
+        <arrivaldistribution>Normal</arrivaldistribution>
+        <arrivalmean>12</mean>
+        <arrivalstddeviation>8</stddeviation>
+        <arrivalunit>Day</unit>
+        <numberofinstances>20</numberofinstances>
+        <starttime>12/5/2025 9:00</starttime>
+        <currency>CZK</currency>
+    </scenariospecs>
+
+    
+    <resource>
+        <id>Lane_ObchodniOddeleni</id>
+        <name>Obchodník</name>
+        <number>1</number>
+        <costperhour>300</costperhour>
+        <timetable>Default</timetable>
+    </recource>
+    <resource>
+        <id>Lane_Dilna</id>
+        <name>Automechanik</name>
+        <number>2</number>
+        <costperhour>250</costperhour>
+        <timetable>Default</timetable>
+    </recource>
+    <resource>
+        <id>Lane_Sklad</id>
+        <name>Skladník</name>
+        <number>1</number>
+        <costperhour>200</costperhour>
+        <timetable>Default</timetable>
+    </recource>
+  
+ 
+
+    <timetable>
+        <name>Default</name>
+        <beginday>Monday</beginday>
+        <endday>Friday</endday>
+        <begintime>09:00</begintime>
+        <endtime>17:00</endtime>
+    </timetable>
+
+    <element>
+        <type>Activity</type>
+        <id>Activity_DiagnostikovatAutomobil</id>
+        <resource>Automechanik</resource>
+        <distribution>Normal</distribution>
+        <mean>4</mean>
+        <stddeviation>2</stddeviation>
+        <unit>Hour</unit>
+        <fixedcost>0</fixedcost>
+    </element>
+    <element>
+        <type>Activity</type>
+        <id>Activity_PripravitAutomobil</id>
+        <resource>Automechanik</resource>
+        <distribution>Normal</distribution>
+        <mean>4</mean>
+        <stddeviation>2</stddeviation>
+        <unit>Hour</unit>
+        <fixedcost>0</fixedcost>
+    </element>
+    <element>
+        <type>Activity</type>
+        <id>Activity_NaskladnitMaterial</id>
+        <resource>Skladník</resource>
+        <distribution>Fixed</distribution>
+        <mean>1</mean>
+        <stddeviation></stddeviation>
+        <unit>Hour</unit>
+        <fixedcost>0</fixedcost>
+    </element>
+    <element>
+        <type>Activity</type>
+        <id>Activity_ObjednatMaterial</id>
+        <resource>Skladník</resource>
+        <distribution>Fixed</distribution>
+        <mean>1</mean>
+        <stddeviation></stddeviation>
+        <unit>Hour</unit>
+        <fixedcost>0</fixedcost>
+    </element>
+    <element>
+        <type>Activity</type>
+        <id>Activity_OpravitAutomobil</id>
+        <resource>Automechanik</resource>
+        <distribution>Normal</distribution>
+        <mean>5</mean>
+        <stddeviation>3</stddeviation>
+        <unit>Day</unit>
+        <fixedcost>0</fixedcost>
+    </element>
+    <element>
+        <type>Activity</type>
+        <id>Activity_VypocitatCenuOpravy</id>
+        <resource>Obchodník</resource>
+        <distribution>Normal</distribution>
+        <mean>90</mean>
+        <stddeviation>60</stddeviation>
+        <unit>Minute</unit>
+        <fixedcost>0</fixedcost>
+    </element>
+    <element>
+        <type>Activity</type>
+        <id>Activity_ZkontrolovatMaterialy</id>
+        <resource>Skladník</resource>
+        <distribution>Normal</distribution>
+        <mean>60</mean>
+        <stddeviation>30</stddeviation>
+        <unit>Minute</unit>
+        <fixedcost>0</fixedcost>
+    </element>
+    <element>
+        <type>Activity</type>
+        <id>Activity_PredatAutomobil</id>
+        <resource>Obchodník</resource>
+        <distribution>Exponential</distribution>
+        <mean>60</mean>
+        <stddeviation></stddeviation>
+        <unit>Minute</unit>
+        <fixedcost>0</fixedcost>
+    </element>
+   
+
+    <element>
+        <type>StartEvent</type>
+        <id>StartEvent_PrijetiObjednavky</id>
+    </element>
+
+    <element>
+        <type>EndEvent</type>
+        <id>Event_AutomobilPredan</id>
+    </element>
+
+    <element>
+        <type>IntermediateEvent</type>
+        <id>Event_VyckatNaMaterial</id>
+        <distribution>Normal</distribution>
+        <mean>4</mean>
+        <stddeviation>3</stddeviation>
+        <unit>Day</unit>
+    </element>
+
+    <element>
+        <type>IntermediateEvent</type>
+        <id>Event_ObdrzeniRozhodnuti</id>
+        <distribution>Normal</distribution>
+        <mean>4</mean>
+        <stddeviation>3</stddeviation>
+        <unit>Hour</unit>
+    </element>
+
+    <element>
+        <type>Gateway</type>
+        <type2>Exlusive</type2>
+        <id>Gateway_Spoj1</id>
+        <out>
+            <id>Flow_Spoj1_ZkontrolovatMaterialy</id>
+            <probability>1</probability>
+        </out>
+    </element>
+    <element>
+        <type>Gateway</type>
+        <type2>Exlusive</type2>
+        <id>Gateway_Spoj2</id>
+        <out>
+            <id>Flow_Spoj2_PredatAutomobil</id>
+            <probability>1</probability>
+        </out>
+    </element>
+
+    <element>
+        <type>Gateway</type>
+        <type2>Exlusive</type2>
+        <id>Gateway_VseNaskladneno</id>
+        <out>
+            <id>Flow_VseNaskladneno_ObjednatMaterial</id>
+            <probability>0.35</probability>
+        </out>
+        <out>
+            <id>Flow_VseNaskladneno_OpravitAutomobil</id>
+            <probability>0.65</probability>
+        </out>
+    </element>
+    <element>
+        <type>Gateway</type>
+        <type2>Exlusive</type2>
+        <id>Gateway_ZakazkaProvedena</id>
+        <out>
+            <id>Flow_ZakazkaProvedena_Spoj1</id>
+            <probability>0.85</probability>
+        </out>
+        <out>
+            <id>Flow_ZakazkaProvedena_Spoj2</id>
+            <probability>0.15</probability>
+        </out>
+    </element>
+
+    
+</simulation>
+

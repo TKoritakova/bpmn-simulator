@@ -5,16 +5,6 @@ import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend  } from 'recha
 
 export function ResourceUtilization({ stats, diagram }) {
   
-  const data = [
-    { name: 'Čekání', value: stats.general.totalWaitingForExecution },
-    { name: 'Práce v pracovní době', value: stats.general.totalDurationWithoutOfftime },
-    { name: 'Čekání mimo pracovní dobu', value: stats.general.totalDuration - stats.general.totalDurationWithoutOfftime },
-  ];
-
-  const data2 = [
-    { name: 'Čekání', value: stats.general.totalWaitingForExecution },
-    { name: 'Práce v pracovní době', value: stats.general.totalDurationWithoutOfftime },
-  ];
   
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
   
