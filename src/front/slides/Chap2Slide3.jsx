@@ -6,7 +6,7 @@ export default function Chap2Slide3({ setSlideFinished }) {
     const options = [{ text: "Přeplněný obchod", correct: false, reason: "V procesu není nikde řešen počet lidí v supermarketu." },
         { text: "Požadované zboží je vyprodané", correct: true, reason: "Na začátku procesu je rozhodovací blok, který řeší, jestli je položka dostupná. Pokud není, zákazník přeskočí na další položku svého nákupního seznamu. V realitě by nejspíše hledal alternativu ke své položce než rovnou přešel k dalšímu nákupu, což dává možnost pro další rozšíření tohoto procesu." },
         { text: "Dlouhá fronta u pokladny", correct: false, reason: "Jediná aktivita, která se týká fronty, je její vystání. Nijak není řešeno co dělat, pokud je dlouhá." },
-        { text: "Nedostupné nákupní košíky", correct: false, reason: "Košíky v tomto modelu procesu nejsou vůbec zmíněny." },
+        { text: "Nedostupné nákupní košíky", correct: false, reason: "Košíky jsou v tomto modelu zmíněny pouze v souvislosti vkládání zboží do nich, ale řešení jejich nedostupnosti zmíněno není." },
         { text: "Špatně naskenované zboží u pokladny", correct: true, reason: "V závěrečné části diagramu si zákazník kontroluje svůj nákup a pokud není v pořádku, jde provést reklamaci." },
         { text: "Nedostupné tašky u pokladen", correct: false, reason: "Tašky v tomto modelu procesu nejsou vůbec zmíněny." },
 
@@ -114,12 +114,12 @@ export default function Chap2Slide3({ setSlideFinished }) {
                 </div>
                 <div className='diagram-description'>
                     {/* lit. 5 - str. 43 */}
-                    <div className='diagram-description-item'><p><b>Aktivity</b> - základní elementy každého procesu. Představují práci, nějaký úkol, který je třeba vykonat pro získání chtěných výstupů. Většinou se pojmenovávají jako sloveso v infinitivu + podstatné jméno, např. odeslat zprávu nebo vybrat zboží. V diagramu vypadá jako obdélník.</p></div>
+                    <div className='diagram-description-item'><p><b>Aktivity</b> - základní elementy každého procesu. Představují práci, nějaký úkol, který je třeba vykonat pro získání chtěných výstupů. Většinou se pojmenovávají jako sloveso v infinitivu + podstatné jméno, např. odeslat zprávu nebo vybrat zboží. V diagramu vypadají jako obdélník se zaoblenými rohy.</p></div>
                     <div className='diagram-description-item'><p><b>Události</b> - elementy, které představují důležité věci, které se dějí před, během nebo při skončení procesu. Události se dělí na několik druhů, například:</p>
                         <ul>
-                            <li><b>Spouštěcí události</b> - událost, která způsobí spuštění procesu. Čeká, až se stane něco mimo proces, a reaguje na to. Značí se kruhem s jednoduchým slabým ohraničením.</li>
-                            <li><b>Koncové události</b> - události, které proces spouští, ale už na ně nereaguje. Značí stav, kterého je dosaženo na konci procesu. Značí se kruhem s jednoduchým silným ohraničením.</li>
-                            <li><b>Mezilehlé události</b> - události, které se vyskytují v rámci procesu. Mohou značit nějaký stav, kterého se dosáhlo. Proces je může vytvářet sám nebo se mohou samy objevit.</li>
+                            <li><b>Spouštěcí událost</b> - událost, která způsobí spuštění procesu. Čeká, až se stane něco mimo proces, a reaguje na to. Značí se kruhem s jednoduchým slabým ohraničením.</li>
+                            <li><b>Koncová událost</b> - událost, kterou proces spouští, ale už na ni nereaguje. Značí stav, kterého je dosaženo na konci procesu. Značí se kruhem s jednoduchým silným ohraničením.</li>
+                            <li><b>Mezilehlá událost</b> - událost, která se vyskytuje v rámci procesu. Může značit nějaký stav, kterého se dosáhlo. Proces ji může vytvářet sám nebo se může sama objevit. Značí se kruhem s dvojitým slabým ohraničením.</li>
                         </ul>
                         <p>Události dále mohou mít své typy podle toho, jakou událost sledují, například:</p>
                         <ul>
@@ -129,8 +129,8 @@ export default function Chap2Slide3({ setSlideFinished }) {
                     </div>
                     <div className='diagram-description-item'><p><b>Rozhodovací větvení</b> - elementy, které podle podmínek na základě dat dostupných v procesu, větví proces. Značí se kosočtvercem a též je jich více druhů, například:</p>
                         <ul>
-                            <li><b>Exkluzivní větvení (XOR)</b> - větvení, která se podle dat rozhodne, kterou z výstupních cest použije, přičemž vybírá vždy jen jednu z nich. Od jiných bran se liší přidáním X do kosočtverce a v diagramu ji většinou doplníme otázkou.</li>
-                            <li><b>Paralelní větvení (AND)</b> - větvení, která aktivuje všechny své výstupní cesty a používá se pro paralelizaci. V diagramu se značí přidáním plus do kosočtverce.</li>
+                            <li><b>Exkluzivní větvení (XOR)</b> - větvení, které se podle dat rozhodne, kterou z výstupních cest použije, přičemž vybírá vždy jen jednu z nich. Od jiných větvení se liší přidáním X do kosočtverce a v diagramu ho většinou doplníme otázkou.</li>
+                            <li><b>Paralelní větvení (AND)</b> - větvení, které aktivuje všechny své výstupní cesty a používá se pro paralelizaci. V diagramu se značí přidáním plus do kosočtverce.</li>
                         </ul>
                     </div>
                     <div className='diagram-description-item'><p><b>Sekvenční toky</b> - představují logické a časové propojení jednotlivých aktivit, jejich návaznost. V diagramu vypadají jako šipky začínající v jednom elementu a končící v druhém, který na něj navazuje.</p></div>
@@ -139,7 +139,7 @@ export default function Chap2Slide3({ setSlideFinished }) {
             </div>
 
             <h2>Příklad: Proces nákupu v supermarketu</h2>
-            <p className='explanation'>Prohlédněte si upravený diagram procesu nákupu v supermarketu. Ten se v tomto případě zaměřuje pouze na pohled zákazníka, což je zcela v pořádku, protože procesy mohou mít různou úroveň míry detailu pro jeden či více zdrojů. Po prohlédnutí diagramu vyberte níže všechny problémy uvedené v první vizualizaci procesu, které popisují, co se může zákazníkovi v původních čtyřech krocích přihodit, se kterými tento diagram pracuje a je o jejich řešení rozšířen.</p>
+            <p className='explanation'>Prohlédněte si upravený diagram procesu nákupu v supermarketu. Ten se v tomto případě zaměřuje pouze na pohled zákazníka, což je zcela v pořádku, protože procesy mohou mít různou úroveň míry detailu pro jeden či více zdrojů. Po prohlédnutí diagramu vyberte níže všechny možnosti, se kterými tento diagram pracuje a je o jejich řešení rozšířen. Možnosti vychází z problémů, které jsou popsány v první vizualizaci procesu.</p>
 
             <div className='bpmn-diagram-wrapper'><div
                     ref={containerSupermarketRef}

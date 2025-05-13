@@ -66,7 +66,7 @@ export default function Chap3Slide10({ setSlideFinished }) {
           d: "Žádné z řečených",
         },
         correct: "b",
-        explanation: "xx"
+        explanation: "Fixní rozdělení má mezi příchody pevně stanovené hodnoty, tedy správnou odpovědí není. Normální rozdělení má mezi příchody časy, které jsou na číselné ose rozmístěné okolo jeho střední hodnoty. Exponenciální rozdělení naopak říká, že je větší šance, že nový zákazník přijde hned po tom předchozím, než dlouho po něm - a proto je tedy i správnou odpovědí. "
       },
       {
         id: 3,

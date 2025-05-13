@@ -100,61 +100,8 @@ export default function Chap3Slide8({ setSlideFinished }) {
 
     };
 
-   
-    const formatDate = (date) => {
-      const options = {
-        weekday: 'short',   
-        day: 'numeric',       
-        month: 'numeric',     
-        year: 'numeric',      
-        hour: 'numeric',      
-        minute: '2-digit',    
-        hour12: false        
-      };
-    
-      return new Intl.DateTimeFormat('cs-CZ', options).format(date);
-    };
 
 
-    const getWarehouse = () => {
-
-      const gateway = diagram.getObjectByID("Gateway_VseNaskladneno");
-      if (gateway) {
-        const probability = gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil");
-        if (probability) {
-          if (probability.probability >= 0.65) {
-            return "High"
-          } else if (probability.probability <= 0.35) {
-            return "Low"
-          } else {
-            return "Middle"
-          }
-        }
-      }
-      return null;
-    }
-    
-    const saveWarehouse = (value) =>{
-     
-      const gateway = diagram.getObjectByID("Gateway_VseNaskladneno");
-      if (gateway) {
-        switch (value) {
-          case "High":
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.65;
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.35;
-            break;
-          case "Low": 
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.35;
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.65;
-            break;
-          case "Middle":
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_OpravitAutomobil").probability = 0.5;
-            gateway.getProbabilities().find(p => p.id === "Flow_VseNaskladneno_ObjednatMaterial").probability = 0.5;
-            break;
-        }
- 
-      }
-    }
 
 
 
@@ -315,8 +262,8 @@ export default function Chap3Slide8({ setSlideFinished }) {
       )}
 
       {diagram && diagramFirstSimulation && statsFirstSimulation && (
-        <p className="explanation">Poslední simulační cvičení je zaměřeno na pracovní doby. Jak je řečeno výše, určují čas, kdy bude zdroj pracovat. Zde je možné vytvořit si vlastní  pracovní dobu a upravit jí parametry. Jméno se nesmí shodovat se jménem jiné pracovní doby. Poslední pracovní den musí být stejný nebo později než první pracovní den. Stejně tak konec pracovní doby musí být později než její začátek - v opačném případě nepůjde údaje upravit. Vytvořené pracovní doby je následně možné přiřadit jednotlivým zdrojům.<br/><br/>
-        Pro první spuštění s vlastní pracovní dobou je vhodné nastavit podobné parametry jako má výchozí pracovní doba a změnit například pracovní dny nebo časy. Každému zdroji je možné nastavit jeho vlastní pracovní dobu.</p>
+        <p className="explanation">Poslední simulační cvičení je zaměřeno na pracovní doby. Jak je řečeno výše, určují čas, kdy bude zdroj pracovat. Zde je možné vytvořit si vlastní  pracovní dobu a upravit jí parametry. Jméno se nesmí shodovat se jménem jiné pracovní doby. Poslední pracovní den musí být tentýž nebo pozdější než první pracovní den. Stejně tak konec pracovní doby musí být později než její začátek - v opačném případě nepůjde údaje upravit. Vytvořené pracovní doby je následně možné přiřadit jednotlivým zdrojům.<br/><br/>
+        Pro první spuštění s vlastní pracovní dobou je vhodné nastavit podobné parametry, jako má výchozí pracovní doba a změnit například pracovní dny nebo časy. Každému zdroji je možné nastavit jeho vlastní pracovní dobu.</p>
       )}
 
     
@@ -348,7 +295,7 @@ export default function Chap3Slide8({ setSlideFinished }) {
 )}
 
 {stats.general && Object.keys(stats.general).length > 0 && (<div>
-      <h2>Výsledky první simulace simulace</h2>
+      <h2>Výsledky první simulace</h2>
       <p className="explanation">Níže se nachází statistiky z první simulace, konkrétně jejího posledního spuštění. Je v nich použita výchozí pracovní doba pro všechny zdroje, což znamená od pondělí do pátku od 9:00 do 17:00.</p>
           <GeneralDataWithWeeklyCosts stats={statsFirstSimulation} diagram={diagramFirstSimulation}/>
           <ResourceUtilization stats={statsFirstSimulation} diagram={diagramFirstSimulation}/>

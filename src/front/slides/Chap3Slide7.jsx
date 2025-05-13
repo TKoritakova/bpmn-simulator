@@ -233,7 +233,7 @@ export default function Chap3Slide7({ setSlideFinished }) {
 )}
 
 {stats.general && Object.keys(stats.general).length > 0 && (<div>
-      <h2>Výsledky první simulace simulace</h2>
+      <h2>Výsledky první simulace</h2>
       <p className="explanation">Níže se nachází statistiky z první simulace, konkrétně jejího posledního spuštění, pro porovnání s daty z pozměněného scénáře.</p>
           <GeneralData stats={statsFirstSimulation} diagram={diagramFirstSimulation}/>
           <Heatmap stats={statsFirstSimulation} diagram={diagramFirstSimulation} file={'dilna-ver1.bpmn'}/>

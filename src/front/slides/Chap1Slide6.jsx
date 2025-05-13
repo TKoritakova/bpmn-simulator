@@ -53,10 +53,10 @@ export default function Chap1Slide6({ setSlideFinished }) {
         id: 2,
         question: "Jaký zdroj/zdroje je potřeba pro proces výroby auta?",
         options: {
-          a: "Papírové formuláře.",
-          b: "Obchodní zástupce společnosti.",
-          c: "Stroje a suroviny.",
-          d: "Dodavatel materiálů.",
+          a: "Papírové formuláře",
+          b: "Obchodní zástupce společnosti",
+          c: "Stroje a suroviny",
+          d: "Dodavatel materiálů",
         },
         correct: "c",
         explanation: "Zdroje procesu označují kohokoliv nebo cokoliv, co je v procesu nutné k provádění aktivit. Proces výroby nepotřebuje nutně žádné papírové formuláře ani obchodního zástupce společnosti, který se účastní procesu prodeje auta, nikoliv přímo jeho výroby. Dodavatel materiálů se výroby jako takové též neúčastní, proces, jehož je zdrojem, může být například proces naskladnění materiálů."
@@ -65,10 +65,10 @@ export default function Chap1Slide6({ setSlideFinished }) {
         id: 3,
         question: "Co je nejvhodnější KPI pro proces expedice objednávek eshopu?",
         options: {
-          a: "Průměrný čas doručení objednávek.",
-          b: "Počet použitých barev obalových materiálů.",
-          c: "Maximální velikost objednávky.",
-          d: "Celkové náklady na nákup doručovacích vozidel."
+          a: "Průměrný čas doručení objednávek",
+          b: "Počet použitých barev obalových materiálů",
+          c: "Maximální velikost objednávky",
+          d: "Celkové náklady na nákup doručovacích vozidel"
         },
         correct: "a",
         explanation: "KPI je konkrétní a měřitelná hodnota, kterou se hodnotí efektivita a výkonnost procesu. Do této definice spadá průměrný čas doručení objednávek. Naopak barvy použitých obalových materiálu nám o efektivitě a výkonnosti nic neřeknou. Maximální velikost objednávky sice do definice KPI spadá, ale je spíše statistickým údajem a rozhodně má menší význman než průměrný čas. Náklady na nákup doručovacích vozidel do tohoto procesu nespadají, vozidla se budou nakupovat v jiném, odděleném procesu - zde by mělo význam jen sledování nákladů na jejich provoz, například spotřeba a cena paliva."
@@ -83,13 +83,13 @@ export default function Chap1Slide6({ setSlideFinished }) {
           d: "Sledují hlavně názory a spokojenost zákazníků procesu."
         },
         correct: "c",
-        explanation: "Kvantitativní metriky jsou založeny na sledování konkrétních veličin jako je čas nebo náklady. Nejedná se tedy o subjektivní hodnocení, osobní zkušenosti nebo názory."
+        explanation: "Kvantitativní metriky jsou založeny na sledování konkrétních veličin, jako je čas nebo náklady. Nejedná se tedy o subjektivní hodnocení, osobní zkušenosti nebo názory."
 
 
       },
       {
         id: 5,
-        question: "Společnost poskytující služby překladů textů chce zlepšit svůj proces pro objednávky od zákazníků. Vedení společnosti se rozhodne zaměřit na dobu trvání procesu, dostupnosti a vytížení překladatelů, délky textů k překladu podle počtu slov a celkové tržby za měsíc. Který z následujících výroků není v souladu s principy procesního řízení?",
+        question: "Společnost poskytující služby překladů textů chce zlepšit svůj proces pro objednávky od zákazníků. Vedení společnosti se rozhodne zaměřit na dobu trvání procesu, dostupnost a vytížení překladatelů, délky textů k překladu podle počtu stran a celkové tržby za měsíc. Který z následujících výroků není v souladu s principy procesního řízení?",
         options: {
           a: "Doba trvání procesu je kvantitativní metrika a může nám sloužit jako podklad pro tvorbu KPI.",
           b: "Celkové tržby za měsíc mohou být KGI a hodnotit, zda byl splněn strategický cíl v podobě překročení řečené hranice chtěných tržeb.",
