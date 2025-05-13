@@ -11,6 +11,8 @@ export class Statistics {
         result["activites"] = this.generateActivityStatistics(log,diagram);
         result["resources"] = this.generateResourceUtilization(log,diagram, result["general"]);
 
+   
+        
 
         return result;
     }
@@ -217,7 +219,7 @@ export class Statistics {
 
       
         const startDate = diagram.getStartTime();
-        let day = startDate.getDay();
+        let day = startDate.getDay() == 0 ? 7 : startDate.getDay();
         let hour = startDate.getHours();
         let minute = startDate.getMinutes();
         let remainingTime = general.totalRealExecutionTime;
@@ -225,18 +227,20 @@ export class Statistics {
         let beginTime = timetable.getBeginTime().split(':').map(Number);
         let endTime = timetable.getEndTime().split(':').map(Number);
         let shiftLenght = (endTime[0] * 60 * 60 + endTime[1] * 60) - (beginTime[0] * 60 * 60 + beginTime[1] * 60)
+        let beginDay = timetable.getBeginDay() == 0 ? 7 : timetable.getBeginDay();
+        let endDay = timetable.getEndDay() == 0 ? 7 : timetable.getEndDay();
 
         while (remainingTime > 0) {          
-          const isWorkingDay = (day >= timetable.getBeginDay() && day <= timetable.getEndDay()); 
-         
+          const isWorkingDay = (day >= beginDay && day <= endDay); 
+          
 
           if (isWorkingDay) {
+     
 
-      
             if ((hour > beginTime[0] || (hour == beginTime[0] && minute >= beginTime[1])) && (hour < endTime[0] || (hour == endTime[0]  && minute <= endTime[1]))) {
               let timeUntilDayEnd = (60 * 60 * 24) - (hour * 60 * 60 + minute * 60);
-              let timeUntilShiftEnd = shiftLenght - ((endTime[0] * 60 * 60 + endTime[1] * 60) - (hour * 60 * 60 + minute * 60))
-                
+              let timeUntilShiftEnd = shiftLenght - ((hour * 60 * 60 + minute * 60) - (beginTime[0] * 60 * 60 + beginTime[1] * 60))
+           
               if (remainingTime >= timeUntilDayEnd || remainingTime >= timeUntilShiftEnd) {
                 resultSecs.push(timeUntilShiftEnd);               
               } else {
@@ -281,7 +285,7 @@ export class Statistics {
             minute = 0;
           }
           
-          day = (day + 1) % 7;
+          day = (day + 1) == 8 ? 1 : (day + 1);
             
         }
 

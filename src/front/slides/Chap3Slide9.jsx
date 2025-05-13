@@ -231,7 +231,6 @@ export default function Chap3Slide8({ setSlideFinished, slideFinished }) {
                 const value = e.target.value;
                 info.setWorkingHours(value);
                 forceUpdate();
-                console.log(diagram)
               }}
                 >
               {Object.entries(diagram.getAllTimetables() || {}).map(
@@ -277,7 +276,7 @@ export default function Chap3Slide8({ setSlideFinished, slideFinished }) {
 
       {diagram && diagramFirstSimulation && statsFirstSimulation && (
         <p className="explanation">Poslední simulační cvičení je zaměřeno na pracovní doby. Jak je řečeno výše, určují čas, kdy bude zdroj pracovat. Zde je možné vytvořit si vlastní  pracovní dobu a upravit jí parametry. Jméno se nesmí shodovat se jménem jiné pracovní doby. Poslední pracovní den musí být tentýž nebo pozdější než první pracovní den. Stejně tak konec pracovní doby musí být později než její začátek - v opačném případě nepůjde údaje upravit. Vytvořené pracovní doby je následně možné přiřadit jednotlivým zdrojům.<br/><br/>
-        Pro první spuštění s vlastní pracovní dobou je vhodné nastavit podobné parametry, jako má výchozí pracovní doba a změnit například pracovní dny nebo časy. Každému zdroji je možné nastavit jeho vlastní pracovní dobu.</p>
+        Pro první spuštění s vlastní pracovní dobou je vhodné nastavit podobné parametry, jako má výchozí pracovní doba a změnit například pracovní dny nebo časy. Každému zdroji je možné nastavit jeho vlastní pracovní dobu. Přestože máte možnost nastavit jakoukoliv pracovní dobu, nedoporučuji ji příliš zkracovat, obzvláště u mechaniků.</p>
       )}
 
     
