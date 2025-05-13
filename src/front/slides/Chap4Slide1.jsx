@@ -230,13 +230,13 @@ export default function Chap4Slide1({ setSlideFinished }) {
         <p>Pro úspěšné zakončení cesty touto aplikací je nutné nastavit parametry vstupního scénáře tak, aby:</p>
         <ul>
           <li>Celkové náklady na proces nepřesáhly 1 000 000 Kč.</li>
-          <li>Týdenní mzdové náklady nepřesáhly 15 000 Kč.</li>
+          <li>Týdenní mzdové náklady (za odpracované aktivity) nepřesáhly 15 000 Kč.</li>
           <li>Doba trvání (začátek - konec) nepřesáhla 50 týdnů.</li>
           <li>Využití automechanika bylo alespoň 50%.</li>
           <li>Maximální hodnota čekání, která se u aktivit vyskytne, nepřesáhla 2 týdny.</li>
         </ul>
 
-        <p>Rozdělení příchodů instancí bude s 95% pravděpodobností normální se střední hodnotou 12 a odchylkou 8. Ve zbylých 5% to bude exponenciální. Šance, že zákazník přijme cenou nabídku, je 85%. Pravděpodobnosti skladových zásob zůstávají stejné jako v předchozích příklad - vysoké zásoby znamenají, že s 65% je materiál skladem, střední 50% a nízké 35%.</p>
+        <p>Rozdělení příchodů instancí bude s 95% pravděpodobností normální se střední hodnotou 12 a odchylkou 8. Ve zbylých 5% to bude exponenciální. Šance, že zákazník přijme cenovou nabídku, je 85%. Pravděpodobnosti skladových zásob zůstávají stejné jako v předchozích příklad - vysoké zásoby znamenají, že s 65% je materiál skladem, střední 50% a nízké 35%.</p>
 
       </div>
 
