@@ -28,7 +28,7 @@ export default function Chapter3() {
   const [submitted, setSubmitted] = useState(false);
 
 
-  const slideComponents = [<Chap3Slide1 setSlideFinished={setSlideFinished} />,<Chap3Slide2 setSlideFinished={setSlideFinished} />,<Chap3Slide3 setSlideFinished={setSlideFinished} />,<Chap3Slide4 setSlideFinished={setSlideFinished} />,<Chap3Slide5 setSlideFinished={setSlideFinished} />,<Chap3Slide6 setSlideFinished={setSlideFinished} />,<Chap3Slide7 setSlideFinished={setSlideFinished} />,<Chap3Slide8 setSlideFinished={setSlideFinished} />,<Chap3Slide9 setSlideFinished={setSlideFinished} />,<Chap3Slide10 setSlideFinished={setSlideFinished} />];
+  const slideComponents = [<Chap3Slide1 setSlideFinished={setSlideFinished} />,<Chap3Slide2 setSlideFinished={setSlideFinished} />,<Chap3Slide3 setSlideFinished={setSlideFinished} />,<Chap3Slide4 setSlideFinished={setSlideFinished} />,<Chap3Slide5 setSlideFinished={setSlideFinished} slideFinished={slideFinished} />,<Chap3Slide6 setSlideFinished={setSlideFinished} slideFinished={slideFinished} />,<Chap3Slide7 setSlideFinished={setSlideFinished} slideFinished={slideFinished} />,<Chap3Slide8 setSlideFinished={setSlideFinished} slideFinished={slideFinished} />,<Chap3Slide9 setSlideFinished={setSlideFinished} slideFinished={slideFinished} />,<Chap3Slide10 setSlideFinished={setSlideFinished} />];
  
 
   useEffect(() => {

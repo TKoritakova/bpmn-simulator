@@ -11,7 +11,7 @@ import { HeatmapIterations } from "../components/stats/HeatmapIterations";
 const LOCAL_KEY_STATS = "chapter3-default-simulation-stats";
 const LOCAL_KEY_DIAGRAM = "chapter3-default-simulation-diagram";
 
-export default function Chap3Slide6({ setSlideFinished }) {
+export default function Chap3Slide6({ setSlideFinished, slideFinished }) {
 
   const containerWorkshopRef = useRef(null);
   const viewerWorkshopRef = useRef(null);
@@ -54,6 +54,17 @@ export default function Chap3Slide6({ setSlideFinished }) {
 
 
   }, []);
+
+      useEffect(() => {
+      
+  
+      const storedDiagram = localStorage.getItem(LOCAL_KEY_DIAGRAM);
+      if (storedDiagram) setDiagramFirstSimulation(BPMNDiagram.fromSerializableObject(JSON.parse(storedDiagram)));
+      const storedStats = localStorage.getItem(LOCAL_KEY_STATS);
+      if (storedStats) setStatsFirstSimulation(JSON.parse(storedStats));
+  
+  
+    }, [slideFinished]);
 
   const runSimulation = async () => {
       
@@ -187,7 +198,7 @@ export default function Chap3Slide6({ setSlideFinished }) {
       </div>
 
        
-      {!diagramFirstSimulation && !statsFirstSimulation && (
+      {(!diagramFirstSimulation || !statsFirstSimulation) && (
         <p className="explanation">Nejsou dostupné výsledky z první simulace. Pro pokračování výuky se nejprve vraťte na příslušnou obrazovku s první simulací a spusťte ji.</p>
       )}
 

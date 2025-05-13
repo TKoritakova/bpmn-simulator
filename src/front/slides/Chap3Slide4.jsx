@@ -148,7 +148,7 @@ export default function Chap3Slide4({ setSlideFinished }) {
       <div className='slide-h1-wrapper'><h1>První simulace</h1></div>
       <div className='slide-content-wrapper'>
 
-        <p>Nacházíme se v autodílně, která se zabývá repasováním automobilů. Sledujeme jejich proces opravy automobilu. Ten začíná v obchodním oddělení, které po předchozí dohodě se zákazníkem přijme automobil. Ten je v dílně prohlídnut a vyšetřen, z čehož vzniknou diagnostická data. Z těch je následně zpět v obchodním oddělení spočítána cena opravy. Po určení této ceny se přechází do skladu, kde skladník kontroluje stav zásob. Pokud nějaké nejsou dostupné, objedná je, počká na jejich příjezd a provede naskladnění, načež znovu kontroluje, zda má vše potřebné pro opravu. Pokud je vše dostupné, přechází se k opravě automobilu a po něm proces končí. Tento proces je vyobrazen na modelu níže:</p>
+        <p>Nacházíme se v autodílně, která se zabývá repasováním automobilů. Sledujeme jejich proces opravy automobilu. Ten začíná v obchodním oddělení, které po předchozí dohodě se zákazníkem přijme automobil. Ten je v dílně prohlédnut a vyšetřen, z čehož vzniknou diagnostická data. Z těch je následně zpět v obchodním oddělení spočítána cena opravy. Po určení této ceny se přechází do skladu, kde skladník kontroluje stav zásob. Pokud nějaké nejsou dostupné, objedná je, počká na jejich příjezd a provede naskladnění, načež znovu kontroluje, zda má vše potřebné pro opravu. Pokud je vše dostupné, přechází se k opravě automobilu a po něm proces končí. Tento proces je vyobrazen na modelu níže:</p>
 
       <div className='bpmn-diagram-wrapper'>
         <div ref={containerWorkshopRef} className='bpmn-diagram-supermarketver2' />
