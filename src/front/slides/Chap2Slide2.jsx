@@ -49,7 +49,7 @@ export default function Chap2Slide2({ setSlideFinished }) {
 
             <p>Umožňuje <b>vizuálně znázornit</b>, jak <b>jednotlivé činnosti v organizaci probíhají, kdo je vykonává a jak jsou mezi sebou propojeny</b>. Použít se dá například pro návrh a optimalizaci interních procesů organizce, automatizaci podnikových informačních systémů a analýzu efektivity procesů.</p>
 
-            <p className="explanation">Na obrázku níže je model z předchozí stránky přepsaný do bpmn notace. Pro zachování jednoduchosti zatím nejsou dodržena všechna pravidla notace, takže model není zcela správně a je určen pouze pro prvotní porovnání obou zápisů. Je čitelnější předchozí zápis nebo tento? Který obsahuje na první pohled více informací? Kterému účastníkovi procesu (zdroji) věnujeme větší míru detailu?</p>
+            <p className="explanation">Na obrázku níže je model z předchozí stránky přepsaný do BPMN notace. Pro zachování jednoduchosti zatím nejsou dodržena všechna pravidla notace, takže model není zcela správně a je určen pouze pro prvotní porovnání obou zápisů. Je čitelnější předchozí zápis nebo tento? Který obsahuje na první pohled více informací? Kterému účastníkovi procesu (zdroji) věnujeme větší míru detailu?</p>
 
             <div className='bpmn-diagram-wrapper'><div
                 ref={containerRef}

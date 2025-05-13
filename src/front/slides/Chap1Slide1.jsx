@@ -56,7 +56,7 @@ export default function Chap1Slide1({ setSlideFinished }) {
         <li>musí mít svého <b>zákazníka</b>, kterým může i být sama společnost, a musí pro něj mít hodnotu.</li>
     </ul>
 <h2>Příklad jednoduchého procesu: Nákup v supermarketu</h2>
-<p className="explanation">Níže je umístěn příklad jednoduchého procesu, který je každý schopný si představit. Jedná se o velmi zjednodušenou verzi toho, co se při nákupu z pohledu nakupujícího děje. Každá krok má popsané, co se v něm děje, a zároveň připojených pár problémů, kterým může v daném kroku čelit. Napadají vás nějaké další?</p>
+<p className="explanation">Níže je umístěn příklad jednoduchého procesu, který je každý schopný si představit. Jedná se o velmi zjednodušenou verzi toho, co se děje při nákupu z pohledu nakupujícího. Každá krok má popsané, co se v něm děje, a zároveň připojených pár problémů, kterým může v daném kroku čelit. Napadají vás nějaké další?</p>
 
 <div className="easy-process">
         {steps.map((step, index) => (

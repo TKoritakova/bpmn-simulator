@@ -71,11 +71,11 @@ export default function Chap2Slide5({ setSlideFinished }) {
         d: "Exkluzivní větvení",
       },
       correct: "c",
-      explanation: "Mezi události se počítají i spouštěcí a koncové události, tedy tento element se v procesu vyskytuje. Zprávový tok je použit placení u klasické pokladny a vyřízení reklamace. Všechny použité větvení jsou exkluzivní, takže správnou odpovědí je, že model neobsahuje paralelní větvení."
+      explanation: "Mezi události se počítají i spouštěcí a koncové události, tedy tento element se v procesu vyskytuje. Zprávový tok je použit při placení u klasické pokladny a vyřízení reklamace. Všechny použité větvení jsou exkluzivní, takže správnou odpovědí je, že model neobsahuje paralelní větvení."
     },
     {
         id: 2,
-        question: "K čemu v modelu slouží exkluzivní větvení s otázkou „Je zboží dostupné?“?",
+        question: "K čemu v modelu slouží větvení s otázkou „Je zboží dostupné?“?",
         options: {
           a: "Rozhoduje, jestli zákazník opustí supermarket.",
           b: "Rozhoduje, jestli zákazník může vložit dané zboží do košíku.",
@@ -127,8 +127,8 @@ export default function Chap2Slide5({ setSlideFinished }) {
         id: 6,
         question: "Jak model co nejlépe upravit, aby řešil i následující: pokud zákazník nemá dostupný preferovaný produkt, hledá nejprve jeho alternativy než se případně posune na další produkt; zákazník si volí pokladnu podle toho, kde je nejmenší fronta; pokud na začátku nejsou dostupné košíky, zákazník čeká, až budou dostupné.",
         options: {
-          a: "Na začátek procesu se přidá exkluzivní větvení, která se bude ptát, zda jsou dostupné košíky. Pokud ano, bude aktivována cesta k existujícímu větvení zjišťujícímu, zda je dostupné zboží. Pokud ne, bude aktivována cesta k časovači, který bude vyčkávat na volné košíky, a následně se též napojí na existující větvení o dostupnosti zboží. Větev o nedostupnosti zboží z tohoto větvení rozšíříme o aktivitu hledání alternativy. Před výběr způsobu platby přidáme aktivitu kontroly délky front a stávající exkluzivní větvení upravíme tak, aby reagovalo na délku fronty změnou jeho otázky.",
-          b: "Na začátek procesu se přidá paralelní větvení. Jedna její větev bude aktivovat cestu k existujícímu větvení zjišťujícímu, zda je dostupné zboží. Druhá bude mít cestu k časovači, který bude vyčkávat na volné košíky a jakmile bude nějaký volný, vezme si ho. Obě větve se spojí před výběrem způsobu platby, kam přidáme aktivitu kontroly délky front a stávající exkluzivní větvení upravíme tak, aby reagovalo na délku fronty změnou jeho otázky.",
+          a: "Na začátek procesu se přidá exkluzivní větvení, které se bude ptát, zda jsou dostupné košíky. Pokud ano, bude aktivována cesta k existujícímu větvení zjišťujícímu, zda je dostupné zboží. Pokud ne, bude aktivována cesta k časovači, který bude vyčkávat na volné košíky a následně se též napojí na existující větvení o dostupnosti zboží. Větev o nedostupnosti zboží z tohoto větvení rozšíříme o aktivitu hledání alternativy. Před výběr způsobu platby přidáme aktivitu kontroly délky front a stávající exkluzivní větvení upravíme tak, aby reagovalo na délku fronty změnou jeho otázky.",
+          b: "Na začátek procesu se přidá paralelní větvení. Jedna jeho větev bude aktivovat cestu k existujícímu větvení zjišťujícímu, zda je dostupné zboží. Druhá větev bude půjde k časovači, který bude vyčkávat na volné košíky a jakmile bude nějaký volný, vezme si ho. Obě větve se spojí před výběrem způsobu platby, kam přidáme aktivitu kontroly délky front, a stávající exkluzivní větvení upravíme tak, aby reagovalo na délku fronty změnou jeho otázky.",
           c: "Na začátek procesu se přidá aktivita vyčkat na košík. Větev o nedostupnosti zboží z prvního exkluzivního větvení rozšíříme o aktivitu hledání alternativy, za kterou ještě umístíme ještě exkluzivní větvení. To se bude ptát, jestli zákazník zboží našel a zda ho chce, pokud ano, zboží vloží do košíku. Jinak pokračuje k další položce nákupního seznamu. Před výběr způsobu platby přidáme aktivitu kontroly délky front.",
           d: "Na začátek procesu se přidá aktivita vyčkat na košík následovaná aktivitou vzít si košík. Větev o nedostupnosti zboží rozšíříme o exkluzivní větvení, které bude řešit, zda je dostupná alternativa. Pokud ano, vložíme ji do košíku, pokud ne, pokračujeme k další položce nákupu. Před placením na klasické pokladně přidáme aktivitu kontroly délky front.",
         },

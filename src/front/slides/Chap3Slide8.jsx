@@ -123,7 +123,7 @@ export default function Chap3Slide8({ setSlideFinished }) {
 
       <div className='simulation-scenario-description-item'>
         <h2>Opakování</h2>
-        <p><b>Zdroje</b> jsou lidé či role, kteří na procesu pracují - tedy jsou to účastníci procesu. Taktéž to mohou být systémy, tedy jakékoliv aktivní zdroje definované při tvorbě procesu. Mohou být shodné s bazény a dráhami v modelu. Každému zdroji se nastaví jeho <b>jméno</b>, <b>kapacita</b> (tedy například kolik prodavačů je k dispozici), <b>mzda</b> za časový údaj a <b>pracovní doba</b>.</p>
+        <p><b>Zdroje</b> jsou lidé či role, kteří na procesu pracují - tedy jsou to účastníci procesu. Taktéž to mohou být systémy, tedy jakékoliv aktivní zdroje definované při tvorbě procesu. Mohou být shodné s bazény a drahami v modelu. Každému zdroji se nastaví jeho <b>jméno</b>, <b>kapacita</b> (tedy například kolik prodavačů je k dispozici), <b>mzda</b> za časový údaj a <b>pracovní doba</b>.</p> 
       </div>
        
       <div className='bpmn-diagram-wrapper'>
@@ -196,8 +196,8 @@ export default function Chap3Slide8({ setSlideFinished }) {
     {stats.general && Object.keys(stats.general).length > 0 && (<div>
       <h2>Výsledky simulace</h2>
       <p className="explanation">Zobrazené statistiky pro tento příklad obsahují již známé statistiky pro aktivity a heatmapy. Celkové statistiky jsou mírně upraveny a obsahují dva nové řádky se mzdovými týdenními náklady. První z nich, který počítá jen s odpracovanými aktivitami, počítá mzdové náklady z celkové ceny (bez nákladů na sklad) a to jejím vydělením počtem týdnů. Celková cena procesu se určuje součtem cen za jednotlivé uskutečněné aktivity, které se počítají jako doba jejího trvání krát hodinová mzda zdroje, který na ní pracuje.<br/><br/>
-      Druhý nový řádek říká, jaké jsou mzdové náklady za celou pracovní dobu použitých zdrojů - což je částka určená vynásobením jejich hodinové mzdy a počtu odpracovaných hodin za týden, který byl zde určen na 40. Skladník bere 200 Kč na hodinu, automechanik 250 Kč a obchodník 300 Kč. Tento údaj zároveň ukazuje, kolik společnost bude muset navíc zaplatit každý týden proti tomu, co bylo skutečně odpracováno. Že se částky nerovnají není špatně a není třeba se je snažit úplně vyrovnat, protože v reálném prostředí mohou zdroje zbytek své pracovní doby využít a využijí na úkoly z jiných procesů. Údaj je zde spíše pro zajímavost a uvědomění si, že mzdové náklady, které simulace spočítá, se nerovnají tomu, co je v realitě skutečně náklady na zaměstnanecké výplaty.<br/><br/>
-      Dalším novým prvkem statistik jsou grafy využití zdrojů. Ty ukazují využití pracovní doby zdrojů, pokud by skutečně měly úkoly jen z tohoto procesu. Grafy lze též vyložit jako kolik procent své pracovní doby zdroje tráví plněním úkolů z tohoto procesu.<br/><br/>
+      Druhý nový řádek říká, jaké jsou mzdové náklady za celou pracovní dobu použitých zdrojů - což je částka určená vynásobením jejich hodinové mzdy a počtu odpracovaných hodin za týden, který byl zde určen na 40. Skladník bere 200 Kč na hodinu, automechanik 250 Kč a obchodník 300 Kč. Tento údaj zároveň ukazuje, kolik společnost bude muset navíc zaplatit každý týden proti tomu, co bylo skutečně odpracováno. Že se částky nerovnají není špatně a není třeba se je snažit úplně vyrovnat, protože v reálném prostředí mohou zdroje zbytek své pracovní doby využít a využijí na úkoly z jiných procesů. Údaj je zde spíše pro zajímavost a uvědomění si, že mzdové náklady, které simulace spočítá, se nerovnají tomu, co jsou v realitě skutečně náklady na zaměstnanecké výplaty.<br/><br/>
+      Dalším novým prvkem statistik jsou grafy využití zdrojů. Ty ukazují využití pracovní doby zdrojů, pokud by skutečně měly úkoly jen z tohoto procesu. Grafy lze též vyložit jako, kolik procent své pracovní doby zdroje tráví plněním úkolů z tohoto procesu.<br/><br/>
       Opět simulaci pusťte s různými počty kapacit zdrojů. Jak změny kapacit mění využití zdrojů? Týdenní mzdové náklady? Ale zároveň též doby čekání, jak celkové, tak u jednotlivých aktivit? Pro porovnání jsou i zde níže umístěny statistiky první simulace.</p>
           <GeneralDataWithWeeklyCosts stats={stats} diagram={diagram}/>
           <ResourceUtilization stats={stats} diagram={diagram}/>
@@ -207,7 +207,7 @@ export default function Chap3Slide8({ setSlideFinished }) {
 )}
 
 {stats.general && Object.keys(stats.general).length > 0 && (<div>
-      <h2>Výsledky první simulace simulace</h2>
+      <h2>Výsledky první simulace</h2>
       <p className="explanation">Níže se nachází statistiky z první simulace, konkrétně jejího posledního spuštění, pro porovnání s daty ze scénáře s novými kapacitami. Původní kapacity jsou jeden dostupný obchodník, jeden skladník a dva automechnici.</p>
           <GeneralDataWithWeeklyCosts stats={statsFirstSimulation} diagram={diagramFirstSimulation}/>
           <ResourceUtilization stats={statsFirstSimulation} diagram={diagramFirstSimulation}/>

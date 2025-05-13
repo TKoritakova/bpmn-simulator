@@ -176,7 +176,7 @@ export default function Chap3Slide6({ setSlideFinished }) {
 
       <div className='simulation-scenario-description-item'>
         <h2>Opakování</h2>              
-          <p><b>Větvení</b> - všem větvením, které proces obsahuje, se musí přiřadit <b>pravděpodobnosti</b> k větvím, které z nich vychází. Jejich součet musí dát dohromady číslo jedna a určují, <b>s jakou pravděpodobností se určitá větev vykoná</b>. Pro případ, že se v procesu prochází danou branou vícekrát a je třeba rozlišit s jakou pravděpodobností se větve vykonají, umožňují některé simulační nástroje navíc pro každou větev nastavit několik hodnot - pro první, druhý, třetí, ... průchod branou.</p> 
+          <p><b>Větvení</b> - všem větvením, které proces obsahuje, se musí přiřadit <b>pravděpodobnosti</b> k větvím, které z nich vychází. Jejich součet musí dát dohromady číslo jedna a určují, <b>s jakou pravděpodobností se určitá větev vykoná</b>. Pro případ, že se v procesu prochází daným větvením vícekrát a je třeba rozlišit s jakou pravděpodobností se větve vykonají, umožňují některé simulační nástroje navíc pro každou větev nastavit několik hodnot - pro první, druhý, třetí, ... průchod větvením.</p> 
       </div>
        
       <div className='bpmn-diagram-wrapper'>
@@ -250,7 +250,7 @@ export default function Chap3Slide6({ setSlideFinished }) {
 
     {stats.general && Object.keys(stats.general).length > 0 && (<div>
       <h2>Výsledky simulace</h2>
-      <p className="explanation">Ke statistikám známým z předchozích simulací se i zde přidívá jedna nová. Jedná se o dvě heatmapy, které znázorňují následující: první ukazuje četnost průchodů daným elementem, druhá pak procento instancí procesu, v nichž byla daná aktivita spuštěna. Příslušné heatmapy byly doplněny opět i k výsledkům první simulace, které jsou porovnání dostupné na konci této stránky.<br/><br/>Spusťte si simulaci několikrát a pozorujte, jak se simulace chová vůči jiné výši skladových zásob. Jak to ovlivňuje cenu? Počty spuštění instancí? Časy trvání a čekání? Pomáhá něčemu mít nižší nebo vyšší skladové zásoby?</p>
+      <p className="explanation">Ke statistikám známým z předchozích simulací se i zde přidává jedna nová. Jedná se o dvě heatmapy, které znázorňují následující: první ukazuje četnost průchodů daným elementem, druhá pak procento instancí procesu, v nichž byla daná aktivita spuštěna. Příslušné heatmapy byly doplněny opět i k výsledkům první simulace, které jsou porovnání dostupné na konci této stránky.<br/><br/>Spusťte si simulaci několikrát a pozorujte, jak se simulace chová vůči jiné výši skladových zásob. Jak to ovlivňuje cenu? Počty spuštění instancí? Časy trvání a čekání? Pomáhá něčemu mít nižší nebo vyšší skladové zásoby?</p>
           <GeneralData stats={stats} diagram={diagram}/>
           <Heatmap stats={stats} diagram={diagram} file={'dilna-ver1.bpmn'}/>
           <HeatmapIterations stats={stats} file={'dilna-ver1.bpmn'} />
@@ -260,7 +260,7 @@ export default function Chap3Slide6({ setSlideFinished }) {
 )}
 
 {stats.general && Object.keys(stats.general).length > 0 && (<div>
-      <h2>Výsledky první simulace simulace</h2>
+      <h2>Výsledky první simulace</h2>
       <p className="explanation">Níže se nachází statistiky z první simulace, konkrétně jejího posledního spuštění. Jsou též rozšířené o příslušné heatmapy, aby bylo možné lépe provádět porovnání.</p>
           <GeneralData stats={statsFirstSimulation} diagram={diagramFirstSimulation}/>
           <Heatmap stats={statsFirstSimulation} diagram={diagramFirstSimulation} file={'dilna-ver1.bpmn'}/>
