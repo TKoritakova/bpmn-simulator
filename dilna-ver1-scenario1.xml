@@ -20,7 +20,7 @@
     <resource>
         <id>Lane_Dilna</id>
         <name>Automechanik</name>
-        <number>2</number>
+        <number>4</number>
         <costperhour>250</costperhour>
         <timetable>Default</timetable>
     </recource>

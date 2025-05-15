@@ -4,7 +4,7 @@
         <arrivalmean>48</mean>
         <arrivalstddeviation>20</stddeviation>
         <arrivalunit>Hour</unit>
-        <numberofinstances>20</numberofinstances>
+        <numberofinstances>50</numberofinstances>
         <starttime>12/5/2025 9:00</starttime>
         <currency>CZK</currency>
     </scenariospecs>
@@ -20,7 +20,7 @@
     <resource>
         <id>Lane_Dilna</id>
         <name>Automechanik</name>
-        <number>2</number>
+        <number>4</number>
         <costperhour>250</costperhour>
         <timetable>Default</timetable>
     </recource>
