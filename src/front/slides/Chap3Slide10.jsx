@@ -39,7 +39,7 @@ export default function Chap3Slide10({ setSlideFinished }) {
         window.dispatchEvent(new Event("storageUpdated"));
         setSlideFinished(prev => ({
           ...prev,
-          [5]: true
+          [10]: true
         }));
     };
 

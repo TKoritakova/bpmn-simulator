@@ -123,14 +123,23 @@ export default function Chap4Slide1({ setSlideFinished }) {
         }
     }
 
-    let priceGoal = (stats.general.totalPrice+stats.general.totalWarehouse) <= 1000000;
-    let waitingGoal = maxWaiting <= (2 * 7 * 24 * 60 * 60);
-    let utilizationGoal = (stats.resources["Lane_Dilna"].workedTime / stats.resources["Lane_Dilna"].allShiftsLenght) >= 0.5;
-    let payCostsGoal = (stats.general.totalPrice / (stats.general.totalRealExecutionTime / (60 * 60 * 24 * 7))) <= 15000;
-    let lenghtGoal = stats.general.totalRealExecutionTime <= (50 * 7 * 24 * 60 * 60 );
+      
+    let weeks = stats.general.totalRealExecutionTime / (60 * 60 * 24 * 7);
+    let costs = 0;
+    for (let key in stats.resources) {
+      let participant = stats.resources[key]; 
+      costs += (participant.allShiftsLenght / 3600) * diagram.getObjectByID(participant.id).getCost();
+    }
+
+    let priceGoal = (stats.general.totalPrice+stats.general.totalWarehouse) <= 2000000;
+    let waitingGoal = maxWaiting <= (4 * 7 * 24 * 60 * 60);
+    let utilizationGoal = (stats.resources["Lane_Dilna"].workedTime / stats.resources["Lane_Dilna"].allShiftsLenght) >= 0.7;
+    let payCostsGoal = (stats.general.totalPrice / (weeks)) <= 70000;
+    let payCostsGoalReal = (costs/weeks) <= 100000;
+    let lenghtGoal = stats.general.totalRealExecutionTime <= (30 * 7 * 24 * 60 * 60 );
  
 
-    return priceGoal && waitingGoal && utilizationGoal && payCostsGoal && lenghtGoal;
+    return priceGoal && waitingGoal && utilizationGoal && payCostsGoal && lenghtGoal && payCostsGoalReal;
   }
 
   const runSimulation = async () => {
@@ -229,14 +238,15 @@ export default function Chap4Slide1({ setSlideFinished }) {
       <div className="explanation">
         <p>Pro úspěšné zakončení cesty touto aplikací je nutné nastavit parametry vstupního scénáře tak, aby:</p>
         <ul>
-          <li>Celkové náklady na proces nepřesáhly 1 000 000 Kč.</li>
-          <li>Týdenní mzdové náklady (za odpracované aktivity) nepřesáhly 15 000 Kč.</li>
-          <li>Doba trvání (začátek - konec) nepřesáhla 50 týdnů.</li>
-          <li>Využití automechanika bylo alespoň 50%.</li>
-          <li>Maximální hodnota čekání, která se u aktivit vyskytne, nepřesáhla 2 týdny.</li>
+          <li>Celkové náklady na simulaci nepřesáhly 2 000 000 Kč.</li>
+          <li>Týdenní mzdové náklady (za odpracované aktivity) nepřesáhly 70 000 Kč.</li>
+          <li>Týdenní mzdové náklady (skutečné) nepřesáhly 100 000 Kč.</li>
+          <li>Doba trvání (začátek - konec) nepřesáhla 30 týdnů.</li>
+          <li>Využití automechanika bylo alespoň 70%.</li>
+          <li>Maximální hodnota čekání, která se u aktivit vyskytne, nepřesáhla 4 týdny.</li>
         </ul>
 
-        <p>Rozdělení příchodů instancí bude s 95% pravděpodobností normální se střední hodnotou 12 a odchylkou 8. Ve zbylých 5% to bude exponenciální. Šance, že zákazník přijme cenovou nabídku, je 85%. Pravděpodobnosti skladových zásob zůstávají stejné jako v předchozích příklad - vysoké zásoby znamenají, že s 65% je materiál skladem, střední 50% a nízké 35%.</p>
+        <p>Rozdělení příchodů instancí bude s 95% pravděpodobností normální se střední hodnotou 48 hodin a odchylkou 20. Ve zbylých 5% to bude exponenciální. Šance, že zákazník přijme cenovou nabídku, je 85%. Pravděpodobnosti skladových zásob zůstávají stejné jako v předchozích příkladech - vysoké zásoby znamenají, že s 65% je materiál skladem, střední 50% a nízké 35%.</p>
 
       </div>
 

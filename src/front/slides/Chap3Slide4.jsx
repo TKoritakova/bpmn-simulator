@@ -46,6 +46,10 @@ export default function Chap3Slide4({ setSlideFinished }) {
   const runSimulation = async () => {
       
       setSimulationRunning(true);
+      setSlideFinished(prev => ({
+          ...prev,
+          [4]: false
+        })); 
 
       const worker = new Worker(
         new URL('../../workers/simulationWorker.js', import.meta.url), // přizpůsob cestu!
@@ -155,7 +159,7 @@ export default function Chap3Slide4({ setSlideFinished }) {
       </div>
 
       <h2>Spuštění první simulace</h2>
-      <p className="explanation">V první simulaci sledujeme běžný provoz dílny. Ta má k dispozici dva mechaniky, jednoho prodejce a jednoho skladníka, kteří plní své činnosti. Skladové zásoby jsou vysoké, což znamená, že s 65% šancí jsou potřebné díly na skladě a jen v 35 % případů je bude třeba objednat. Průměrně přichází jeden zákazník za dvanáct dní, ovšem normální rozdělení, které je zde použité, říká, že s největší pravděpodobností přijde mezi čtvrtým a dvacátým dnem. Simulace začíná v pondělí a cena je počítána v korunách. Parametry scénáře jsou přehledně vypsány zde:</p>
+      <p className="explanation">V první simulaci sledujeme běžný provoz dílny. Ta má k dispozici čtyři mechaniky, jednoho prodejce a jednoho skladníka, kteří plní své činnosti. Skladové zásoby jsou vysoké, což znamená, že s 65% šancí jsou potřebné díly na skladě a jen v 35 % případů je bude třeba objednat. Průměrně přichází jeden zákazník za čtyřicet osm hodin (dva dny), ovšem normální rozdělení, které je zde použité, říká, že s největší pravděpodobností přijde mezi dvacátou osmou a šedesátou osmou hodinou. Simulace začíná v pondělí a cena je počítána v korunách. Parametry scénáře jsou přehledně vypsány zde:</p>
      
       <div className="first-simulation-container">
       {diagram && (<form>
@@ -208,7 +212,7 @@ export default function Chap3Slide4({ setSlideFinished }) {
       </button>
 
       {stats.general && Object.keys(stats.general).length > 0 && (<div className="first-general-data-container">
-        <p className="explanation">Simulace skončila a poskytla první statistiky. V těch je možné vidět počet proběhlých instancí, celkovou cenu a celkovou dobu trvání. Dva grafy zároveň ukazují, jak byl čas v simulaci rozložen. První z nich dělí celkový čas na hodiny mimo pracovní dobu a ty v pracovní době, kam spadá jak čekání, tak samotná práce. Jejich poměr je pak lépe znázorněn na druhém grafu.<br /><br/>Posledním výstupem simulace jsou dvě heatmapy, které ukazují, jak dlouho jednotlivé aktivity trvají vůči ostatním a jak dlouho čekají na své provedení. Jejich stupnice je následující: zelená, žlutá, oranžová a červená. Zelená barva znamená, že aktivita nečeká či netrvá příliš dlouho na provedení, červená je opakem. Rozložení stupnice je relativní vůči největší hodnotě, která se v ní nachází, a tedy heatmapa nemusí obsahovat všechny zmíněné barvy.<br /><br/>Přestože simulaci spustíme znovu se stejnými parametry, může dát velmi odlišné výsledky. V tomto případě je to způsobeno hlavně počtem instancí procesů, jelikož dvacet je poměrně malé množství. Je možné si tyto změny vyzkoušet opětovním spuštěním první simulace po kliknutí na tlačítko Spusť simulaci.</p>
+        <p className="explanation">Simulace skončila a poskytla první statistiky. V těch je možné vidět počet proběhlých instancí, celkovou cenu a celkovou dobu trvání. Dva grafy zároveň ukazují, jak byl čas v simulaci rozložen. První z nich dělí celkový čas na hodiny mimo pracovní dobu a ty v pracovní době, kam spadá jak čekání, tak samotná práce. Jejich poměr je pak lépe znázorněn na druhém grafu.<br /><br/>Posledním výstupem simulace jsou dvě heatmapy, které ukazují, jak dlouho jednotlivé aktivity trvají vůči ostatním a jak dlouho čekají na své provedení. Jejich stupnice je následující: zelená, žlutá, oranžová a červená. Zelená barva znamená, že aktivita nečeká či netrvá příliš dlouho na provedení, červená je opakem. Rozložení stupnice je relativní vůči největší hodnotě, která se v ní nachází, a tedy heatmapa nemusí obsahovat všechny zmíněné barvy.<br /><br/>Přestože simulaci spustíme znovu se stejnými parametry, může dát velmi odlišné výsledky. V tomto případě je to způsobeno hlavně počtem instancí procesů, jelikož padesát je poměrně malé množství. Je možné si tyto změny vyzkoušet opětovným spuštěním první simulace po kliknutí na tlačítko Spusť simulaci.</p>
           <GeneralData stats={stats} diagram={diagram}/>
           <Heatmap stats={stats} diagram={diagram} file={'dilna-ver1.bpmn'}/>
 
