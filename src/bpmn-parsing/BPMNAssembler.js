@@ -42,7 +42,7 @@ export class BPMNAssembler {
 
     let simulationData = await this.loadAndParseXMLSimulationData(simulationDataPath);
     this.updateDiagramData(diagram, simulationData);
-    
+    console.log(diagram)
     
     return diagram;
   }

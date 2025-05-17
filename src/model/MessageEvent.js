@@ -9,9 +9,6 @@ export class MessageEvent extends Event {
     this.unit;
   }
 
-  execute() {
-    console.log(`Message event: ${this.description}`);
-  }
 
   getUnit() {
     return this.unit;

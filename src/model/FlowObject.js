@@ -7,22 +7,10 @@ export class FlowObject extends BPMNObject {
         throw new TypeError('Cannot instantiate abstract class FlowObject directly');
       }
       super(description, ID);    
-      this.duration = null;
       this.ins = ins;
       this.outs = outs;
     }
-  
-    execute() {
-      throw new Error('Method "execute()" must be implemented in subclass');
-    }
 
-    setDuration(duration) {
-      this.duration = duration;
-    }
-
-    getDuration() {
-      return this.duration;
-    }
 
     setIns(ins) {
       this.ins = ins;
@@ -40,7 +28,13 @@ export class FlowObject extends BPMNObject {
       return this.outs;
     }
 
-    
+    toSerializableObject() {
+      
+    }
+  
+    static fromSerializableObject(data) {
+
+    }
   }
 
   

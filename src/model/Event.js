@@ -7,10 +7,6 @@ export class Event extends FlowObject {
     this.type = type;
   }
 
-  execute() {
-    console.log(`Event triggered: ${this.description}`);
-  }
-
   getType() {
     return this.type;
   }

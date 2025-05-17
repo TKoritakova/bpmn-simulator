@@ -12,10 +12,6 @@ export class Activity extends FlowObject {
     this.resource;
   }
 
-  execute() {
-    console.log(`Executing activity ${this.description}`);
-  }
-
   getUnit() {
     return this.unit;
   }

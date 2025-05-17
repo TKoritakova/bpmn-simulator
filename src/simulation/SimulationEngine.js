@@ -39,7 +39,7 @@ export class SimulationEngine {
 
       })
 
-      this.generateArrivalTimes(diagram);
+      
  
     }
 
@@ -114,7 +114,7 @@ export class SimulationEngine {
   
    
     async run() {
-
+      this.generateArrivalTimes(this.diagram);
 
       while ((this.hasTasks() || this.sleepingItems.size > 0 || this.arrivals.length > 0) /*&& this.currentTime < 1000000*/) {
         // SPUŠTĚNÍ NOVÝCH INSTANCÍ

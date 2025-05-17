@@ -7,10 +7,6 @@ export class Gateway extends FlowObject {
     this.probabilities = [];
   }
 
-  execute() {
-    console.log(`Gateway (${this.type}): ${this}`);
-  }
-
   getType() {
     return this.type;
   }

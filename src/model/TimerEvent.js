@@ -9,11 +9,6 @@ export class TimerEvent extends Event {
     this.unit;
   }
 
-  execute() {
-    console.log(`Timer event: ${this.description}`);
-  }
-
-
   getUnit() {
     return this.unit;
   }
