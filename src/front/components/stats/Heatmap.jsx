@@ -1,46 +1,61 @@
 import React, { useEffect, useRef, useState } from 'react';
 import BpmnViewer from 'bpmn-js';
 
+/**
+ * Finds maximum value of average durations.
+ * @param {*} stats stats
+ * @returns maximum value of average durations
+ */
 function findMaxAvgDurationWithoutOfftime(stats) {
-    let maxValue = -Infinity;
-    let maxKey = null;
-  
-    for (const key in stats) {
-      
-        const activity = stats[key];
-        if (
-          typeof activity.avgDurationWithoutOfftime === "number" &&
-          activity.avgDurationWithoutOfftime > maxValue
-        ) {
-          maxValue = activity.avgDurationWithoutOfftime;
-          maxKey = key;
-        }
-      
-    }
-  
-    return { key: maxKey, value: maxValue };
+  let maxValue = -Infinity;
+  let maxKey = null;
+
+  for (const key in stats) {  
+      const activity = stats[key];
+      if (
+        typeof activity.avgDurationWithoutOfftime === "number" &&
+        activity.avgDurationWithoutOfftime > maxValue
+      ) {
+        maxValue = activity.avgDurationWithoutOfftime;
+        maxKey = key;
+      }   
   }
 
-  function findMaxAvgWaitingForExecution(stats) {
-    let maxValue = -Infinity;
-    let maxKey = null;
-  
-    for (const key in stats) {
-      
-        const activity = stats[key];
-        if (
-          typeof activity.avgWaitingForExecution === "number" &&
-          activity.avgWaitingForExecution > maxValue
-        ) {
-          maxValue = activity.avgWaitingForExecution;
-          maxKey = key;
-        }
-      
-    }
-  
-    return { key: maxKey, value: maxValue };
+  return { key: maxKey, value: maxValue };
+}
+
+/**
+ * Finds maximum value of average waiting times.
+ * @param {*} stats stats
+ * @returns maximum value of average waiting times
+ */
+function findMaxAvgWaitingForExecution(stats) {
+  let maxValue = -Infinity;
+  let maxKey = null;
+
+  for (const key in stats) {
+    
+      const activity = stats[key];
+      if (
+        typeof activity.avgWaitingForExecution === "number" &&
+        activity.avgWaitingForExecution > maxValue
+      ) {
+        maxValue = activity.avgWaitingForExecution;
+        maxKey = key;
+      }
+    
   }
 
+  return { key: maxKey, value: maxValue };
+}
+
+/**
+ * Function to colorize heatmap.
+ * @param {*} viewer viewer for heatmap
+ * @param {*} stats stats
+ * @param {*} type heatmap type
+ * @returns 
+ */
 function colorizeDiagram(viewer, stats, type = 'execution') {
   viewer.get('overlays').clear();
   let overlays = viewer.get('overlays');
@@ -102,12 +117,16 @@ function colorizeDiagram(viewer, stats, type = 'execution') {
       });
     }
 
-}
+  }
 }
 
-
+/**
+ * React component displaying heatmap for waiting and execution times.
+ * @component
+ * @param {*} param0 stats
+ * @returns {JSX.Element} React element displaying heatmap for waiting and execution times
+ */
 export function Heatmap({ stats, diagram, file  }) {
-
 
   // wait
   const containerWorkshopRef1 = useRef(null);
@@ -117,43 +136,38 @@ export function Heatmap({ stats, diagram, file  }) {
   const containerWorkshopRef2 = useRef(null);
   const viewerWorkshopRef2 = useRef(null);
 
+  useEffect(() => {
+    fetch(file) 
+    .then(res => res.text())
+    .then(text => {
+      
+      if (!viewerWorkshopRef1.current) {
+        viewerWorkshopRef1.current = new BpmnViewer({ container: containerWorkshopRef1.current });
+      }
+      viewerWorkshopRef1.current.importXML(text).then(async () => {
+        viewerWorkshopRef1.current.get('canvas').zoom('fit-viewport');                   
+        colorizeDiagram(viewerWorkshopRef1.current, stats, 'execution');
+      }).catch(err => {
+          console.error('Chyba při načítání BPMN XML:', err);
+      });
 
-    useEffect(() => {
-        fetch(file) 
-        .then(res => res.text())
-        .then(text => {
-          
-          if (!viewerWorkshopRef1.current) {
-            viewerWorkshopRef1.current = new BpmnViewer({ container: containerWorkshopRef1.current });
-          }
-          viewerWorkshopRef1.current.importXML(text).then(async () => {
-            viewerWorkshopRef1.current.get('canvas').zoom('fit-viewport');                   
-            colorizeDiagram(viewerWorkshopRef1.current, stats, 'execution');
-          }).catch(err => {
-              console.error('Chyba při načítání BPMN XML:', err);
-          });
 
+      if (!viewerWorkshopRef2.current) {
+        viewerWorkshopRef2.current = new BpmnViewer({ container: containerWorkshopRef2.current });
+      }
+      viewerWorkshopRef2.current.importXML(text).then(async () => {
+        viewerWorkshopRef2.current.get('canvas').zoom('fit-viewport');                   
+        colorizeDiagram(viewerWorkshopRef2.current, stats, 'waiting');
+      }).catch(err => {
+          console.error('Chyba při načítání BPMN XML:', err);
+      });
 
-          if (!viewerWorkshopRef2.current) {
-            viewerWorkshopRef2.current = new BpmnViewer({ container: containerWorkshopRef2.current });
-          }
-          viewerWorkshopRef2.current.importXML(text).then(async () => {
-            viewerWorkshopRef2.current.get('canvas').zoom('fit-viewport');                   
-            colorizeDiagram(viewerWorkshopRef2.current, stats, 'waiting');
-          }).catch(err => {
-              console.error('Chyba při načítání BPMN XML:', err);
-          });
-
-        })
-        .catch(err => {
-        console.error('Chyba při načítání BPMN souboru:', err);
-        });
-    
-    
-      }, [stats]);
-
- 
-
+    })
+    .catch(err => {
+      console.error('Chyba při načítání BPMN souboru:', err);
+    });
+      
+  }, [stats]);
 
   return (
     <div className='heatmap-section-container'>

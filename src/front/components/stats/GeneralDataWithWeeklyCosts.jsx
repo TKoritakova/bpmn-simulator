@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState, PureComponent } from 'react';
 import { Statistics } from '../../../simulation/Statistics';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend  } from 'recharts';
 
-
+/**
+ * React component displaying general simulation statistics with weekly costs in a table and graphs. 
+ * @component
+ * @param {*} param0 stats
+ * @returns {JSX.Element} React element displaying general-level statistics with weekly costs.
+ */
 export function GeneralDataWithWeeklyCosts({ stats, diagram }) {
   
   const data = [
@@ -45,11 +50,11 @@ export function GeneralDataWithWeeklyCosts({ stats, diagram }) {
     return new Intl.DateTimeFormat('cs-CZ', options).format(date);
   };
 
- const getWeeklyCosts = (stats) => {
-      let weeks = stats.general.totalRealExecutionTime / (60 * 60 * 24 * 7);
-      let costs = stats.general.totalPrice;
-      return costs/weeks;
- };
+  const getWeeklyCosts = (stats) => {
+    let weeks = stats.general.totalRealExecutionTime / (60 * 60 * 24 * 7);
+    let costs = stats.general.totalPrice;
+    return costs/weeks;
+  };
 
   const getWeeklyCosts2 = (stats, diagram) => {
       let weeks = stats.general.totalRealExecutionTime / (60 * 60 * 24 * 7);
@@ -59,103 +64,93 @@ export function GeneralDataWithWeeklyCosts({ stats, diagram }) {
     
         costs += (participant.allShiftsLenght / 3600) * diagram.getObjectByID(participant.id).getCost();
       }
-   
+      
       return costs/weeks;
- };
+  };
 
   return (
     <div>
-      
-
       {stats.general && Object.keys(stats.general).length > 0 && (
         <div className="general-data">
- 
-    <h3>Celkové údaje o simulaci</h3>
-    <table className="table-striped table-general">
-      <thead>
-        <tr>
-          <th>Info</th>
-          <th>Údaj</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Počet instancí:</td>
-          <td>{stats.general.numberOfInstances}</td>
-        </tr>
-        <tr>
-          <td>Celková cena:</td>
-          <td>{Statistics.convertGeneralValues("totalPrice",(stats.general.totalPrice+stats.general.totalWarehouse),diagram)} <br /> (z toho náklady na sklad: {Statistics.convertGeneralValues("totalPrice",stats.general.totalWarehouse,diagram)})</td>
-        </tr>
-        <tr>
-          <td>Týdenní mzdové náklady (jen odpracované aktivity):</td>
-          <td>
-            {Statistics.convertGeneralValues("totalPrice",getWeeklyCosts(stats),diagram)} 
-            </td>
-        </tr>
-        <tr>
-          <td>Týdenní mzdové náklady (skutečně vyplacená částka):</td>
-          <td>
-            {Statistics.convertGeneralValues("totalPrice",getWeeklyCosts2(stats, diagram),diagram)} 
-            </td>
-        </tr>
-        <tr>
-          <td>Začátek - konec:</td>
-          <td><div>{formatDate(diagram.getStartTime())} - {formatDate(new Date(diagram.getStartTime().getTime() + stats.general.totalRealExecutionTime * 1000))} <br /> ({Statistics.convertGeneralValues("totalRealExecutionTime",stats.general.totalRealExecutionTime,diagram)})</div></td>
-        </tr>
-        <tr>
-          <td>Celkový součet času instancí:</td>
-          <td>{Statistics.convertGeneralValues("totalWholeDuration",stats.general.totalWholeDuration,diagram)}</td>
-        </tr>
-      </tbody>
-    </table>
+          <h3>Celkové údaje o simulaci</h3>
+          <table className="table-striped table-general">
+            <thead>
+              <tr>
+                <th>Info</th>
+                <th>Údaj</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Počet instancí:</td>
+                <td>{stats.general.numberOfInstances}</td>
+              </tr>
+              <tr>
+                <td>Celková cena:</td>
+                <td>{Statistics.convertGeneralValues("totalPrice",(stats.general.totalPrice+stats.general.totalWarehouse),diagram)} <br /> (z toho náklady na sklad: {Statistics.convertGeneralValues("totalPrice",stats.general.totalWarehouse,diagram)})</td>
+              </tr>
+              <tr>
+                <td>Týdenní mzdové náklady (jen odpracované aktivity):</td>
+                <td>
+                  {Statistics.convertGeneralValues("totalPrice",getWeeklyCosts(stats),diagram)} 
+                  </td>
+              </tr>
+              <tr>
+                <td>Týdenní mzdové náklady (skutečně vyplacená částka):</td>
+                <td>
+                  {Statistics.convertGeneralValues("totalPrice",getWeeklyCosts2(stats, diagram),diagram)} 
+                  </td>
+              </tr>
+              <tr>
+                <td>Začátek - konec:</td>
+                <td><div>{formatDate(diagram.getStartTime())} - {formatDate(new Date(diagram.getStartTime().getTime() + stats.general.totalRealExecutionTime * 1000))} <br /> ({Statistics.convertGeneralValues("totalRealExecutionTime",stats.general.totalRealExecutionTime,diagram)})</div></td>
+              </tr>
+              <tr>
+                <td>Celkový součet času instancí:</td>
+                <td>{Statistics.convertGeneralValues("totalWholeDuration",stats.general.totalWholeDuration,diagram)}</td>
+              </tr>
+            </tbody>
+          </table>
 
-  
-  
-        <div className='general-data-charts'>
-        <PieChart width={400} height={400}>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Legend /> 
-        </PieChart>
-    
-        <PieChart width={400} height={400}>
-          <Pie
-            data={data2}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-          >
-            {data2.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Legend /> 
-        </PieChart>
+          <div className='general-data-charts'>
+            <PieChart width={400} height={400}>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={renderCustomizedLabel}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Legend /> 
+            </PieChart>
+        
+            <PieChart width={400} height={400}>
+              <Pie
+                data={data2}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={renderCustomizedLabel}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {data2.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Legend /> 
+            </PieChart>
+          </div>
         </div>
-    
-  
-  </div>
-)}  
-
-  
-
+      )}  
     </div>
   );
 

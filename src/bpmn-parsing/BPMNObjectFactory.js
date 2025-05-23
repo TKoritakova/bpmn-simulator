@@ -8,7 +8,15 @@ import { DataObject } from "../model/DataObject";
 import { Participant } from "../model/Participant";
 
 
-
+/**
+ * Deserializes a JSON-compatible BPMN object based on its type and returns the corresponding class instance.
+ * 
+ * Supported types: `Activity`, `Gateway`, `Event`, `MessageEvent`, `TimerEvent`, `ConnectingObject`, `DataObject`, `Participant`.
+ *
+ * @param {*} data - serialized BPMN object including a `type` field.
+ * @returns {Activity|Gateway|Event|MessageEvent|TimerEvent|ConnectingObject|DataObject|Participant} instance of the corresponding BPMN class
+ * @throws {Error} if the `type` is not recognized
+ */
 export function deserializeBPMNObject(data) {
     switch (data.type) {
         case 'Activity': return Activity.fromSerializableObject(data);
@@ -23,3 +31,5 @@ export function deserializeBPMNObject(data) {
           throw new Error(`Neznámý typ objektu: ${data.type}`);
       }
   }
+
+

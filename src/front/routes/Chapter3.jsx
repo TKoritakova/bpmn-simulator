@@ -20,6 +20,11 @@ const STORAGE_CURRENT = 'chapter3_current_slide';
 const STORAGE_MAX = 'chapter3_max_slide';
 const LOCAL_KEY_CHAP3_SUBMITTED = "chapter3-test-submitted";
 
+/**
+ * React component displaying third lesson. 
+ * @component
+ * @returns {JSX.Element} React element displaying third lesson
+ */
 export default function Chapter3() {
   const swiperRef = useRef(null);
   const [current, setCurrent] = useState(0);

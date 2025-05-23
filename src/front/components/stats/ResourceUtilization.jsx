@@ -2,9 +2,14 @@ import React, { useEffect, useRef, useState, PureComponent } from 'react';
 import { Statistics } from '../../../simulation/Statistics';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend  } from 'recharts';
 
-
+/**
+ * React component displaying resource utilization. 
+ * @component
+ * @param {*} param0 stats
+ * @param {*} param1 diagram
+ * @returns {JSX.Element} React element displaying resource utilization
+ */
 export function ResourceUtilization({ stats, diagram }) {
-  
   
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
   
@@ -29,37 +34,33 @@ export function ResourceUtilization({ stats, diagram }) {
   };
 
   const DisplayData = Object.entries(stats.resources || {}).map(
-        ([resourceID, info], index) => (
-          <div key={index}>
-            <h3>{info.name}</h3>
-            <PieChart width={300} height={300}>
-              <Pie
-                data={getData(info)}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={renderCustomizedLabel}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {getData(info).map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Legend /> 
-            </PieChart>
-            
-    
-           
-          </div>
-        )
-      );
+    ([resourceID, info], index) => (
+      <div key={index}>
+        <h3>{info.name}</h3>
+        <PieChart width={300} height={300}>
+          <Pie
+            data={getData(info)}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            {getData(info).map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Legend /> 
+        </PieChart>        
+      </div>
+    )
+  );
 
   return (
     <div>
       
-
       {stats.general && Object.keys(stats.general).length > 0 && (
         <div className="general-data">
 
@@ -69,8 +70,6 @@ export function ResourceUtilization({ stats, diagram }) {
           </div>
         </div>
       )}  
-
-  
 
     </div>
   );

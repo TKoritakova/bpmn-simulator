@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import BpmnViewer from 'bpmn-js';
 
+/**
+ * React component displaying second lesson's second slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @returns {JSX.Element} React element displaying second lesson's second slide
+ */
 export default function Chap2Slide2({ setSlideFinished }) {
 
     const containerRef = useRef(null);

@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import BpmnViewer from 'bpmn-js';
 
+/**
+ * React component displaying second lesson's third slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @returns {JSX.Element} React element displaying second lesson's third slide
+ */
 export default function Chap2Slide3({ setSlideFinished }) {
 
     const options = [{ text: "Přeplněný obchod", correct: false, reason: "V procesu není nikde řešen počet lidí v supermarketu." },

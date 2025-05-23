@@ -11,6 +11,13 @@ import { HeatmapIterations } from "../components/stats/HeatmapIterations";
 const LOCAL_KEY_STATS = "chapter3-default-simulation-stats";
 const LOCAL_KEY_DIAGRAM = "chapter3-default-simulation-diagram";
 
+/**
+ * React component displaying third lesson's sixth slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @param {*} param1 slideFinished
+ * @returns {JSX.Element} React element displaying third lesson's sixth slide
+ */
 export default function Chap3Slide6({ setSlideFinished, slideFinished }) {
 
   const containerWorkshopRef = useRef(null);

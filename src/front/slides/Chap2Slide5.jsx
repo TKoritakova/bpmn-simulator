@@ -5,6 +5,12 @@ import BpmnViewer from 'bpmn-js';
 const LOCAL_KEY_STATE = "chapter2-test-state";
 const LOCAL_KEY_SUBMITTED = "chapter2-test-submitted";
 
+/**
+ * React component displaying second lesson's fifth slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @returns {JSX.Element} React element displaying second lesson's fifth slide
+ */
 export default function Chap2Slide5({ setSlideFinished }) {
 
     const containerSupermarketObjRef = useRef(null);

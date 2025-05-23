@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 
-
+/**
+ * React component displaying first lesson's first slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @returns {JSX.Element} React element displaying first lesson's first slide
+ */
 export default function Chap1Slide1({ setSlideFinished }) {
-
-
 
     const steps = [
         { text: 'Vstup do supermarketu', description: 'Zákazník vstupuje do obchodu a bere si nákupní košík či vozík.', problem: 'Obchod je přeplněný, takže nejsou dostupné košíky.' },
@@ -40,7 +43,7 @@ export default function Chap1Slide1({ setSlideFinished }) {
         <div className='slide-content-wrapper'>
 
 {/* Lit. 4, str 30 */}
-<p>Proces je možné chápat jako to, co společnosti dělají, když poskytují službu nebo produkt zákazníkům. Způsob, jakým je proces navržen a prováděn, ovlivňuje kvalitu služby nebo produktu a též efektivitu, s jakou jsou služby nebo produkty vytvářeny.</p>
+<p>Proces je možné chápat jako něco, co společnosti dělají, když poskytují službu nebo produkt zákazníkům. Způsob, jakým je proces navržen a prováděn, ovlivňuje kvalitu služby nebo produktu a též efektivitu, s jakou jsou služby nebo produkty vytvářeny.</p>
 
 <p>Více formálně se dá říct, že proces:</p>
 

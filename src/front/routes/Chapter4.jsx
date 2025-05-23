@@ -11,6 +11,11 @@ import Chap4Slide1 from '../slides/Chap4Slide1';
 
 const LOCAL_KEY_CHAP4_SUBMITTED = "chapter4-submitted";
 
+/**
+ * React component displaying fourth lesson. 
+ * @component
+ * @returns {JSX.Element} React element displaying fourth lesson
+ */
 export default function Chapter4() {
 
 

@@ -6,6 +6,11 @@ const LOCAL_KEY_CHAP1_SUBMITTED = "chapter1-test-submitted";
 const LOCAL_KEY_CHAP2_SUBMITTED = "chapter2-test-submitted";
 const LOCAL_KEY_CHAP3_SUBMITTED = "chapter3-test-submitted";
 
+/**
+ * React component displaying homepage. 
+ * @component
+ * @returns {JSX.Element} React element displaying homepage
+ */
 export default function Home() {
 
     const link = () => {

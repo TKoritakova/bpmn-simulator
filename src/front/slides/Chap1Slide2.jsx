@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+/**
+ * React component displaying first lesson's second slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @returns {JSX.Element} React element displaying first lesson's second slide
+ */
 export default function Chap1Slide2({ setSlideFinished }) {
     const inputAnswers = [
         { text: "Nákupní seznam", correct: true, reason: "Nákupní seznam, ať už ve fyzické podobě nebo jen jako myšlenka, je informace potřebná k nákupu. Zákazník potřebuje vědět, s čím chce odejít." },

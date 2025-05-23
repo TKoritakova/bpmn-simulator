@@ -4,6 +4,12 @@ import { useState, useEffect } from "react";
 const LOCAL_KEY_STATE = "chapter1-test-state";
 const LOCAL_KEY_SUBMITTED = "chapter1-test-submitted";
 
+/**
+ * React component displaying first lesson's sixth slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @returns {JSX.Element} React element displaying first lesson's sixth slide
+ */
 export default function Chap1Slide6({ setSlideFinished }) {
 
     const [answers, setAnswers] = useState({});

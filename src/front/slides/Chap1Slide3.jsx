@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+/**
+ * React component displaying first lesson's third slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @returns {JSX.Element} React element displaying first lesson's third slide
+ */
 export default function Chap1Slide3({ setSlideFinished }) {
 
     const recourcesOption = [{ text: "Dodavatel zboží", correct: false, reason: "Dodavatel zboží musí supermarketu dodat zboží, které zákazník chce nakoupit, ovšem činí tak v jiném procesu. Samotného procesu nákupu se neúčastní." },

@@ -13,7 +13,12 @@ import confetti from 'canvas-confetti';
 
 
 const LOCAL_KEY_CHAP4_SUBMITTED = "chapter4-submitted";
-
+/**
+ * React component displaying fourth lesson's first slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @returns {JSX.Element} React element displaying fourth lesson's first slide
+ */
 export default function Chap4Slide1({ setSlideFinished }) {
 
   const containerWorkshopRef = useRef(null);
@@ -242,7 +247,7 @@ export default function Chap4Slide1({ setSlideFinished }) {
           <li>Týdenní mzdové náklady (za odpracované aktivity) nepřesáhly 70 000 Kč.</li>
           <li>Týdenní mzdové náklady (skutečné) nepřesáhly 100 000 Kč.</li>
           <li>Doba trvání (začátek - konec) nepřesáhla 30 týdnů.</li>
-          <li>Využití automechanika bylo alespoň 70%.</li>
+          <li>Využití automechanika bylo alespoň 70 %.</li>
           <li>Maximální hodnota čekání, která se u aktivit vyskytne, nepřesáhla 4 týdny.</li>
         </ul>
 

@@ -15,6 +15,11 @@ const STORAGE_CURRENT = 'chapter1_current_slide';
 const STORAGE_MAX = 'chapter1_max_slide';
 const LOCAL_KEY_CHAP1_SUBMITTED = "chapter1-test-submitted";
 
+/**
+ * React component displaying first lesson. 
+ * @component
+ * @returns {JSX.Element} React element displaying first lesson
+ */
 export default function Chapter1() {
   const swiperRef = useRef(null);
   const [current, setCurrent] = useState(0);
@@ -22,10 +27,15 @@ export default function Chapter1() {
   const [slideFinished, setSlideFinished] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
-
-  const slideComponents = [<Chap1Slide1 setSlideFinished={setSlideFinished} />, <Chap1Slide2 setSlideFinished={setSlideFinished} />, <Chap1Slide3 setSlideFinished={setSlideFinished}/>, <Chap1Slide4 setSlideFinished={setSlideFinished}/>, <Chap1Slide5 setSlideFinished={setSlideFinished}/>, <Chap1Slide6 setSlideFinished={setSlideFinished}/>];
+  const slideComponents = [
+    <Chap1Slide1 setSlideFinished={setSlideFinished} />, 
+    <Chap1Slide2 setSlideFinished={setSlideFinished} />, 
+    <Chap1Slide3 setSlideFinished={setSlideFinished}/>, 
+    <Chap1Slide4 setSlideFinished={setSlideFinished}/>, 
+    <Chap1Slide5 setSlideFinished={setSlideFinished}/>, 
+    <Chap1Slide6 setSlideFinished={setSlideFinished}/>
+  ];
  
-
   useEffect(() => {
     const savedSlide = parseInt(localStorage.getItem(STORAGE_CURRENT), 10);
     const savedMax = parseInt(localStorage.getItem(STORAGE_MAX), 10);
@@ -77,8 +87,6 @@ export default function Chapter1() {
     }
   };
 
-
-
   return (
     <>
       <Swiper
@@ -91,23 +99,20 @@ export default function Chapter1() {
         keyboard={{ enabled: false }}
       >
         {slideComponents.map((SlideComponent, index) => (
-        <SwiperSlide key={index}>
-          {SlideComponent}
-          <div style={{ marginTop: '1rem' }}>
-            {index > 0 && <button onClick={prevSlide} className='left'>Předchozí</button>}
-            {index < slideComponents.length - 1 && ((slideFinished[index+1]) || max > index) && (
-              <button onClick={nextSlide} className='right'>Další</button>
-            )}
-            {index === slideComponents.length - 1 && ((slideFinished[index+1]) || submitted) && (
-              <Link to="/bpmn-simulator/lesson-2"><button className='right'>Další lekce</button></Link>
-              
-            )}
-          </div>
-        </SwiperSlide>
-      ))}
+          <SwiperSlide key={index}>
+            {SlideComponent}
+            <div style={{ marginTop: '1rem' }}>
+              {index > 0 && <button onClick={prevSlide} className='left'>Předchozí</button>}
+              {index < slideComponents.length - 1 && ((slideFinished[index+1]) || max > index) && (
+                <button onClick={nextSlide} className='right'>Další</button>
+              )}
+              {index === slideComponents.length - 1 && ((slideFinished[index+1]) || submitted) && (
+                <Link to="/bpmn-simulator/lesson-2"><button className='right'>Další lekce</button></Link>                
+              )}
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
-
-     
     </>
   );
 }

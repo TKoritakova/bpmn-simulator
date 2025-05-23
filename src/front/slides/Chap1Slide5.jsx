@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+/**
+ * React component displaying first lesson's fifth slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @returns {JSX.Element} React element displaying first lesson's fifth slide
+ */
 export default function Chap1Slide5({ setSlideFinished }) {
 
     const metricsOptions = [
@@ -68,7 +74,7 @@ export default function Chap1Slide5({ setSlideFinished }) {
     <p>První skupinou metrik, která sem spadá, jsou metriky vycházející z <b>analýzy procesního toku (flow analysis)</b>. Tyto metriky se zaměřují na odhadování celkové výkonnosti procesu na základě určitých znalostí o průběhu jeho jednotlivých aktivit, událostí a rozhodnutí. Zařadit sem můžeme například:</p>
     <ul>
         <li><b>Průměrný čas běhu procesu</b> - celkový čas běhu procesu je čas získaný součtem trvání jednotlivých aktivit, ale též času, kdy se na jejich provedení čeká, například z důvodu nedostupných zdrojů. Dá se určit z modelu procesu a časových údajů přiřazených k jednotlivým aktivitám dosazením do rovnic pro tyto výpočty. Ty zde nebudou dále rozebírány.</li>
-        <li><b>Účinnost procesu</b> - metrika, která říká, jaké procento z celkového času běhu procesu je skutečně vynaloženo na plnění činností. Dá se zjistit vydělením času, kdy skutečně probíhají aktivity a vytváří se výstupy, výskedkem předchozí metriky.</li>
+        <li><b>Účinnost procesu</b> - metrika, která říká, jaké procento z celkového času běhu procesu je skutečně vynaloženo na plnění činností. Dá se zjistit vydělením času, kdy skutečně probíhají aktivity a vytváří se výstupy, výsledkem předchozí metriky.</li>
         <li><b>Průměrné náklady</b> - pokud jsou známy náklady na provedení jednotlivých aktivit a počty toho, kolikrát bude aktivita v rámci procesu provedena, dají se výpočtem určit průměrné náklady na jedno provedení procesu. Tento výpočet je podobný výpočtu průměrného času běhu procesu.</li>
     </ul>
 

@@ -2,7 +2,12 @@ import React, { useRef, useState, useEffect, useReducer } from 'react';
 import { Timetable } from '../../model/Timetable';
 import { Participant } from '../../model/Participant';
 
-
+/**
+ * React component displaying form for final simulation.
+ * @component
+ * @param {*} param0 diagram
+ * @returns {JSX.Element} React element displaying form for final simulation
+ */
 export function FinalSimulationForm({ diagram }) {
 
   const [, forceUpdate] = useReducer(x => x + 1, 0);

@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 
-
+/**
+ * React component displaying third lesson's second slide. 
+ * @component
+ * @param {*} param0 setSlideFinished
+ * @returns {JSX.Element} React element displaying third lesson's second slide
+ */
 export default function Chap3Slide2({ setSlideFinished }) {
 
 

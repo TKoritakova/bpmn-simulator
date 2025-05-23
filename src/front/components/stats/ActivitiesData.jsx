@@ -1,10 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Statistics } from '../../../simulation/Statistics';
 
-
+/**
+ * React component displaying per-activity simulation statistics in a table. 
+ * @component
+ * @param {*} param0 stats
+ * @returns {JSX.Element} React element displaying activity-level statistics
+ */
 export function ActivitiesData({ stats }) {
   
-
     const DisplayData = Object.entries(stats.activites || {}).map(
       ([activityID, info], index) => (
         <tr key={index}>
@@ -24,9 +28,7 @@ export function ActivitiesData({ stats }) {
           <td>{Statistics.prepareValueForReading(info.minWaitingForExecution)}</td>
           <td>{Statistics.prepareValueForReading(info.avgWaitingForExecution)}</td>
           <td>{Statistics.prepareValueForReading(info.maxWaitingForExecution)}</td>
-          
-  
-         
+
         </tr>
       )
     );
@@ -63,11 +65,6 @@ export function ActivitiesData({ stats }) {
   </div>
 )}
       
-
-   
-
-  
-
     </div>
   );
 
